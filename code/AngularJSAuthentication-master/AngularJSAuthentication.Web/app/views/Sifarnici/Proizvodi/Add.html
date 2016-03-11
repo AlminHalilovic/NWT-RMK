@@ -1,0 +1,27 @@
+﻿<h2>Novi proizvod</h2>
+<table class="table table-bordered table-responsive">
+
+    <tr>
+        <td>Šifra</td>
+        <td><input type="text" ng-model="sifra" ng-class="{ error: !sifra }" />  </td>
+    </tr>
+    <tr>
+        <td>Naziv</td>
+        <td><input type="text" ng-model="naziv" ng-class="{ error: !naziv }" />  </td>
+    </tr>
+    <tr>
+        <td>Barcode</td>
+        <td><input type="text" ng-model="barcode" ng-class="{ error: !barcode }" />  </td>
+    </tr>
+    <tr>
+        <td>Grupa proizvoda</td>
+        <td><select ng-model="grupa_proizvoda" ng-options="item.id as item.naziv for item in collection1" ng-init="grupa_proizvoda = grupa_proizvoda|| collection1[0].naziv" ng-class="{ error: !grupa_proizvoda }"></select></td>
+    </tr>
+    <tr>
+        <td>Jedinica mjera</td>
+        <td><select ng-model="jedinica_mjere" ng-options="item.id as item.naziv for item in collection" ng-init="jedinica_mjere = jedinica_mjere|| collection[0].naziv" ng-class="{ error: !jedinica_mjere }"></select></td>
+    </tr>
+
+</table>
+<input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!sifra || !naziv ||!barcode ||!grupa_proizvoda ||!jedinica_mjere" />
+<a class="btn btn-info" ng-click="back()">Odustani</a>

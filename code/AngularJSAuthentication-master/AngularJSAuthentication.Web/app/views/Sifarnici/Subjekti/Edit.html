@@ -1,0 +1,50 @@
+﻿
+<h2>Izmjena subjekata</h2>
+<table class="table table-bordered table-responsive">
+
+    <tr>
+        <td>Šifra</td>
+        <td><input type="text" ng-model="Item.sifra" ng-class="{ error: !Item.sifra }" />  </td>
+    </tr>
+    <tr>
+        <td>Naziv</td>
+        <td><input type="text" ng-model="Item.naziv" ng-class="{ error: !Item.naziv }" />  </td>
+    </tr>
+    <tr>
+        <td>PDV broj</td>
+        <td><input type="text" ng-model="Item.pdV_BROJ" ng-pattern="/^\d+$/" ng-class="{ error: !Item.pdV_BROJ }" />  </td>
+    </tr>
+    <tr>
+        <td>Poreski broj</td>
+        <td><input type="text" ng-model="Item.poreskI_BROJ" ng-class="{ error: !Item.poreskI_BROJ }" />  </td>
+    </tr>
+    <tr>
+        <td>Adresa</td>
+        <td><input type="text" ng-model="Item.adresa" ng-class="{ error: !Item.adresa }" />  </td>
+    </tr>
+    <tr>
+        <td>Kontakt osoba</td>
+        <td><input type="text" ng-model="Item.kontakT_OSOBA" ng-class="{ error: !Item.kontakT_OSOBA }" />  </td>
+    </tr>
+    <tr>
+
+        <td>Email</td>
+        <td><input type="text" ng-model="Item.email" ng-pattern="emailPattern" ng-class="{ error: !Item.email }" />  </td>
+    </tr>
+    <tr>
+        <td>Telefon</td>
+        <td><input ng-model="Item.telefon" ng-pattern="/^\d+$/" ng-class="{ error: !Item.telefon }" /></td>
+    </tr>
+    <tr>
+        <td>Fax</td>
+        <td><input ng-model="Item.fax" ng-pattern="/^\d+$/" ng-class="{error:!Item.fax}" /></td>
+    </tr>
+    <tr>
+        <td>Vrsta subjekta</td>
+        <td><select ng-model="vrsta_subjekta" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !vrsta_subjekta }" ng-init="vrsta_subjekta=vrsta_subjekta|| collection[0].naziv"></select></td>
+
+    </tr>
+
+</table>
+<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.pdV_BROJ ||!Item.poreskI_BROJ ||!Item.adresa ||!Item.kontakT_OSOBA  ||!Item.email ||!Item.telefon ||!Item.fax ||!vrsta_subjekta" />
+<a class="btn btn-info" ng-click="back()">Odustani</a>

@@ -1,0 +1,25 @@
+﻿
+<h2>Brisanje kadrova</h2>
+<table class="table table-responsive table-bordered">
+
+    <tr>
+        <td>JMBG</td>
+        <td>{{Item.jmbg}}  </td>
+    </tr>
+    <tr>
+        <td>Ime</td>
+        <td>{{Item.ime}} </td>
+    </tr>
+    <tr>
+        <td>Prezime</td>
+        <td>{{Item.prezime}} </td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{Item.email}} </td>
+    </tr>
+
+</table>
+<input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
+<a class="btn btn-info" ng-click="back()">Odustani</a>
+<div>{{error}}</div>

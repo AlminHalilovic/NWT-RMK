@@ -1,0 +1,18 @@
+﻿<h2>Nova grupa proizvoda</h2>
+<table class="table table-bordered table-responsive">
+
+    <tr>
+        <td>Šifra</td>
+        <td><input type="text" ng-model="sifra" ng-class="{ error: !sifra }" />  </td>
+    </tr>
+    <tr>
+        <td>Naziv</td>
+        <td><input type="text" ng-model="naziv" ng-class="{ error: !naziv }" />  </td>
+    </tr>
+    <tr>
+        <td>Nadgrupa</td>
+        <td><select ng-model="nadgrupa" ng-options="item.id as item.naziv for item in collection" ng-init="nadgrupa = nadgrupa|| collection[0].naziv" ng-class="{ error: !nadgrupa }"></select></td>
+    </tr>
+</table>
+<input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!sifra || !naziv ||!nadgrupa" />
+<a class="btn btn-info" ng-click="back()">Odustani</a>

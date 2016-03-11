@@ -1,0 +1,50 @@
+﻿
+<h2>Brisanje subjekta</h2>
+<table class="table table-responsive table-bordered">
+
+    <tr>
+        <td>Šifra</td>
+        <td>{{Item.sifra}}</td>
+    </tr>
+    <tr>
+        <td>Naziv</td>
+        <td>{{Item.naziv}}</td>
+    </tr>
+    <tr>
+        <td>PDV broj</td>
+        <td>{{Item.pdV_BROJ}}</td>
+    </tr>
+    <tr>
+        <td>Poreski broj</td>
+        <td>{{Item.poreskI_BROJ}}</td>
+    </tr>
+    <tr>
+        <td>Adresa</td>
+        <td>{{Item.adresa}}</td>
+    </tr>
+    <tr>
+        <td>Kontakt osoba</td>
+        <td>{{Item.kontakT_OSOBA}}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{Item.email}}</td>
+    </tr>
+    <tr>
+        <td>Telefon</td>
+        <td>{{Item.telefon}}</td>
+    </tr>
+    <tr>
+        <td>Fax</td>
+        <td>{{Item.fax}}</td>
+    </tr>
+
+
+</table>
+
+
+
+
+<input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
+<a class="btn btn-info" ng-click="back()">Odustani</a>
+<div>{{error}}</div>
