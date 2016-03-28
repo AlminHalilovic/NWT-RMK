@@ -15,4 +15,7 @@
         }
         return true;
     };
+    this.getJmjere = function (path, proizvod) {
+        return $http.get(path + "?proizvodId=" + proizvod);
+    };
 });

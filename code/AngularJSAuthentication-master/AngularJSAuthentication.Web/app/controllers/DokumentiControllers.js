@@ -45,6 +45,13 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
         });
     };
 
+    $scope.getJmjere = function (index) {
+        DokumentiService.getJmjere('/api/ProizvodiAPI', $scope.stavke[index].proizvod).then(function (pl) {
+            $scope.stavke[index].sifra_jmjere = pl.data[1];
+            $scope.stavke[index].jedinica_mjere = pl.data[0];
+        });
+    };
+
     $scope.removeStavka = function (index) {
         $scope.stavke.splice(index, 1);
         DokumentiService.recalculateOrdinals($scope.stavke);

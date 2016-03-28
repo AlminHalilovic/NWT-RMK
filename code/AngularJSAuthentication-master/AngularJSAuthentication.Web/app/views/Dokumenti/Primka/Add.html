@@ -29,7 +29,7 @@
         <tr ng-repeat="stavka in stavke">
             <td><input type="text" id="id_redniBroj_{{$index}}" name="proizvod_{{$index}}" ng-model="stavke[$index].redni_broj" ng-disabled="true"></td>
             <!--<td><input type="text" id="id_proizvod_{{$index}}" name="proizvod_{{$index}}" ng-model="stavke[$index].proizvod" /></td>-->
-            <td><select ng-model="stavke[$index].proizvod" ng-options="item.id as item.naziv for item in proizvodi" ng-change="alert('Hljeb')" ng-class="{ error: !stavke[$index].proizvod }" ng-init="stavke[$index].proizvod = stavke[$index].proizvod || proizvodi[0]"></select></td>
+            <td><select ng-model="stavke[$index].proizvod" ng-options="item.id as item.naziv for item in proizvodi" ng-change="getJmjere($index)" ng-class="{ error: !stavke[$index].proizvod }"></select></td>
             <td><p id="id_sifra_jedinica_mjere_{{$index}}">{{stavke[$index].sifra_jmjere}}</p></td>
             <td><input type="text" id="id_kolicina_{{$index}}" name="kolicina_{{$index}}" ng-model="stavke[$index].kolicina" /></td>
             <td><input type="text" id="id_cijena_{{$index}}" name="cijena_{{$index}}" ng-model="stavke[$index].cijena" /></td>

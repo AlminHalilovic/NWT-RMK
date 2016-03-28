@@ -43,6 +43,7 @@ namespace AngularJSAuthentication.API.Controllers
         public IHttpActionResult GetJedinicaMjereForProizvod(int proizvodId) {
 
             sp_proizvodi proizvod = db.sp_proizvodi.Find(proizvodId);
+            object[] data = { proizvod.JEDINICA_MJERE, proizvod.sp_jedinice_mjera.SIFRA };
             return Ok(proizvod.JEDINICA_MJERE);
         }
 
