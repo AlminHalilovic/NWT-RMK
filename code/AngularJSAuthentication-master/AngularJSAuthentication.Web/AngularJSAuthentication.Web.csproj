@@ -68,12 +68,16 @@
     <Content Include="app\controllers\SifarniciControllers.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
+    <Content Include="app\factories\DokumentiFactories.js" />
     <Content Include="app\factories\SifarniciFactories.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\DokumentiServices.js" />
     <Content Include="app\services\SifarniciService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\Dokumenti\Index.html" />
+    <Content Include="app\views\Dokumenti\Primka\Add.html" />
+    <Content Include="app\views\Dokumenti\Primka\Index.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\Izvjestaji\Index.html" />
     <Content Include="app\views\login.html" />
@@ -126,6 +130,7 @@
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\tokens.html" />
     <Content Include="authComplete.html" />
+    <Content Include="content\css\AdminLTE.css" />
     <Content Include="content\css\font-awesome.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
@@ -153,13 +158,23 @@
     <Content Include="index.html" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
+    <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\views\Dokumenti\Inventura\" />
+    <Folder Include="app\views\Dokumenti\InventurniManjak\" />
+    <Folder Include="app\views\Dokumenti\InventurniVisak\" />
+    <Folder Include="app\views\Dokumenti\Izdatnica\" />
+    <Folder Include="app\views\Dokumenti\PocetnoStanje\" />
+    <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
+    <Folder Include="app\views\Dokumenti\StornoPocetnoStanje\" />
+    <Folder Include="app\views\Dokumenti\StornoPrimka\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -38,6 +38,14 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(sp_proizvodi);
         }
 
+        [HttpGet]
+        [Route("jedinicaMjere")]
+        public IHttpActionResult GetJedinicaMjereForProizvod(int proizvodId) {
+
+            sp_proizvodi proizvod = db.sp_proizvodi.Find(proizvodId);
+            return Ok(proizvod.JEDINICA_MJERE);
+        }
+
         // PUT: api/ProizvodiAPI/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putsp_proizvodi(int id, sp_proizvodi sp_proizvodi)

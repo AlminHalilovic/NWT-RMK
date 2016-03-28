@@ -15,6 +15,31 @@ var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular
         $routeProvider.when('/Izvjestaji/', { templateUrl: '/app/views/Izvjestaji/Index.html', controller: 'IzvjestajiController' });
         $routeProvider.when('/Sifarnici', { templateUrl: '/app/views/Sifarnici/Index.html', controller: 'SifarniciController' });
 
+        $routeProvider.when('/Dokumenti/Primka/', { templateUrl: '/app/views/Dokumenti/Primka/Index.html', controller: 'PrimkaController' });
+        $routeProvider.when('/Dokumenti/Primka/AddPrimka', { templateUrl: '/app/views/Dokumenti/Primka/Add.html', controller: 'AddPrimkaController' });
+
+        $routeProvider.when('/Dokumenti/PocetnoStanje/', { templateUrl: '/app/views/Dokumenti/PocetnoStanje/Index.html', controller: 'PocetnoStanjeController' });
+        $routeProvider.when('/Dokumenti/PocetnoStanje/AddPocetnoStanje', { templateUrl: '/app/views/Dokumenti/PocetnoStanje/Add.html', controller: 'AddPocetnoStanjeController' });
+
+        $routeProvider.when('/Dokumenti/Izdatnica/', { templateUrl: '/app/views/Dokumenti/Izdatnica/Index.html', controller: 'IzdatnicaController' });
+        $routeProvider.when('/Dokumenti/Izdatnica/AddIzdatnica', { templateUrl: '/app/views/Dokumenti/Izdatnica/Add.html', controller: 'AddIzdatnicaController' });
+
+        $routeProvider.when('/Dokumenti/Inventura/', { templateUrl: '/app/views/Dokumenti/Inventura/Index.html', controller: 'InventuraController' });
+        $routeProvider.when('/Dokumenti/Inventura/AddInventura', { templateUrl: '/app/views/Dokumenti/Inventura/Add.html', controller: 'AddInventuraController' });
+      
+        $routeProvider.when('/Dokumenti/InventurniManjak/', { templateUrl: '/app/views/Dokumenti/InventurniManjak/Index.html', controller: 'InventurniManjakController' });
+        
+        $routeProvider.when('/Dokumenti/InventurniVisak/', { templateUrl: '/app/views/Dokumenti/InventurniVisak/Index.html', controller: 'InventurniVisakController' });
+
+        $routeProvider.when('/Dokumenti/StornoPrimka/', { templateUrl: '/app/views/Dokumenti/StornoPrimka/Index.html', controller: 'StornoPrimkaController' });
+        $routeProvider.when('/Dokumenti/StornoPrimka/AddStornoPrimka', { templateUrl: '/app/views/Dokumenti/StornoPrimka/Add.html', controller: 'AddStornoPrimkaController' });
+
+        $routeProvider.when('/Dokumenti/StornoIzdatnica/', { templateUrl: '/app/views/Dokumenti/StornoIzdatnica/Index.html', controller: 'StornoIzdatnicaController' });
+        $routeProvider.when('/Dokumenti/StornoIzdatnica/AddStornoIzdatnica', { templateUrl: '/app/views/Dokumenti/StornoIzdatnica/Add.html', controller: 'AddStornoIzdatnicaController' });
+
+        $routeProvider.when('/Dokumenti/StornoPocetnoStanje/', { templateUrl: '/app/views/Dokumenti/StornoPocetnoStanje/Index.html', controller: 'StornoPocetnoStanjeController' });
+        $routeProvider.when('/Dokumenti/StornoPocetnoStanje/AddStornoPocetnoStanje', { templateUrl: '/app/views/Dokumenti/StornoPocetnoStanje/Add.html', controller: 'AddStornoPocetnoStanjeController' });
+
         $routeProvider.when('/Sifarnici/JediniceMjera', { templateUrl: '/app/views/Sifarnici/JediniceMjera/Index.html', controller: 'JediniceMjeraController' });
         $routeProvider.when('/Sifarnici/AddJediniceMjera', { templateUrl: '/app/views/Sifarnici/JediniceMjera/Add.html', controller: 'AddJediniceMjeraController' });
         $routeProvider.when('/Sifarnici/EditJediniceMjera/:id', { templateUrl: '/app/views/Sifarnici/JediniceMjera/Edit.html', controller: 'EditJediniceMjeraController' });

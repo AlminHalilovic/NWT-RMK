@@ -144,6 +144,7 @@
     <Compile Include="Controllers\KlaseKadrovaAPIController.cs" />
     <Compile Include="Controllers\OdnosiSubjekataAPIController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PrimkaAPIController.cs" />
     <Compile Include="Controllers\ProizvodiAPIController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\SubjektiAPIController.cs" />
