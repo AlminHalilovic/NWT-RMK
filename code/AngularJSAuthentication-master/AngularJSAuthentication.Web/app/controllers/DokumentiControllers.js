@@ -13,14 +13,25 @@ app.controller('PrimkaController', function ($scope, $location, DokumentiGetAllF
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
     $scope.addItem = function () { $location.path("/Primka/AddPrimka"); }
 });
-app.controller('AddPrimkaController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ShareData) {
+app.controller('AddPrimkaController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ShareData) {
 
     $scope.back = function () { $location.path("/Dokumenti/Primka"); }
     $scope.id = 0;
     $scope.stavke = [];
+    $scope.primka = {
+        dostavnica: null,
+        organizacija: null,
+        dobavljac: null,
+        broj_primke: null,
+        datum: null,
+        opis: null
+    };
+    $scope.ukupno = 0;
+    $scope.Math = window.Math;
 
     SifarniciService.getItem('/api/ProizvodiAPI').then(function (pl) {
-        $scope.proizvodi = pl.data;
+        var response = angular.fromJson(JSON.parse(pl.data));
+        $scope.proizvodi = response;
     }, function (errorPl) {
               $scope.error = 'Greška tokom učitavanja podataka', errorPl;
     });
@@ -33,7 +44,6 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
     };
 
     $scope.addStavka = function (p_redniBroj, p_proizvod, p_cijena, p_stanje, p_jedinicaMjere, p_kolicina, p_sifra_jmjere) {
-        console.log($scope.stavke);
         $scope.stavke.push({  
             redni_broj: $scope.stavke.length + 1, 
             proizvod: p_proizvod, 
@@ -46,14 +56,34 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
     };
 
     $scope.getJmjere = function (index) {
-        DokumentiService.getJmjere('/api/ProizvodiAPI', $scope.stavke[index].proizvod).then(function (pl) {
-            $scope.stavke[index].sifra_jmjere = pl.data[1];
-            $scope.stavke[index].jedinica_mjere = pl.data[0];
+        SifarniciService.getItemId("/api/ProizvodiAPI", $scope.stavke[index].proizvod).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data))[0];
+            $scope.stavke[index].sifra_jmjere = response.sifra_jmjere;
+            $scope.stavke[index].jedinica_mjere = response.id_jmjere;
         });
+    };
+
+    $scope.getZalihe = function (index) {
+        ZaliheService.getItem("/api/ZaliheAPI", $scope.stavke[index].proizvod, $scope.primka.organizacija).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data))[0];
+            $scope.stavke[index].cijena = response.cijena;
+            $scope.stavke[index].stanje = response.stanje;
+        });
+    }
+
+    $scope.getProizvodData = function (index) {
+        $scope.getJmjere(index);
+        $scope.getZalihe(index);
+        $scope.calculateTotal();
     };
 
     $scope.removeStavka = function (index) {
         $scope.stavke.splice(index, 1);
         DokumentiService.recalculateOrdinals($scope.stavke);
+        $scope.ukupno = DokumentiService.calculateTotal($scope.stavke);
     };
+
+    $scope.calculateTotal = function () {
+        $scope.ukupno = DokumentiService.calculateTotal($scope.stavke);
+    }
 });

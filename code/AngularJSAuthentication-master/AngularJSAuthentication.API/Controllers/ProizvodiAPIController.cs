@@ -9,42 +9,39 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-
+using System.Web.Http.Results;
 
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/ProizvodiAPI")]
-    [Authorize]
+    
     public class ProizvodiAPIController : ApiController
     {
         private materijalno db = new materijalno();
 
         // GET: api/ProizvodiAPI
-        public IQueryable<sp_proizvodi> Getsp_proizvodi()
+        public string Getsp_proizvodi()
         {
-            return db.sp_proizvodi;
+            var jsonResult = db.sp_proizvodi.Select(x => new { id = x.ID,
+                                                               naziv = x.NAZIV,
+                                                               sifra = x.SIFRA,
+                                                               barcode = x.BARCODE,
+                                                               sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                                                               id_jmjere = x.sp_jedinice_mjera.ID }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
-        // GET: api/ProizvodiAPI/5
-        [ResponseType(typeof(sp_proizvodi))]
-        public IHttpActionResult Getsp_proizvodi(int id)
+        public string Getsp_proizvodi(int id)
         {
-            sp_proizvodi sp_proizvodi = db.sp_proizvodi.Find(id);
-            if (sp_proizvodi == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_proizvodi);
-        }
-
-        [HttpGet]
-        [Route("jedinicaMjere")]
-        public IHttpActionResult GetJedinicaMjereForProizvod(int proizvodId) {
-
-            sp_proizvodi proizvod = db.sp_proizvodi.Find(proizvodId);
-            object[] data = { proizvod.JEDINICA_MJERE, proizvod.sp_jedinice_mjera.SIFRA };
-            return Ok(proizvod.JEDINICA_MJERE);
+            var jsonResult = db.sp_proizvodi.Select(x => new { id = x.ID,
+                                                               naziv = x.NAZIV,
+                                                               sifra = x.SIFRA,
+                                                               barcode = x.BARCODE,
+                                                               sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                                                               id_jmjere = x.sp_jedinice_mjera.ID}).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/ProizvodiAPI/5

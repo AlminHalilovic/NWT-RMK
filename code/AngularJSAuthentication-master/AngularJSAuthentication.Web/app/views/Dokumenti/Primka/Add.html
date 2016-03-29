@@ -1,18 +1,25 @@
 ﻿<h2>Nova grupa proizvoda</h2>
 <table class="table table-bordered table-responsive">
-
-    <tr>
-        <td>Šifra</td>
-        <td><input type="text" ng-model="sifra" ng-class="{ error: !sifra }" />  </td>
-    </tr>
-    <tr>
-        <td>Naziv</td>
-        <td><input type="text" ng-model="naziv" ng-class="{ error: !naziv }" />  </td>
-    </tr>
-    <tr>
-        <td>Nadgrupa</td>
-        <td><select ng-model="nadgrupa" ng-options="item.id as item.naziv for item in collection" ng-init="nadgrupa = nadgrupa|| collection[0].naziv" ng-class="{ error: !nadgrupa }"></select></td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>Dostavnica</td>
+            <td><input type="text" ng-model="primka.dostavnica" ng-class="{ error: !primka.dostavnica }" />  </td>
+            <td>Opis</td>
+            <td><input type="text" ng-model="primka.opis" ng-class="{ error: !primka.opis }" />  </td>
+        </tr>
+        <tr>
+            <td>Dokument</td>
+            <td><input type="text" ng-model="primka.broj_primke" ng-class="{ error: !primka.broj_primke }" />  </td>
+            <td>Datum</td>
+            <td><input type="text" ng-model="primka.datum" ng-class="{ error: !primka.datum }" />  </td>
+        </tr>
+        <tr>
+            <td>Organizacija</td>
+            <td><input type="text" ng-model="primka.organizacija" ng-class="{ error: !primka.organizacija }" /></td>
+            <td>Dobavljač</td>
+            <td><input type="text" ng-model="primka.dobavljac" ng-class="{ error: !primka.dobavljac }" /></td>
+        </tr>
+    </tbody>
 </table>
 <table class="table table-bordered table-hover table-responsive">
     <thead>
@@ -22,22 +29,34 @@
             <th>Jedinica mjere</th>
             <th>Količina</th>
             <th>Cijena</th>
-            <th>Stanje</th>
+            <th>Vrijednost</th>
+            <th>Akcije</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="stavka in stavke">
             <td><input type="text" id="id_redniBroj_{{$index}}" name="proizvod_{{$index}}" ng-model="stavke[$index].redni_broj" ng-disabled="true"></td>
             <!--<td><input type="text" id="id_proizvod_{{$index}}" name="proizvod_{{$index}}" ng-model="stavke[$index].proizvod" /></td>-->
-            <td><select ng-model="stavke[$index].proizvod" ng-options="item.id as item.naziv for item in proizvodi" ng-change="getJmjere($index)" ng-class="{ error: !stavke[$index].proizvod }"></select></td>
+            <td><select ng-model="stavke[$index].proizvod" ng-options="item.id as item.naziv for item in proizvodi" ng-change="getProizvodData($index)" ng-class="{ error: !stavke[$index].proizvod }"></select></td>
             <td><p id="id_sifra_jedinica_mjere_{{$index}}">{{stavke[$index].sifra_jmjere}}</p></td>
-            <td><input type="text" id="id_kolicina_{{$index}}" name="kolicina_{{$index}}" ng-model="stavke[$index].kolicina" /></td>
-            <td><input type="text" id="id_cijena_{{$index}}" name="cijena_{{$index}}" ng-model="stavke[$index].cijena" /></td>
-            <td><input type="text" id="id_stanje_{{$index}}" name="stanje_{{$index}}" ng-model="stavke[$index].stanje" /></td>
+            <td><input type="text" id="id_kolicina_{{$index}}" name="kolicina_{{$index}}" ng-model="stavke[$index].kolicina" ng-change="calculateTotal()" /></td>
+            <td><input type="text" id="id_cijena_{{$index}}" name="cijena_{{$index}}" ng-model="stavke[$index].cijena" ng-change="calculateTotal()" /></td>
+            <td><p>{{((stavke[$index].cijena == null ? 0 : stavke[$index].cijena) * (stavke[$index].kolicina == null ? 0 : stavke[$index].kolicina)).toFixed(3)}}</p></td>
             <td><input type="button" class="btn btn-success" value="Obriši stavku" ng-click="removeStavka($index)" /></td>
+            <td style="display:none;"><input type="hidden" id="id_stanje_{{$index}}" name="stanje_{{$index}}" ng-model="stavke[$index].stanje" /></td>
             <td style="display:none;"><input type="hidden" id="id_jedinica_mjere_{{$index}}" name="jedinica_mjere_{{$index}}" ng-model="stavke[$index].jedinica_mjere" /></td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td><b>Ukupno:</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ukupno.toFixed(3)}}</td>
+        </tr>
+    </tfoot>
 </table>
 <input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!sifra || !naziv ||!nadgrupa" />
 <input type="button" class="btn btn-success" value="Nova stavka" ng-click="addStavka()"/>

@@ -15,7 +15,13 @@
         }
         return true;
     };
-    this.getJmjere = function (path, proizvod) {
-        return $http.get(path + "?proizvodId=" + proizvod);
-    };
+    this.calculateTotal = function (stavke) {
+        var sum = 0;
+        for (var i = 0; i < stavke.length; i++) {
+            var cijena = stavke[i].cijena == null ? 0.0 : stavke[i].cijena;
+            var kolicina = stavke[i].kolicina == null ? 0 : stavke[i].kolicina;
+            sum += cijena * kolicina;
+        }
+        return sum;
+    }
 });

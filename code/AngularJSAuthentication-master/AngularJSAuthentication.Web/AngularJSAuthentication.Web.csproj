@@ -75,6 +75,7 @@
     <Content Include="app\services\DokumentiServices.js" />
     <Content Include="app\services\SifarniciService.js" />
     <Content Include="app\services\tokensManagerService.js" />
+    <Content Include="app\services\ZaliheServices.js" />
     <Content Include="app\views\Dokumenti\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
