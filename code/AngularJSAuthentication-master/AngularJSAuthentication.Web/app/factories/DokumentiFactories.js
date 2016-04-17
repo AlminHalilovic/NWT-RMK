@@ -17,16 +17,24 @@
 
     }
 });
-app.factory('DokumentiCreateFactory', function (DokumentiService, $location, ShareData) {
+app.factory('DokumentiCreateFactory', function (DokumentiService, $location, SweetAlert, ShareData) {
     return function ($scope, apiPath, returnPath, Item) {
 
         var promisePost = DokumentiService.postItem(apiPath, Item);
-
-
         promisePost.then(function (pl) {
-
-            alert("Uspješno je unesen novi dokument!");
-            $location.path(returnPath);
+            var response = angular.fromJson(JSON.parse(pl.data));
+            if (response.ok == true) {
+                SweetAlert.swal({
+                    title: "Uspjeh!",
+                    text: response.message,
+                    type: "success"
+                }, function () {
+                    $location.path(returnPath);
+                });
+            }
+            else {
+                SweetAlert.swal("Greška!", response.message, "failure");
+            }
         },
               function (errorPl) {
                   $scope.error = 'Greška tokom učitavanja podataka', errorPl;

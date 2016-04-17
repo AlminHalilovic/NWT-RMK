@@ -18,16 +18,24 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
     $scope.back = function () { $location.path("/Dokumenti/Primka"); }
     $scope.id = 0;
     $scope.stavke = [];
+    $scope.maxDate = new Date();
     $scope.primka = {
         dostavnica: null,
-        organizacija: null,
+        skladiste: null,
         dobavljac: null,
         broj_primke: null,
-        datum: null,
+        datum: new Date(),
         opis: null
     };
     $scope.ukupno = 0;
     $scope.Math = window.Math;
+    $scope.dateFormat = 'dd.MM.yyyy';
+    $scope.dateOptions = {
+        formatYear: 'yyyy',
+        maxDate: new Date(),
+        startingDay: 1
+    };
+    $scope.isOpen = false;
 
     SifarniciService.getItem('/api/ProizvodiAPI').then(function (pl) {
         var response = angular.fromJson(JSON.parse(pl.data));
@@ -36,11 +44,21 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
               $scope.error = 'Greška tokom učitavanja podataka', errorPl;
     });
 
+    SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) {
+        var response = angular.fromJson(JSON.parse(pl.data));
+        $scope.subjekti = response;
+        console.log($scope.subjekti);
+    }, function (errorPl) {
+        $scope.error = 'Greška tokom učitavanja podataka', errorPl;
+    });
+
     //Scope.save metoda poziva sifarnicicreatefactory, te mu prosljedjuje apiPath te urlPath, za poziv ka webapi te za naknadno vracanje pri izvrsenju akcija
     $scope.save = function () {
-        //var Item = { sifra: $scope.sifra, naziv: $scope.naziv };
-        var Item = { broj_primke: $scope.broj_primke, dostavnica: $scope.dostavnica, datum: $scope.datum, opis: $scope.opis };
-        DokumentiCreateFactory($scope, "/api/PrimkaAPI", "/Dokumenti/Primka", Item);
+        var finalDocument = {
+            master: $scope.primka,
+            detail: $scope.stavke
+        };
+        DokumentiCreateFactory($scope, "/api/PrimkaAPI", "/Dokumenti/Primka", finalDocument);
     };
 
     $scope.addStavka = function (p_redniBroj, p_proizvod, p_cijena, p_stanje, p_jedinicaMjere, p_kolicina, p_sifra_jmjere) {
@@ -64,8 +82,9 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
     };
 
     $scope.getZalihe = function (index) {
-        ZaliheService.getItem("/api/ZaliheAPI", $scope.stavke[index].proizvod, $scope.primka.organizacija).then(function (pl) {
+        ZaliheService.getItem("/api/ZaliheAPI", $scope.stavke[index].proizvod, $scope.primka.skladiste).then(function (pl) {
             var response = angular.fromJson(JSON.parse(pl.data))[0];
+            console.log(response);
             $scope.stavke[index].cijena = response.cijena;
             $scope.stavke[index].stanje = response.stanje;
         });
@@ -86,4 +105,13 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
     $scope.calculateTotal = function () {
         $scope.ukupno = DokumentiService.calculateTotal($scope.stavke);
     }
+
+    $scope.openPopup = function () {
+        $scope.isOpen = !$scope.isOpen;
+    };
+
+    $scope.formatDate = function (date) {
+        return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    };
+
 });

@@ -27,6 +27,7 @@ namespace AngularJSAuthentication.API.Controllers
                                                                sifra = x.SIFRA,
                                                                barcode = x.BARCODE,
                                                                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                                                               sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
                                                                id_jmjere = x.sp_jedinice_mjera.ID }).ToList();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
@@ -39,6 +40,7 @@ namespace AngularJSAuthentication.API.Controllers
                                                                sifra = x.SIFRA,
                                                                barcode = x.BARCODE,
                                                                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                                                               sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
                                                                id_jmjere = x.sp_jedinice_mjera.ID}).Where(x => x.id == id).ToList();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
