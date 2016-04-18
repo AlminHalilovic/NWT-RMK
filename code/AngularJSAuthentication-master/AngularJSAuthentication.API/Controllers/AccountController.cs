@@ -1,25 +1,25 @@
-﻿using AngularJSAuthentication.API.Models;
-using AngularJSAuthentication.API.Results;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Linq;
+﻿using AngularJSAuthentication.API.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Net.Http;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
+using AngularJSAuthentication.API.Models;
+using System.Security.Claims;
+using System.Web.Http.ModelBinding;
+using AngularJSAuthentication.API.Controllers;
+using Microsoft.Owin.Security;
+using AngularJSAuthentication.API.Results;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseApiController
     {
         private AuthRepository _repo = null;
 
@@ -33,26 +33,230 @@ namespace AngularJSAuthentication.API.Controllers
             _repo = new AuthRepository();
         }
 
-        // POST api/Account/Register
+        [Authorize(Roles = "Admin")]
+        [Route("users")]
+        public IHttpActionResult GetUsers()
+        {
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+            var identity = User.Identity as System.Security.Claims.ClaimsIdentity;
+
+            return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}", Name = "GetUserById")]
+        public async Task<IHttpActionResult> GetUser(string Id)
+        {
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+            var user = await this.AppUserManager.FindByIdAsync(Id);
+
+            if (user != null)
+            {
+                return Ok(this.TheModelFactory.Create(user));
+            }
+
+            return NotFound();
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("user/{username}")]
+        public async Task<IHttpActionResult> GetUserByName(string username)
+        {
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+            var user = await this.AppUserManager.FindByNameAsync(username);
+
+            if (user != null)
+            {
+                return Ok(this.TheModelFactory.Create(user));
+            }
+
+            return NotFound();
+
+        }
+
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel userModel)
+        public async Task<IHttpActionResult> Register(CreateUserBindingModel createUserModel)
         {
-             if (!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-             IdentityResult result = await _repo.RegisterUser(userModel);
+            var user = new ApplicationUser()
+            {
+                UserName = createUserModel.Username,
+                Email = createUserModel.Email,
+                FirstName = createUserModel.FirstName,
+                LastName = createUserModel.LastName
+            };
 
-             IHttpActionResult errorResult = GetErrorResult(result);
 
-             if (errorResult != null)
-             {
-                 return errorResult;
-             }
+              IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
 
-             return Ok();
+            if (!addUserResult.Succeeded)
+            {
+                return GetErrorResult(addUserResult);
+            }
+            
+            string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Account confirmation");
+            return Ok(callbackUrl);
+
+        }
+        //
+        // GET: /Account/ConfirmEmail
+       
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                ModelState.AddModelError("", "User Id and Code are required");
+                return BadRequest(ModelState);
+            }
+            IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return GetErrorResult(result);
+            }
+        }
+
+      
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link:
+            var applicationLink = System.Configuration.ConfigurationManager.AppSettings["as:applicationLink"];
+            applicationLink += "#/confirmEmail/";
+            string code = await AppUserManager.GenerateEmailConfirmationTokenAsync(userID);
+         //   var callbackUrl = new Uri(Url.Link(applicationLink, new { userId = userID, code = code }));
+            var url = applicationLink +  userID + "/" + code;
+            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = userID }));
+            await AppUserManager.SendEmailAsync(userID, subject, "Please confirm your account by <a href=\"" + url + "\">clicking here</a>");
+
+
+            return url.ToString();
+        }
+
+        private async Task<string> SendPasswordResetTokenAsync(string userID, string subject)
+        {
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link:
+            var applicationLink = System.Configuration.ConfigurationManager.AppSettings["as:applicationLink"];
+            applicationLink += "#/resetPassword/";
+            string code = await AppUserManager.GeneratePasswordResetTokenAsync(userID);
+            //   var callbackUrl = new Uri(Url.Link(applicationLink, new { userId = userID, code = code }));
+            code = HttpServerUtility.UrlTokenEncode(System.Text.Encoding.ASCII.GetBytes(code));
+            userID = HttpContext.Current.Server.UrlEncode(userID);
+
+        var url = applicationLink + userID + "/" + code;
+           // Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = userID }));
+            await AppUserManager.SendEmailAsync(userID, subject, "Reset your password by <a href=\"" + url + "\">clicking here</a>");
+
+
+            return url.ToString();
+        }
+
+
+
+        [Authorize]
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+           
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}")]
+        public async Task<IHttpActionResult> DeleteUser(string id)
+        {
+
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+
+            var appUser = await this.AppUserManager.FindByIdAsync(id);
+
+            if (appUser != null)
+            {
+                IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                return Ok();
+
+            }
+
+            return NotFound();
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}/roles")]
+        [HttpPut]
+        public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
+        {
+
+            var appUser = await this.AppUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await this.AppUserManager.GetRolesAsync(appUser.Id);
+
+            var rolesNotExists = rolesToAssign.Except(this.AppRoleManager.Roles.Select(x => x.Name)).ToArray();
+
+            if (rolesNotExists.Count() > 0)
+            {
+
+                ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult removeResult = await this.AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+
+            if (!removeResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to remove user roles");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult addResult = await this.AppUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+
+            if (!addResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to add user roles");
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+
         }
 
         // GET api/Account/ExternalLogin
@@ -109,131 +313,53 @@ namespace AngularJSAuthentication.API.Controllers
 
         }
 
-        // POST api/Account/RegisterExternal
         [AllowAnonymous]
-        [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+      
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var user = await AppUserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await AppUserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return BadRequest(ModelState);
+                }
 
+                string callbackUrl = await SendPasswordResetTokenAsync(user.Id, "Password reset");
+                return Ok(callbackUrl);
+            }
+
+            return BadRequest("Something went wrong. Sit and cry.");
+        }
+
+       
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
-            if (verifiedAccessToken == null)
+            var user = await AppUserManager.FindByEmailAsync(model.Email);
+            if (user == null)
             {
-                return BadRequest("Invalid Provider or External Access Token");
-            }
-
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
-
-            bool hasRegistered = user != null;
-
-            if (hasRegistered)
-            {
-                return BadRequest("External user is already registered");
-            }
-
-            user = new IdentityUser() { UserName = model.UserName };
-
-            IdentityResult result = await _repo.CreateAsync(user);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            var info = new ExternalLoginInfo()
-            {
-                DefaultUserName = model.UserName,
-                Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
-            };
-
-            result = await _repo.AddLoginAsync(user.Id, info.Login);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
-
-            return Ok(accessTokenResponse);
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("ObtainLocalAccessToken")]
-        public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
-        {
-
-            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
-            {
-                return BadRequest("Provider or external access token is not sent");
-            }
-
-            var verifiedAccessToken = await VerifyExternalAccessToken(provider, externalAccessToken);
-            if (verifiedAccessToken == null)
-            {
-                return BadRequest("Invalid Provider or External Access Token");
-            }
-
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
-
-            bool hasRegistered = user != null;
-
-            if (!hasRegistered)
-            {
-                return BadRequest("External user is not registered");
-            }
-
-            //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
-
-            return Ok(accessTokenResponse);
-
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #region Helpers
-
-        private IHttpActionResult GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-            {
-                return InternalServerError();
-            }
-
-            if (!result.Succeeded)
-            {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
+                // Don't reveal that the user does not exist
                 return BadRequest(ModelState);
             }
+            var codeB = HttpServerUtility.UrlTokenDecode(model.Code);
+            string code= System.Text.Encoding.Default.GetString(codeB);
+            var result = await AppUserManager.ResetPasswordAsync(user.Id, code, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok("Success");
+            }
 
-            return null;
+            return BadRequest("Something went wrong. Sit and cry.");
         }
+
 
         private string ValidateClientAndRedirectUri(HttpRequestMessage request, ref string redirectUriOutput)
         {
@@ -278,7 +404,6 @@ namespace AngularJSAuthentication.API.Controllers
             return string.Empty;
 
         }
-
         private string GetQueryString(HttpRequestMessage request, string key)
         {
             var queryStrings = request.GetQueryNameValuePairs();
@@ -290,99 +415,6 @@ namespace AngularJSAuthentication.API.Controllers
             if (string.IsNullOrEmpty(match.Value)) return null;
 
             return match.Value;
-        }
-
-        private async Task<ParsedExternalAccessToken> VerifyExternalAccessToken(string provider, string accessToken)
-        {
-            ParsedExternalAccessToken parsedToken = null;
-
-            var verifyTokenEndPoint = "";
-
-            if (provider == "Facebook")
-            {
-                //You can get it from here: https://developers.facebook.com/tools/accesstoken/
-                //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-                var appToken = "xxxxxx";
-                verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
-            }
-            else if (provider == "Google")
-            {
-                verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
-            }
-            else
-            {
-                return null;
-            }
-
-            var client = new HttpClient();
-            var uri = new Uri(verifyTokenEndPoint);
-            var response = await client.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-
-                dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-
-                parsedToken = new ParsedExternalAccessToken();
-
-                if (provider == "Facebook")
-                {
-                    parsedToken.user_id = jObj["data"]["user_id"];
-                    parsedToken.app_id = jObj["data"]["app_id"];
-
-                    if (!string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return null;
-                    }
-                }
-                else if (provider == "Google")
-                {
-                    parsedToken.user_id = jObj["user_id"];
-                    parsedToken.app_id = jObj["audience"];
-
-                    if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return null;
-                    }
-
-                }
-
-            }
-
-            return parsedToken;
-        }
-
-        private JObject GenerateLocalAccessTokenResponse(string userName)
-        {
-
-            var tokenExpiration = TimeSpan.FromDays(1);
-
-            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-
-            identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-            identity.AddClaim(new Claim("role", "user"));
-
-            var props = new AuthenticationProperties()
-            {
-                IssuedUtc = DateTime.UtcNow,
-                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-            };
-
-            var ticket = new AuthenticationTicket(identity, props);
-
-            var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
-
-            JObject tokenResponse = new JObject(
-                                        new JProperty("userName", userName),
-                                        new JProperty("access_token", accessToken),
-                                        new JProperty("token_type", "bearer"),
-                                        new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                        new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                        new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-        );
-
-            return tokenResponse;
         }
 
         private class ExternalLoginData
@@ -421,6 +453,5 @@ namespace AngularJSAuthentication.API.Controllers
             }
         }
 
-        #endregion
     }
 }

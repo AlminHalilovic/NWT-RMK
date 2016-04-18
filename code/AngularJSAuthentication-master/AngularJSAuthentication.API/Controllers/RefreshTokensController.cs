@@ -19,11 +19,11 @@ namespace AngularJSAuthentication.API.Controllers
             _repo = new AuthRepository();
         }
 
-        [Authorize(Users="Admin")]
+        [Authorize(Users = "Admin")]
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Ok(_repo.GetAllRefreshTokens());
+            return Ok();
         }
 
         //[Authorize(Users = "Admin")]
@@ -37,7 +37,7 @@ namespace AngularJSAuthentication.API.Controllers
                 return Ok();
             }
             return BadRequest("Token Id does not exist");
-            
+
         }
 
         protected override void Dispose(bool disposing)

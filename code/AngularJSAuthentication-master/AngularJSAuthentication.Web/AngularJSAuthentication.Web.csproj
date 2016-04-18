@@ -39,6 +39,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BotDetect, Version=4.0.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Captcha.4.0.1\lib\net45\BotDetect.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BotDetect.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Captcha.4.0.1\lib\net45\BotDetect.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -59,12 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\AppModule.js" />
+    <Content Include="app\controllers\confirmEmailController.js" />
     <Content Include="app\controllers\DokumentiControllers.js" />
+    <Content Include="app\controllers\forgotPasswordController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\IzvjestajiControllers.js" />
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\refreshController.js" />
+    <Content Include="app\controllers\resetPasswordController.js" />
     <Content Include="app\controllers\SifarniciControllers.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
@@ -76,13 +87,16 @@
     <Content Include="app\services\SifarniciService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\services\ZaliheServices.js" />
+    <Content Include="app\views\confirmEmail.html" />
     <Content Include="app\views\Dokumenti\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
+    <Content Include="app\views\forgotPassword.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\Izvjestaji\Index.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\refresh.html" />
+    <Content Include="app\views\resetPassword.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Add.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Delete.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Edit.html" />
@@ -145,6 +159,7 @@
     <Content Include="content\fonts\fontawesome-webfont.ttf" />
     <Content Include="content\fonts\fontawesome-webfont.woff" />
     <Content Include="content\fonts\FontAwesome.otf" />
+    <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\ngauthenticationweb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

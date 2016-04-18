@@ -5,6 +5,9 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
     $scope.message = "";
 
     $scope.registration = {
+        eMail: "",
+        firstName: "smt",
+        lastName:"smt",
         userName: "",
         password: "",
         confirmPassword: ""
@@ -15,8 +18,8 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
         authService.saveRegistration($scope.registration).then(function (response) {
 
             $scope.savedSuccessfully = true;
-            $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-            startTimer();
+            $scope.message = "Please check your email and confirm your registration.";
+           // startTimer();
 
         },
          function (response) {

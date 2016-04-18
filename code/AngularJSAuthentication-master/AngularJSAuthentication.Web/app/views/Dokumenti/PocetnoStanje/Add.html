@@ -1,0 +1,110 @@
+﻿<table class="table">
+    <tr>
+        <td colspan="2"><h2>Unos novog početnog stanja</h2></td>
+        <td style="text-align:right;">
+            <a class="btn btn-info" style="margin-top:5%;margin-right:1%;" ng-click="back()">Odustani <span class="glyphicon glyphicon-repeat"></span></a>
+            <button class="btn btn-success" style="margin-top:5%;" ng-click="save()" ng-disabled="!pocetnoStanjeForm.$valid || stavke.length == 0">Sačuvaj početno stanje<span class="glyphicon glyphicon-ok"></span></button>
+        </td>
+    </tr>
+</table>
+<div ng-form name="pocetnoStanjeForm">
+    <table class="table table-bordered table-responsive">
+        <tbody>
+            <tr>
+                <td>Dostavnica početnog stanja</td>
+                <td>
+                    <input type="text" name="dostavnica" class="form-control" ng-required="false" ng-model="pocetnoStanje.dostavnica" ng-class="{ error: !pocetnoStanje.dostavnica }" /> 
+                </td>
+                <td>Opis</td>
+                <td><input type="text" class="form-control" ng-required="false" ng-model="pocetnoStanje.opis" ng-class="{ error: !pocetnoStanje.opis }" />  </td>
+            </tr>
+            <tr>
+                <td>Dokument</td>
+                <td><input type="text" class="form-control" ng-model="pocetnoStanje.broj_primke" ng-class="{ error: !pocetnoStanje.broj_primke }" />  </td>
+                <td>Datum</td>
+                <td>
+                    <div class="row">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td ng-class="{ 'has-error' : pocetnoStanjeForm.date.$invalid && !pocetnoStanjeForm.date.$pristine }">
+                                        <input type="text" name="date" style="margin-left: 8px;" class="form-control"  ng-required="true" max="{{formatDate(maxDate)}}"  uib-datepicker-popup="{{dateFormat}}" is-open="isOpen" ng-model="pocetnoStanje.datum" datepicker-options="dateOptions" close-text="Zatvori" />
+                                        <p style="margin-left: 8px;" ng-show="pocetnoStanjeForm.date.$error.required" class="help-block">Morate unijeti datum primke!</p>
+                                        <p style="margin-left: 8px;" ng-show="pocetnoStanjeForm.date.$error.date-invalid" class="help-block">Datum primke mora biti validan!</p>
+                                    </td>
+                                    <td>
+                                        <button style="margin-left:-8px;" class="form-control" ng-click="openPopup()"><span class="glyphicon glyphicon-calendar"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Skladište</td>
+                <td ng-class="{ 'has-error' : pocetnoStanjeForm.skladiste_combobox.$invalid }">
+                    <select id="skladiste_combo" name="skladiste_combobox" ng-disabled="stavke.length > 0" class="form-control" ng-model="pocetnoStanje.skladiste" ng-required="true" ng-options="item.id as item.naziv for item in subjekti"></select>
+                    <p ng-show="pocetnoStanjeForm.skladiste_combobox.$error.required" class="help-block">Morate odabrati skladište!</p>
+                </td>
+                <td>Dobavljač</td>
+                <td ng-class="{ 'has-error' : pocetnoStanjeForm.dobavljaci_combobox.$invalid }">
+                    <select id="dobavljaci_combo" ng-disabled="stavke.length > 0" name="dobavljaci_combobox" class="form-control" ng-required="true" ng-model="pocetnoStanje.dobavljac" ng-options="item.id as item.naziv for item in subjekti"></select>
+                    <p ng-show="pocetnoStanjeForm.dobavljaci_combobox.$error.required" class="help-block">Morate odabrati dobavljača!</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-info" value="Nova stavka" ng-disabled="!pocetnoStanjeForm.$valid" ng-click="addStavka()">Nova stavka&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+    <br />
+    <br />
+    <table class="table table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>Redni broj</th>
+                <th>Proizvod</th>
+                <th>Jedinica mjere</th>
+                <th>Količina</th>
+                <th>Cijena</th>
+                <th>Vrijednost</th>
+                <th ng-show="stavke.length != 0">Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="stavka in stavke">
+                <td><input type="text" id="id_redniBroj_{{$index}}" name="proizvod_{{$index}}" ng-model="stavke[$index].redni_broj" ng-disabled="true"></td>
+                <td ng-class="{ 'has-error' : pocetnoStanjeForm.proizvodi_combobox_{{$index}}.$invalid }">
+                    <select id="proizvodi_combo_{{$index}}" name="proizvodi_combobox_{{$index}}" ng-required="true" class="form-control" ng-model="stavke[$index].proizvod" ng-options="item.id as item.naziv for item in proizvodi" ng-change="getProizvodData($index)"></select>
+                    <p ng-show="pocetnoStanjeForm.proizvodi_combobox_{{$index}}.$error.required" class="help-block">Morate odabrati proizvod!</p>
+                </td>
+                <td><p id="id_sifra_jedinica_mjere_{{$index}}">{{stavke[$index].sifra_jmjere}}</p></td>
+                <td ng-class="{ 'has-error' : pocetnoStanjeForm.kolicina_{{$index}}.$invalid }">
+                    <input type="number" id="id_kolicina_{{$index}}" name="kolicina_{{$index}}" ng-pattern="/^(0|[1-9][0-9]*)$/" ng-required="true" ng-model="stavke[$index].kolicina" ng-change="calculateTotal()" />
+                    <p ng-show="pocetnoStanjeForm.kolicina_{{$index}}.$error.required" class="help-block">Morate unijeti količinu!</p>
+                    <p ng-show="pocetnoStanjeForm.kolicina_{{$index}}.$error.pattern" class="help-block">Količina mora biti cijeli broj veći ili jednak nula!</p>
+                    <p ng-show="pocetnoStanjeForm.kolicina_{{$index}}.$error.number" class="help-block">Količina mora biti broj!</p>
+                </td>
+                <td ng-class="{ 'has-error' : pocetnoStanjeForm.cijena_{{$index}}.$invalid }">
+                    <input type="number" id="id_cijena_{{$index}}" name="cijena_{{$index}}" ng-required="true" ng-pattern="/^0*[0-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*$/"  ng-model="stavke[$index].cijena" ng-change="calculateTotal()" />
+                    <p ng-show="pocetnoStanjeForm.cijena_{{$index}}.$error.required" class="help-block">Morate unijeti cijenu!</p>
+                    <p ng-show="pocetnoStanjeForm.cijena_{{$index}}.$error.pattern" class="help-block">Cijena mora biti veća ili jednaka nuli!</p>
+                    <p ng-show="pocetnoStanjeForm.cijena_{{$index}}.$error.number" class="help-block">Cijena mora biti broj!</p>
+                </td>
+                <td><p>{{((stavke[$index].cijena == null ? 0 : stavke[$index].cijena) * (stavke[$index].kolicina == null ? 0 : stavke[$index].kolicina)).toFixed(3)}}</p></td>
+                <td><input type="button" class="btn btn-danger" value="Obriši stavku" ng-click="removeStavka($index)" /></td>
+                <td style="display:none;"><input type="hidden" id="id_stanje_{{$index}}" name="stanje_{{$index}}" ng-model="stavke[$index].stanje" /></td>
+                <td style="display:none;"><input type="hidden" id="id_jedinica_mjere_{{$index}}" name="jedinica_mjere_{{$index}}" ng-model="stavke[$index].jedinica_mjere" /></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><b>Ukupno:</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ukupno.toFixed(3)}}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div> 

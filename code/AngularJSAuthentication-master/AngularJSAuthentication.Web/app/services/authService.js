@@ -26,17 +26,48 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
     };
 
+    var _confirmEmail = function (userId, code) {
+       
+        
+        return $http.get(serviceBase + 'api/account/ConfirmEmail', { params: { "userId": userId, "code": code } }).then(function (response) {
+            
+             return response;
+        });
+    };
+
+    var _forgotPassword = function (forgotPasswordModel) {
+
+        console.log(forgotPasswordModel);
+        return $http.post(serviceBase + 'api/account/ForgotPassword', forgotPasswordModel).then(function (response) {
+
+            return response;
+        });
+    };
+
+    var _resetPassword = function (resetPassword) {
+
+        console.log(resetPassword);
+
+        return $http.post(serviceBase + 'api/account/ResetPassword', resetPassword ).then(function (response) {
+
+            return response;
+        });
+    };
+
+
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
-        if (loginData.useRefreshTokens) {
-            data = data + "&client_id=" + ngAuthSettings.clientId;
-        }
-
+        //if (loginData.useRefreshTokens) {
+        //    data = data + "&client_id=" + ngAuthSettings.clientId;
+        //}
+       // console.log(data);
         var deferred = $q.defer();
 
-        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+        console.log(serviceBase);
+
+        $http.post(serviceBase + 'oauth/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
             if (loginData.useRefreshTokens) {
                 localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
@@ -165,6 +196,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     authServiceFactory.obtainAccessToken = _obtainAccessToken;
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.registerExternal = _registerExternal;
+    authServiceFactory.confirmEmail = _confirmEmail;
+    authServiceFactory.forgotPassword = _forgotPassword;
+    authServiceFactory.resetPassword = _resetPassword;
 
     return authServiceFactory;
 }]);

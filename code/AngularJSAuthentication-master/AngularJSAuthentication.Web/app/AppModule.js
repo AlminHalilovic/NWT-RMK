@@ -102,6 +102,14 @@ var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular
 
         $routeProvider.when("/tokens", { controller: "tokensManagerController",templateUrl: "/app/views/tokens.html"});
 
+        $routeProvider.when("/confirmEmail/:userId/:code", { controller: "confirmEmailController", templateUrl: "/app/views/confirmEmail.html" });
+
+        $routeProvider.when("/resetPassword/:userId/:code", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
+
+        $routeProvider.when("/forgotPassword", { controller: "forgotPasswordController", templateUrl: "/app/views/forgotPassword.html" });
+
+        //$routeProvider.when("/resetPassword", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
+
         $routeProvider.otherwise({ redirectTo: "/home" });
 
 
