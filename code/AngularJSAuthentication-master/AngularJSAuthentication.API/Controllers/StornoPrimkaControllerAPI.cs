@@ -17,7 +17,7 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/StornoPrimkaAPI")]
-    [Authorize]
+    //[Authorize]
     public class StornoPrimkaAPIController : ApiController
     {
         private materijalno db = new materijalno();
@@ -58,9 +58,12 @@ namespace AngularJSAuthentication.API.Controllers
             var jsonResult = db.dp_stavke_ulaza.Where(y => y.ULAZ == id).Select(x => new {
                 id = x.ID,
                 redni_broj = x.REDNI_BROJ,
-                proizvod = x.sp_proizvodi.NAZIV,
+                proizvodNaziv = x.sp_proizvodi.NAZIV,
+                proizvod = x.PROIZVOD,
                 kolicina = x.KOLICINA,
-                cijena = Math.Round(x.CIJENA, 3)
+                cijena = Math.Round(x.CIJENA, 3),
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                jedinica_mjere = x.JEDINICA_MJERE
             }).ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
@@ -157,7 +160,7 @@ namespace AngularJSAuthentication.API.Controllers
                     brojac_dokumenata.ORGANIZACIJA = ulaz.ZA_SUBJEKTA;
                     brojac_dokumenata.REDNI_BROJ = redniBroj;
                     brojac_dokumenata.GODINA = godina;
-                    brojac_dokumenata.VRSTA_DOKUMENTA = 1;
+                    brojac_dokumenata.VRSTA_DOKUMENTA = 6;
                     db.dp_brojaci_dokumenata.Add(brojac_dokumenata);
                 }
 
@@ -193,8 +196,8 @@ namespace AngularJSAuthentication.API.Controllers
                     try
                     {
                         db.dp_stavke_ulaza.Add(stavka_ulaza);
-                        db.SaveChanges();
                         ids.Add(stavka_ulaza.ID);
+                        db.SaveChanges();
                     }
                     catch (Exception e)
                     {

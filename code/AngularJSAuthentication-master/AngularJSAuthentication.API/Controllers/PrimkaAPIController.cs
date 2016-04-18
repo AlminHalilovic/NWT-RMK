@@ -40,16 +40,23 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/PrimkaAPI/5
-        [ResponseType(typeof(dp_ulazi))]
-        public IHttpActionResult Getdp_ulazi(int id)
+        public string Getdp_ulazi(int id)
         {
-            dp_ulazi dp_ulazi = db.dp_ulazi.Find(id);
-            if (dp_ulazi == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(dp_ulazi);
+            var jsonResult = db.dp_ulazi.Select(x => new {
+                id = x.ID,
+                broj_primke = x.BROJ_PRIMKE,
+                redni_broj = x.REDNI_BROJ,
+                datum = x.DATUM,
+                datum_unosa = x.DATUM_UNOSA,
+                opis = x.OPIS,
+                dostavnica = x.DOSTAVNICA,
+                skladiste = x.ZA_SUBJEKTA,
+                skladisteNaziv = db.sp_subjekti.Where(z => z.ID == x.ZA_SUBJEKTA).FirstOrDefault().NAZIV,
+                dobavljac = x.OD_SUBJEKTA,
+                dobavljacNaziv = x.sp_subjekti.NAZIV
+            }).Where(y => y.id == id).FirstOrDefault();
+            string json = JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         public string Getdp_ulazi(int id, string model)
@@ -61,6 +68,17 @@ namespace AngularJSAuthentication.API.Controllers
                 kolicina = x.KOLICINA,
                 cijena = Math.Round(x.CIJENA, 3)
             }).ToList();
+            string json = JsonConvert.SerializeObject(jsonResult);
+            return json;
+        }
+
+        public string Getdp_ulazi(int dummy1, int dummy2, int dummy3)
+        {
+            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == 1 &&
+                                                 x.POVRAT == null &&
+                                                 !(db.dp_ulazi.Where(y => y.POVRAT != null).Select(y => y.POVRAT)).ToList().Contains(x.ID))).
+                                                 Select(z => new { id = z.ID, broj_povrata = z.BROJ_PRIMKE})
+                                                 .ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
         }

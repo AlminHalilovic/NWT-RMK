@@ -155,7 +155,7 @@ namespace AngularJSAuthentication.API.Controllers
                     brojac_dokumenata.ORGANIZACIJA = ulaz.ZA_SUBJEKTA;
                     brojac_dokumenata.REDNI_BROJ = redniBroj;
                     brojac_dokumenata.GODINA = godina;
-                    brojac_dokumenata.VRSTA_DOKUMENTA = 1;
+                    brojac_dokumenata.VRSTA_DOKUMENTA = 4;
                     db.dp_brojaci_dokumenata.Add(brojac_dokumenata);
                 }
 
