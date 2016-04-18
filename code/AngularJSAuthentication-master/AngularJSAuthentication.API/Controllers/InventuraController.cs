@@ -32,7 +32,8 @@ namespace AngularJSAuthentication.API.Controllers
                 datum_unosa = x.DATUM_UNOSA,
                 opis = x.OPIS,
                 skladiste = x.sp_subjekti.NAZIV,
-                broj_inventure = x.BROJ_INVENTURE
+                broj_inventure = x.BROJ_INVENTURE,
+                isStavkaShown = false
             }).ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
@@ -49,6 +50,20 @@ namespace AngularJSAuthentication.API.Controllers
             }
 
             return Ok(dp_inventure);
+        }
+
+        public string Getdp_inventure(int id, string model)
+        {
+            var jsonResult = db.dp_stavke_inventure.Where(y => y.INVENTURA == id).Select(x => new {
+                id = x.ID,
+                redni_broj = x.REDNI_BROJ,
+                proizvod = x.sp_proizvodi.NAZIV,
+                zaduzeno = x.ZADUZENO,
+                zateceno = x.ZATECENO,
+                cijena = Math.Round(x.CIJENA, 3)
+            }).ToList();
+            string json = JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
 

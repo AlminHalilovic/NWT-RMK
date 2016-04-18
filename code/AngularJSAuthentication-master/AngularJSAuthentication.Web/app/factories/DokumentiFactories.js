@@ -7,7 +7,6 @@
             //$log.debug(pl.data);
             var response = angular.fromJson(JSON.parse(pl.data));
             $scope.collection = response;
-
         },
               function (errorPl) {
                   $scope.error = 'Greška tokom učitavanja podataka', errorPl;

@@ -80,6 +80,8 @@
     <Content Include="app\views\Dokumenti\Index.html" />
     <Content Include="app\views\Dokumenti\Inventura\Add.html" />
     <Content Include="app\views\Dokumenti\Inventura\Index.html" />
+    <Content Include="app\views\Dokumenti\InventurniManjak\Index.html" />
+    <Content Include="app\views\Dokumenti\InventurniVisak\Index.html" />
     <Content Include="app\views\Dokumenti\Izdatnica\Add.html" />
     <Content Include="app\views\Dokumenti\Izdatnica\Index.html" />
     <Content Include="app\views\Dokumenti\PocetnoStanje\Add.html" />
@@ -202,8 +204,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\views\Dokumenti\InventurniManjak\" />
-    <Folder Include="app\views\Dokumenti\InventurniVisak\" />
     <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
     <Folder Include="app\views\Dokumenti\StornoPocetnoStanje\" />
     <Folder Include="app\views\Dokumenti\StornoPrimka\" />

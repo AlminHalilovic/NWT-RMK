@@ -12,6 +12,14 @@ app.controller('PrimkaController', function ($scope, $location, DokumentiService
     function loadData() { DokumentiGetAllFactory($scope, '/api/PrimkaAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
     $scope.addItem = function () { $location.path("/Dokumenti/Primka/AddPrimka"); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/PrimkaAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
 });
 app.controller('AddPrimkaController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ShareData) {
 
@@ -116,13 +124,21 @@ app.controller('AddPrimkaController', function ($scope, $location, DokumentiServ
 
 });
 
-app.controller('IzdatnicaController', function ($scope, $location, DokumentiGetAllFactory, ShareData) {
+app.controller('IzdatnicaController', function ($scope, $location, DokumentiService, DokumentiGetAllFactory, ShareData) {
     loadData();
 
     //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
     function loadData() { DokumentiGetAllFactory($scope, '/api/IzdatnicaAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
     $scope.addItem = function () { $location.path("/Dokumenti/Izdatnica/AddIzdatnica"); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/IzdatnicaAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
 });
 app.controller('AddIzdatnicaController', function ($scope, $location, $http, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ngAuthSettings, ShareData) {
 
@@ -242,6 +258,14 @@ app.controller('PocetnoStanjeController', function ($scope, $location, Dokumenti
     function loadData() { DokumentiGetAllFactory($scope, '/api/PocetnoStanjeAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
     $scope.addItem = function () { $location.path("/Dokumenti/PocetnoStanje/AddPocetnoStanje"); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/PocetnoStanjeAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
 });
 app.controller('AddPocetnoStanjeController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ShareData) {
 
@@ -346,13 +370,21 @@ app.controller('AddPocetnoStanjeController', function ($scope, $location, Dokume
 
 });
 
-app.controller('InventuraController', function ($scope, $location, DokumentiGetAllFactory, ShareData) {
+app.controller('InventuraController', function ($scope, $location, DokumentiService, DokumentiGetAllFactory, ShareData) {
     loadData();
 
     //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
     function loadData() { DokumentiGetAllFactory($scope, '/api/InventuraAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
     $scope.addItem = function () { $location.path("/Dokumenti/Inventura/AddInventura"); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/InventuraAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
 });
 app.controller('AddInventuraController', function ($scope, $location, $http, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ngAuthSettings, ShareData) {
 
@@ -462,4 +494,32 @@ app.controller('AddInventuraController', function ($scope, $location, $http, Dok
         return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
     };
 
+});
+
+app.controller('InventurniVisakController', function ($scope, $location, DokumentiService, DokumentiGetAllFactory, ShareData) {
+    loadData();
+    //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
+    function loadData() { DokumentiGetAllFactory($scope, '/api/InventurniVisakAPI'); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/InventurniVisakAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
+});
+
+app.controller('InventurniManjakController', function ($scope, $location, DokumentiService, DokumentiGetAllFactory, ShareData) {
+    loadData();
+    //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
+    function loadData() { DokumentiGetAllFactory($scope, '/api/InventurniManjakAPI'); }
+    $scope.showStavke = function (model, index) {
+        DokumentiService.getStavke('/api/InventurniManjakAPI', $scope.collection[index].id, model).then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection[index].stavke = [];
+            $scope.collection[index].stavke = response;
+            $scope.collection[index].isStavkeShown = !$scope.collection[index].isStavkeShown;
+        });
+    };
 });

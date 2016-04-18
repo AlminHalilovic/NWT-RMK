@@ -1,28 +1,26 @@
 ﻿<div>
-
-    <h2>Pregled izdatnica</h2>
-
-    <a class="btn btn-primary" ng-click="addItem()"> Nova izdatnica</a>
+    <h2>Pregled inventurnih viškova</h2>
     <br />
     <br />
-
     <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
                 <th>Stavke</th>
                 <th>Redni broj</th>
-                <th>Broj primke</th>
-                <th>Datum primke</th>
+                <th>Broj inventurnog viška</th>
+                <th>Datum inventurnog viška</th>
                 <th>Opis</th>
+                <th>Skladište</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Izlaz', $index)">Stavke</a></td>
+                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">Stavke</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
                 <td>{{i.datum}}</td>
                 <td>{{i.opis}}</td>
+                <td>{{i.skladiste}}</td>
             </tr>
             <tr ng-show="i.isStavkeShown" ng-repeat-end="">
                 <td colspan="6">

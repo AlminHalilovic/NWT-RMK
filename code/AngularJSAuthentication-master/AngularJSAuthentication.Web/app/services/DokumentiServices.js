@@ -23,8 +23,11 @@
             sum += cijena * kolicina;
         }
         return sum;
-    }
+    };
     this.formatDate = function (date) {
         return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
-    }
+    };
+    this.getStavke = function(path, id, model){
+        return $http.get(serviceBase + path + '?id=' + id + '&model=' + model);
+    };
 });

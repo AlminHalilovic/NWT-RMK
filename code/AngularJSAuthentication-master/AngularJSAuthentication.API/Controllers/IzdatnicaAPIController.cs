@@ -31,7 +31,8 @@ namespace AngularJSAuthentication.API.Controllers
                 redni_broj = x.REDNI_BROJ,
                 datum = x.DATUM,
                 datum_unosa = x.DATUM_UNOSA,
-                opis = x.OPIS
+                opis = x.OPIS,
+                isStavkaShown = false
             }).ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
@@ -48,6 +49,19 @@ namespace AngularJSAuthentication.API.Controllers
             }
 
             return Ok(dp_izlazi);
+        }
+
+        public string Getdp_izlazi(int id, string model)
+        {
+            var jsonResult = db.dp_stavke_izlaza.Where(y => y.IZLAZ == id).Select(x => new {
+                id = x.ID,
+                redni_broj = x.REDNI_BROJ,
+                proizvod = x.sp_proizvodi.NAZIV,
+                kolicina = x.KOLICINA,
+                cijena = Math.Round(x.CIJENA, 3)
+            }).ToList();
+            string json = JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
 

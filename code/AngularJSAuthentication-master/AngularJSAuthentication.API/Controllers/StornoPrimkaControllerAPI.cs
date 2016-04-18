@@ -16,17 +16,18 @@ using System.Web.Script.Serialization;
 
 namespace AngularJSAuthentication.API.Controllers
 {
-    [RoutePrefix("api/PocetnoStanjeAPI")]
+    [RoutePrefix("api/StornoPrimkaAPI")]
     [Authorize]
-    public class PocetnoStanjeAPIController : ApiController
+    public class StornoPrimkaAPIController : ApiController
     {
         private materijalno db = new materijalno();
 
         // GET: api/PrimkaAPI
         public string Getdp_ulazi()
         {
-            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 4).Select(x => new {
+            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 6).Select(x => new {
                 id = x.ID,
+                povrat = x.POVRAT,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,
                 datum = x.DATUM,
@@ -133,7 +134,8 @@ namespace AngularJSAuthentication.API.Controllers
                 ulaz.OD_SUBJEKTA = Convert.ToInt32(master["dobavljac"]);
                 ulaz.OPIS = master["opis"].ToString();
                 ulaz.DATUM = Convert.ToDateTime(master["datum"]);
-                ulaz.VRSTA_DOKUMENTA = 4;
+                ulaz.POVRAT = Convert.ToInt32(master["povrat"]);
+                ulaz.VRSTA_DOKUMENTA = 6;
                 ulaz.POSLOVNI_PERIOD = 2;
                 ulaz.DATUM_UNOSA = DateTime.Now;
                 ulaz.STATUS = "D";
