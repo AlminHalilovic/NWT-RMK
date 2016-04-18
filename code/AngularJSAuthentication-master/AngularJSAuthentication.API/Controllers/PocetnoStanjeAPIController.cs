@@ -16,16 +16,16 @@ using System.Web.Script.Serialization;
 
 namespace AngularJSAuthentication.API.Controllers
 {
-    [RoutePrefix("api/PrimkaAPI")]
+    [RoutePrefix("api/PocetnoStanjeAPI")]
     [Authorize]
-    public class PrimkaAPIController : ApiController
+    public class PocetnoStanjeAPIController : ApiController
     {
         private materijalno db = new materijalno();
 
         // GET: api/PrimkaAPI
         public string Getdp_ulazi()
         {
-            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 1).Select(x => new {
+            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 4).Select(x => new {
                 id = x.ID,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,
@@ -98,7 +98,7 @@ namespace AngularJSAuthentication.API.Controllers
             {
                 input = reader.ReadToEnd();
             }
-            if(input == "")
+            if (input == "")
             {
                 response = JsonConvert.SerializeObject(new
                 {
@@ -110,16 +110,16 @@ namespace AngularJSAuthentication.API.Controllers
             {
                 Dictionary<string, object> obj = (Dictionary<string, object>)serializer.DeserializeObject(input);
                 Dictionary<string, object> master = (Dictionary<string, object>)obj["master"];
-                object[] details = (object[])obj["detail"];      
+                object[] details = (object[])obj["detail"];
 
                 dp_ulazi ulaz = new dp_ulazi();
                 ulaz.BROJ_PRIMKE = master["broj_primke"].ToString();
-                ulaz.DOSTAVNICA  = master["dostavnica"].ToString();
+                ulaz.DOSTAVNICA = master["dostavnica"].ToString();
                 ulaz.ZA_SUBJEKTA = Convert.ToInt32(master["skladiste"]);
                 ulaz.OD_SUBJEKTA = Convert.ToInt32(master["dobavljac"]);
-                ulaz.OPIS  = master["opis"].ToString();
+                ulaz.OPIS = master["opis"].ToString();
                 ulaz.DATUM = Convert.ToDateTime(master["datum"]);
-                ulaz.VRSTA_DOKUMENTA = 1;
+                ulaz.VRSTA_DOKUMENTA = 4;
                 ulaz.POSLOVNI_PERIOD = 2;
                 ulaz.DATUM_UNOSA = DateTime.Now;
                 ulaz.STATUS = "D";
@@ -152,7 +152,7 @@ namespace AngularJSAuthentication.API.Controllers
                     db.dp_ulazi.Add(ulaz);
                     db.SaveChanges();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     response = JsonConvert.SerializeObject(new
                     {
@@ -162,7 +162,7 @@ namespace AngularJSAuthentication.API.Controllers
                     return response;
                 }
                 List<int> ids = new List<int>();
-                for(int i = 0; i < details.Length; i++)
+                for (int i = 0; i < details.Length; i++)
                 {
                     Dictionary<string, object> stavka = (Dictionary<string, object>)details[i];
                     dp_stavke_ulaza stavka_ulaza = new dp_stavke_ulaza();
@@ -180,9 +180,9 @@ namespace AngularJSAuthentication.API.Controllers
                         db.SaveChanges();
                         ids.Add(stavka_ulaza.ID);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        for(int j = 0; j < ids.Count; j++)
+                        for (int j = 0; j < ids.Count; j++)
                         {
                             dp_stavke_ulaza stavka_greska = db.dp_stavke_ulaza.Find(ids[j]);
                             db.dp_stavke_ulaza.Remove(stavka_greska);

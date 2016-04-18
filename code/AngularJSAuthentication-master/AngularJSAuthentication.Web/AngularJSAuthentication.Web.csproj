@@ -80,6 +80,8 @@
     <Content Include="app\views\Dokumenti\Index.html" />
     <Content Include="app\views\Dokumenti\Izdatnica\Add.html" />
     <Content Include="app\views\Dokumenti\Izdatnica\Index.html" />
+    <Content Include="app\views\Dokumenti\PocetnoStanje\Add.html" />
+    <Content Include="app\views\Dokumenti\PocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
     <Content Include="app\views\home.html" />
@@ -201,7 +203,6 @@
     <Folder Include="app\views\Dokumenti\Inventura\" />
     <Folder Include="app\views\Dokumenti\InventurniManjak\" />
     <Folder Include="app\views\Dokumenti\InventurniVisak\" />
-    <Folder Include="app\views\Dokumenti\PocetnoStanje\" />
     <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
     <Folder Include="app\views\Dokumenti\StornoPocetnoStanje\" />
     <Folder Include="app\views\Dokumenti\StornoPrimka\" />
