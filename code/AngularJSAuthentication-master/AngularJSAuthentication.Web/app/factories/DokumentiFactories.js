@@ -4,9 +4,9 @@
         var promiseGetData = DokumentiService.getItem(path);
 
         promiseGetData.then(function (pl) {
-            //$log.debug(pl.data);
-            var response = angular.fromJson(JSON.parse(pl.data));
-            $scope.collection = response;
+            $log.debug(pl.data);
+            $scope.collection = pl.data;
+
         },
               function (errorPl) {
                   $scope.error = 'Greška tokom učitavanja podataka', errorPl;
@@ -17,24 +17,16 @@
 
     }
 });
-app.factory('DokumentiCreateFactory', function (DokumentiService, $location, SweetAlert, ShareData) {
+app.factory('DokumentiCreateFactory', function (DokumentiService, $location, ShareData) {
     return function ($scope, apiPath, returnPath, Item) {
 
         var promisePost = DokumentiService.postItem(apiPath, Item);
+
+
         promisePost.then(function (pl) {
-            var response = angular.fromJson(JSON.parse(pl.data));
-            if (response.ok == true) {
-                SweetAlert.swal({
-                    title: "Uspjeh!",
-                    text: response.message,
-                    type: "success"
-                }, function () {
-                    $location.path(returnPath);
-                });
-            }
-            else {
-                SweetAlert.swal("Greška!", response.message, "error");
-            }
+
+            alert("Uspješno je unesen novi dokument!");
+            $location.path(returnPath);
         },
               function (errorPl) {
                   $scope.error = 'Greška tokom učitavanja podataka', errorPl;

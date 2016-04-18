@@ -18,37 +18,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">Stavke</a></td>
-                <td>{{i.redni_broj}}</td>
-                <td>{{i.broj_primke}}</td>
+            <tr ng-repeat="i in collection track by $index">
+                <td>+</td>
+                <td>{{i.rednI_BROJ}}</td>
+                <td>{{i.broJ_PRIMKE}}</td>
                 <td>{{i.dostavnica}}</td>
                 <td>{{i.datum}}</td>
                 <td>{{i.opis}}</td>
-            </tr>
-            <tr ng-show="i.isStavkeShown" ng-repeat-end="" >
-                <td colspan="6">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Redni broj</th>
-                                <th>Proizvod</th>
-                                <th>Količina</th>
-                                <th>Cijena</th>
-                                <th>Vrijednost</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="j in collection[$index].stavke">
-                                <td>{{j.redni_broj}}</td>
-                                <td>{{j.proizvod}}</td>
-                                <td>{{j.kolicina}}</td>
-                                <td>{{j.cijena}}</td>
-                                <td>{{j.cijena*j.kolicina}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
             </tr>
         </tbody>
     </table>

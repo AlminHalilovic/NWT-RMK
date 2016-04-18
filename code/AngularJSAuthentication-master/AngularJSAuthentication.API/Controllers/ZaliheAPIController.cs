@@ -42,17 +42,7 @@ namespace AngularJSAuthentication.API.Controllers
                                                          cijena = Math.Round(x.CIJENA, 3),
                                                          stanje = x.STANJE
                                                       }).Where(x => x.organizacija == organizacija && x.proizvod == proizvodId);
-            string json = "";
-            if (jsonResult == null)
-            {
-                json = Newtonsoft.Json.JsonConvert.SerializeObject(new {
-                    proizvod = proizvodId,
-                    organizacija = organizacija,
-                    cijena = 0.000,
-                    stanje = 0
-                });
-            }
-            else json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
         }
 

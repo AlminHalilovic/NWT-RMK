@@ -7,7 +7,6 @@ app.factory('SifarniciGetAllFactory', function (SifarniciService,ShareData,$http
 
         promiseGetData.then(function (pl) {
             $log.debug(pl.data);
-            var response = angular.fromJson(JSON.parse(pl.data));
             $scope.collection = pl.data;
             
         },

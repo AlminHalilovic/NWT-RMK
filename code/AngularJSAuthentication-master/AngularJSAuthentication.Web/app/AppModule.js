@@ -1,9 +1,6 @@
 ﻿
-var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'acute.select', 'ngSanitize', 'ui.bootstrap', 'oitozero.ngSweetAlert']);
-app.run(function (acuteSelectService) {
-    // Set the template path for all instances
-    acuteSelectService.updateSetting("templatePath", "/content/templates");
-})
+var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+
 
 
     app.factory("ShareData", function () {
