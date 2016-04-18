@@ -177,6 +177,7 @@
     <Compile Include="AuthRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GrupeProizvodaAPIController.cs" />
+    <Compile Include="Controllers\InventuraController.cs" />
     <Compile Include="Controllers\IzdatnicaAPIController.cs" />
     <Compile Include="Controllers\JediniceMjereAPIController.cs" />
     <Compile Include="Controllers\KadroviAPIController.cs" />
