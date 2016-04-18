@@ -88,6 +88,8 @@
     <Content Include="app\views\Dokumenti\PocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
+    <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Add.html" />
+    <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\StornoPrimka\Add.html" />
     <Content Include="app\views\Dokumenti\StornoPrimka\Index.html" />
     <Content Include="app\views\home.html" />
@@ -207,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
-    <Folder Include="app\views\Dokumenti\StornoPocetnoStanje\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

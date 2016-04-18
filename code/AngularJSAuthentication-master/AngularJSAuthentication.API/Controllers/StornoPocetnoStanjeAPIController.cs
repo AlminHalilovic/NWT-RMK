@@ -16,9 +16,9 @@ using System.Web.Script.Serialization;
 
 namespace AngularJSAuthentication.API.Controllers
 {
-    [RoutePrefix("api/PocetnoStanjeAPI")]
-    [Authorize]
-    public class PocetnoStanjeAPIController : ApiController
+    [RoutePrefix("api/StornoPocetnoStanjeAPI")]
+    //[Authorize]
+    public class StornoPocetnoStanjeAPIController : ApiController
     {
         private materijalno db = new materijalno();
 
@@ -27,6 +27,7 @@ namespace AngularJSAuthentication.API.Controllers
         {
             var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 4).Select(x => new {
                 id = x.ID,
+                povrat = x.POVRAT,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,
                 datum = x.DATUM,
@@ -40,23 +41,16 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/PrimkaAPI/5
-        public string Getdp_ulazi(int id)
+        [ResponseType(typeof(dp_ulazi))]
+        public IHttpActionResult Getdp_ulazi(int id)
         {
-            var jsonResult = db.dp_ulazi.Select(x => new {
-                id = x.ID,
-                broj_primke = x.BROJ_PRIMKE,
-                redni_broj = x.REDNI_BROJ,
-                datum = x.DATUM,
-                datum_unosa = x.DATUM_UNOSA,
-                opis = x.OPIS,
-                dostavnica = x.DOSTAVNICA,
-                skladiste = x.ZA_SUBJEKTA,
-                skladisteNaziv = db.sp_subjekti.Where(z => z.ID == x.ZA_SUBJEKTA).FirstOrDefault().NAZIV,
-                dobavljac = x.OD_SUBJEKTA,
-                dobavljacNaziv = x.sp_subjekti.NAZIV
-            }).Where(y => y.id == id).FirstOrDefault();
-            string json = JsonConvert.SerializeObject(jsonResult);
-            return json;
+            dp_ulazi dp_ulazi = db.dp_ulazi.Find(id);
+            if (dp_ulazi == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(dp_ulazi);
         }
 
         public string Getdp_ulazi(int id, string model)
@@ -64,21 +58,13 @@ namespace AngularJSAuthentication.API.Controllers
             var jsonResult = db.dp_stavke_ulaza.Where(y => y.ULAZ == id).Select(x => new {
                 id = x.ID,
                 redni_broj = x.REDNI_BROJ,
-                proizvod = x.sp_proizvodi.NAZIV,
+                proizvodNaziv = x.sp_proizvodi.NAZIV,
+                proizvod = x.PROIZVOD,
                 kolicina = x.KOLICINA,
-                cijena = Math.Round(x.CIJENA, 3)
+                cijena = Math.Round(x.CIJENA, 3),
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                jedinica_mjere = x.JEDINICA_MJERE
             }).ToList();
-            string json = JsonConvert.SerializeObject(jsonResult);
-            return json;
-        }
-
-        public string Getdp_ulazi(int dummy1, int dummy2, int dummy3)
-        {
-            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == 4 &&
-                                                 x.POVRAT == null &&
-                                                 !(db.dp_ulazi.Where(y => y.POVRAT != null).Select(y => y.POVRAT)).ToList().Contains(x.ID))).
-                                                 Select(z => new { id = z.ID, broj_povrata = z.BROJ_PRIMKE })
-                                                 .ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
         }
@@ -151,6 +137,7 @@ namespace AngularJSAuthentication.API.Controllers
                 ulaz.OD_SUBJEKTA = Convert.ToInt32(master["dobavljac"]);
                 ulaz.OPIS = master["opis"].ToString();
                 ulaz.DATUM = Convert.ToDateTime(master["datum"]);
+                ulaz.POVRAT = Convert.ToInt32(master["povrat"]);
                 ulaz.VRSTA_DOKUMENTA = 4;
                 ulaz.POSLOVNI_PERIOD = 2;
                 ulaz.DATUM_UNOSA = DateTime.Now;
@@ -209,8 +196,8 @@ namespace AngularJSAuthentication.API.Controllers
                     try
                     {
                         db.dp_stavke_ulaza.Add(stavka_ulaza);
-                        db.SaveChanges();
                         ids.Add(stavka_ulaza.ID);
+                        db.SaveChanges();
                     }
                     catch (Exception e)
                     {

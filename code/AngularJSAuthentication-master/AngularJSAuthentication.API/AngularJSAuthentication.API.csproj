@@ -191,6 +191,7 @@
     <Compile Include="Controllers\PrimkaAPIController.cs" />
     <Compile Include="Controllers\ProizvodiAPIController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Controllers\StornoPocetnoStanjeAPIController.cs" />
     <Compile Include="Controllers\StornoPrimkaControllerAPI.cs" />
     <Compile Include="Controllers\SubjektiAPIController.cs" />
     <Compile Include="Controllers\VrsteDokumenataAPIController.cs" />
