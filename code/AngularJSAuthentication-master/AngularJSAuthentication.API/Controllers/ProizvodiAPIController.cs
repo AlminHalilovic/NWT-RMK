@@ -46,6 +46,24 @@ namespace AngularJSAuthentication.API.Controllers
             return json;
         }
 
+        [HttpGet]
+        public string Getsp_proizvodi(int subjekt, int dummy)
+        {
+            var proizvodi = db.dp_zalihe.Where(x => x.ORGANIZACIJA == subjekt).Select(y => y.PROIZVOD).ToList();
+
+            var jsonResult = db.sp_proizvodi.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                barcode = x.BARCODE,
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
+                id_jmjere = x.sp_jedinice_mjera.ID
+            }).Where(x => proizvodi.Contains(x.id)).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
+        }
+
         // PUT: api/ProizvodiAPI/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putsp_proizvodi(int id, sp_proizvodi sp_proizvodi)

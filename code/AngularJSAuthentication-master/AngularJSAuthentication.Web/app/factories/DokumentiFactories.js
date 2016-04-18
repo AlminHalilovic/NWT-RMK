@@ -4,8 +4,9 @@
         var promiseGetData = DokumentiService.getItem(path);
 
         promiseGetData.then(function (pl) {
-            $log.debug(pl.data);
-            $scope.collection = pl.data;
+            //$log.debug(pl.data);
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection = response;
 
         },
               function (errorPl) {
@@ -33,7 +34,7 @@ app.factory('DokumentiCreateFactory', function (DokumentiService, $location, Swe
                 });
             }
             else {
-                SweetAlert.swal("Greška!", response.message, "failure");
+                SweetAlert.swal("Greška!", response.message, "error");
             }
         },
               function (errorPl) {

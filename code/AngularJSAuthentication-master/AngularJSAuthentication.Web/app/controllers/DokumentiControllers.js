@@ -5,13 +5,13 @@ app.controller('DokumentiController', function ($scope, $location, DokumentiServ
 
 });
 
-app.controller('PrimkaController', function ($scope, $location, DokumentiGetAllFactory, ShareData) {
+app.controller('PrimkaController', function ($scope, $location, DokumentiService, DokumentiGetAllFactory, ShareData) {
     loadData();
 
     //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
     function loadData() { DokumentiGetAllFactory($scope, '/api/PrimkaAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
-    $scope.addItem = function () { $location.path("/Primka/AddPrimka"); }
+    $scope.addItem = function () { $location.path("/Dokumenti/Primka/AddPrimka"); }
 });
 app.controller('AddPrimkaController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ShareData) {
 
@@ -122,9 +122,9 @@ app.controller('IzdatnicaController', function ($scope, $location, DokumentiGetA
     //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
     function loadData() { DokumentiGetAllFactory($scope, '/api/IzdatnicaAPI'); }
     //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
-    $scope.addItem = function () { $location.path("/Izdatnica/AddIzdatnica"); }
+    $scope.addItem = function () { $location.path("/Dokumenti/Izdatnica/AddIzdatnica"); }
 });
-app.controller('AddIzdatnicaController', function ($scope, $location, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ShareData) {
+app.controller('AddIzdatnicaController', function ($scope, $location, $http, DokumentiService, DokumentiCreateFactory, SifarniciService, SifarniciGetAllFactory, ZaliheService, ngAuthSettings, ShareData) {
 
     $scope.back = function () { $location.path("/Dokumenti/Izdatnica"); }
     $scope.id = 0;
@@ -193,13 +193,21 @@ app.controller('AddIzdatnicaController', function ($scope, $location, DokumentiS
     };
 
     $scope.getZalihe = function (index) {
-        ZaliheService.getItem("/api/ZaliheAPI", $scope.stavke[index].proizvod, $scope.primka.skladiste).then(function (pl) {
+        ZaliheService.getItem("/api/ZaliheAPI", $scope.stavke[index].proizvod, $scope.izdatnica.skladiste).then(function (pl) {
             var response = angular.fromJson(JSON.parse(pl.data))[0];
             console.log(response);
             $scope.stavke[index].cijena = response.cijena;
             $scope.stavke[index].stanje = response.stanje;
         });
-    }
+    };
+
+    $scope.getProizvodiSkladiste = function (skladiste) {
+        $http.get(ngAuthSettings.apiServiceBaseUri + '/api/ProizvodiAPI?subjekt=' + skladiste + '&dummy=1').then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data));
+            console.log(response);
+            $scope.proizvodi = response;
+        });
+    };
 
     $scope.getProizvodData = function (index) {
         $scope.getJmjere(index);
