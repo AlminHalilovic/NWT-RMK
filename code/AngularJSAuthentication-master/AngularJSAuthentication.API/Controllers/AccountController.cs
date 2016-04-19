@@ -93,8 +93,13 @@ namespace AngularJSAuthentication.API.Controllers
                 LastName = createUserModel.LastName
             };
 
+            string response = await ValidateCaptcha(createUserModel.Recaptcha);
+            if (!response.Equals("Ok"))
+            {
+                return BadRequest("Captcha not valid");
+            }
 
-              IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
+            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
 
             if (!addUserResult.Succeeded)
             {
@@ -118,6 +123,14 @@ namespace AngularJSAuthentication.API.Controllers
                 ModelState.AddModelError("", "User Id and Code are required");
                 return BadRequest(ModelState);
             }
+
+            var codeB = HttpServerUtility.UrlTokenDecode(code);
+            if(codeB!=null)
+            code = System.Text.Encoding.Default.GetString(codeB);
+            var userIdB = HttpServerUtility.UrlTokenDecode(userId);
+            if(userIdB!=null)
+            userId = System.Text.Encoding.Default.GetString(userIdB);
+
             IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
 
             if (result.Succeeded)
@@ -138,7 +151,10 @@ namespace AngularJSAuthentication.API.Controllers
             var applicationLink = System.Configuration.ConfigurationManager.AppSettings["as:applicationLink"];
             applicationLink += "#/confirmEmail/";
             string code = await AppUserManager.GenerateEmailConfirmationTokenAsync(userID);
-         //   var callbackUrl = new Uri(Url.Link(applicationLink, new { userId = userID, code = code }));
+
+            code = HttpServerUtility.UrlTokenEncode(System.Text.Encoding.ASCII.GetBytes(code));
+            userID = HttpContext.Current.Server.UrlEncode(userID);
+
             var url = applicationLink +  userID + "/" + code;
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = userID }));
             await AppUserManager.SendEmailAsync(userID, subject, "Please confirm your account by <a href=\"" + url + "\">clicking here</a>");
@@ -350,7 +366,10 @@ namespace AngularJSAuthentication.API.Controllers
                 return BadRequest(ModelState);
             }
             var codeB = HttpServerUtility.UrlTokenDecode(model.Code);
-            string code= System.Text.Encoding.Default.GetString(codeB);
+            string code = null;
+            if(codeB!=null)
+            code= System.Text.Encoding.Default.GetString(codeB);
+
             var result = await AppUserManager.ResetPasswordAsync(user.Id, code, model.Password);
             if (result.Succeeded)
             {
@@ -417,6 +436,38 @@ namespace AngularJSAuthentication.API.Controllers
             return match.Value;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ValidateCaptcha")]
+        public async Task<string> ValidateCaptcha(string response)
+        {
+
+            //secret that was generated in key value pair
+            var secret = System.Configuration.ConfigurationManager.AppSettings["as:captchaKey"];
+
+            var client = new HttpClient();
+            string url = string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response);
+
+            try
+            {
+                HttpResponseMessage captchaResponse = await client.GetAsync(url);
+                if (!captchaResponse.IsSuccessStatusCode)
+                {
+                    return "NotOk";
+                }
+
+            }
+            catch (HttpRequestException e)
+            {
+                // Handle exception.
+                return "NotOk";
+            }
+            return "Ok";
+
+        }
+
+
+
         private class ExternalLoginData
         {
             public string LoginProvider { get; set; }
@@ -452,6 +503,11 @@ namespace AngularJSAuthentication.API.Controllers
                 };
             }
         }
+
+
+       
+
+
 
     }
 }

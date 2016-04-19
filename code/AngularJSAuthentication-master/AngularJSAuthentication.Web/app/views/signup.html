@@ -7,10 +7,12 @@
     
 
      <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="registration.confirmPassword" required>
-    <div class="g-recaptcha" data-sitekey="6LcrtR0TAAAAANuixqNfBk8yhqw_l43gDGiuDx8X"></div>
-
+    <!--<div class="g-recaptcha" data-sitekey="6LcrtR0TAAAAANuixqNfBk8yhqw_l43gDGiuDx8X"></div>-->
+    <div id="captcha"></div>
     <button class="btn btn-lg btn-info btn-block" type="submit" data-ng-click="signUp()">Submit</button>
     <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
         {{message}}
     </div>
 </form>
+
+
