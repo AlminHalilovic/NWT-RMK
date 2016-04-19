@@ -79,6 +79,7 @@
     <Content Include="app\controllers\SifarniciControllers.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
+    <Content Include="app\directives\CustomDirectives.js" />
     <Content Include="app\factories\DokumentiFactories.js" />
     <Content Include="app\factories\SifarniciFactories.js" />
     <Content Include="app\services\authInterceptorService.js" />
@@ -89,8 +90,20 @@
     <Content Include="app\services\ZaliheServices.js" />
     <Content Include="app\views\confirmEmail.html" />
     <Content Include="app\views\Dokumenti\Index.html" />
+    <Content Include="app\views\Dokumenti\Inventura\Add.html" />
+    <Content Include="app\views\Dokumenti\Inventura\Index.html" />
+    <Content Include="app\views\Dokumenti\InventurniManjak\Index.html" />
+    <Content Include="app\views\Dokumenti\InventurniVisak\Index.html" />
+    <Content Include="app\views\Dokumenti\Izdatnica\Add.html" />
+    <Content Include="app\views\Dokumenti\Izdatnica\Index.html" />
+    <Content Include="app\views\Dokumenti\PocetnoStanje\Add.html" />
+    <Content Include="app\views\Dokumenti\PocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
+    <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Add.html" />
+    <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Index.html" />
+    <Content Include="app\views\Dokumenti\StornoPrimka\Add.html" />
+    <Content Include="app\views\Dokumenti\StornoPrimka\Index.html" />
     <Content Include="app\views\forgotPassword.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\Izvjestaji\Index.html" />
@@ -145,12 +158,20 @@
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\tokens.html" />
     <Content Include="authComplete.html" />
+    <Content Include="content\css\acute.select.css" />
     <Content Include="content\css\AdminLTE.css" />
+    <Content Include="content\css\angular-datepicker.min.css" />
     <Content Include="content\css\font-awesome.min.css" />
+    <Content Include="content\css\images\dropdown.gif" />
+    <Content Include="content\css\images\dropdownBlue.gif" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
+    <Content Include="content\css\select.min.css" />
+    <Content Include="content\css\select2.min.css" />
     <Content Include="content\css\site.css" />
     <Content Include="content\css\social-buttons.css" />
+    <Content Include="content\css\sweet-alert.css" />
+    <Content Include="content\css\ui-bootstrap-csp.css" />
     <Content Include="content\fonts\fontawesome-webfont.svg" />
     <Content Include="content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="content\fonts\glyphicons-halflings-regular.ttf" />
@@ -159,7 +180,9 @@
     <Content Include="content\fonts\fontawesome-webfont.ttf" />
     <Content Include="content\fonts\fontawesome-webfont.woff" />
     <Content Include="content\fonts\FontAwesome.otf" />
+    <Content Include="content\templates\acute.select.htm" />
     <Content Include="packages.config" />
+    <Content Include="content\css\images\dropdown.pdn" />
     <None Include="Properties\PublishProfiles\ngauthenticationweb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -172,25 +195,35 @@
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
+    <Content Include="scripts\acute.select.js" />
+    <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-recaptcha.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="scripts\authComplete.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\jquery-2.2.2.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\select.js" />
+    <Content Include="scripts\select.min.js" />
+    <Content Include="scripts\select2.min.js" />
+    <Content Include="scripts\sweet-alert.js" />
+    <Content Include="scripts\SweetAlert.js" />
+    <Content Include="uib\template\datepicker\datepicker.html" />
+    <Content Include="uib\template\datepicker\day.html" />
+    <Content Include="uib\template\datepicker\month.html" />
+    <Content Include="uib\template\datepicker\popup.html" />
+    <Content Include="uib\template\datepicker\year.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\views\Dokumenti\Inventura\" />
-    <Folder Include="app\views\Dokumenti\InventurniManjak\" />
-    <Folder Include="app\views\Dokumenti\InventurniVisak\" />
-    <Folder Include="app\views\Dokumenti\Izdatnica\" />
-    <Folder Include="app\views\Dokumenti\PocetnoStanje\" />
     <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
-    <Folder Include="app\views\Dokumenti\StornoPocetnoStanje\" />
-    <Folder Include="app\views\Dokumenti\StornoPrimka\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

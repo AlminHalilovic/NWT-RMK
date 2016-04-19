@@ -37,12 +37,23 @@ namespace AngularJSAuthentication.API.Controllers
         public string Getdp_zalihe(int proizvodId, int organizacija)
         {
             var jsonResult = db.dp_zalihe.Select(x => new {
-                                                         proizvod = x.PROIZVOD,
-                                                         organizacija = x.ORGANIZACIJA,
-                                                         cijena = Math.Round(x.CIJENA, 3),
-                                                         stanje = x.STANJE
-                                                      }).Where(x => x.organizacija == organizacija && x.proizvod == proizvodId);
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+                proizvod = x.PROIZVOD,
+                organizacija = x.ORGANIZACIJA,
+                cijena = Math.Round(x.CIJENA, 3),
+                stanje = x.STANJE
+            }).Where(x => x.organizacija == organizacija && x.proizvod == proizvodId);
+            string json = "";
+            if (jsonResult == null)
+            {
+                json = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                {
+                    proizvod = proizvodId,
+                    organizacija = organizacija,
+                    cijena = 0.000,
+                    stanje = 0
+                });
+            }
+            else json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
         }
 

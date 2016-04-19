@@ -14,7 +14,7 @@ using System.Web.Http.Results;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/ProizvodiAPI")]
-    
+
     public class ProizvodiAPIController : ApiController
     {
         private materijalno db = new materijalno();
@@ -22,24 +22,48 @@ namespace AngularJSAuthentication.API.Controllers
         // GET: api/ProizvodiAPI
         public string Getsp_proizvodi()
         {
-            var jsonResult = db.sp_proizvodi.Select(x => new { id = x.ID,
-                                                               naziv = x.NAZIV,
-                                                               sifra = x.SIFRA,
-                                                               barcode = x.BARCODE,
-                                                               sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
-                                                               id_jmjere = x.sp_jedinice_mjera.ID }).ToList();
+            var jsonResult = db.sp_proizvodi.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                barcode = x.BARCODE,
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
+                id_jmjere = x.sp_jedinice_mjera.ID
+            }).ToList();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
         }
 
         public string Getsp_proizvodi(int id)
         {
-            var jsonResult = db.sp_proizvodi.Select(x => new { id = x.ID,
-                                                               naziv = x.NAZIV,
-                                                               sifra = x.SIFRA,
-                                                               barcode = x.BARCODE,
-                                                               sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
-                                                               id_jmjere = x.sp_jedinice_mjera.ID}).Where(x => x.id == id).ToList();
+            var jsonResult = db.sp_proizvodi.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                barcode = x.BARCODE,
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
+                id_jmjere = x.sp_jedinice_mjera.ID
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
+        }
+
+        [HttpGet]
+        public string Getsp_proizvodi(int subjekt, int dummy)
+        {
+            var proizvodi = db.dp_zalihe.Where(x => x.ORGANIZACIJA == subjekt).Select(y => y.PROIZVOD).ToList();
+
+            var jsonResult = db.sp_proizvodi.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                barcode = x.BARCODE,
+                sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
+                sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
+                id_jmjere = x.sp_jedinice_mjera.ID
+            }).Where(x => proizvodi.Contains(x.id)).ToList();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
         }

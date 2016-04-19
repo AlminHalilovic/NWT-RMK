@@ -92,7 +92,9 @@ namespace AngularJSAuthentication.API
 
             ConfigureOAuthTokenConsumption(app);
 
-            ConfigureWebApi(httpConfig);
+            //ConfigureWebApi(httpConfig);
+
+            WebApiConfig.Register(httpConfig);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
