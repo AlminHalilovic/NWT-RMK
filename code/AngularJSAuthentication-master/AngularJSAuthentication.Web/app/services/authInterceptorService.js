@@ -16,8 +16,9 @@ app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStor
     }
 
     var _responseError = function (rejection) {
-        if (rejection.status === 401) {
-            var authService = $injector.get('authService');
+        var authService = $injector.get('authService');
+        if (rejection.status === 401 && !authService.authentication.isAuth) {
+            console.log('Nije logovan');
             var authData = localStorageService.get('authorizationData');
 
             if (authData) {
@@ -28,6 +29,12 @@ app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStor
             }
             authService.logOut();
             $location.path('/login');
+        }
+        else if (rejection.status === 401 && authService.authentication.isAuth) {
+            console.log('Nema pristup');
+            alert('Nemate pristup ovom modulu aplikacije!');
+            $location.path('/home');
+            return;
         }
         return $q.reject(rejection);
     }

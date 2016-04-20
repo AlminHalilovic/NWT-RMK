@@ -14,7 +14,7 @@ using System.Web.Http.Description;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/KlaseKadrovaAPI")]
-    [Authorize]
+    [Authorize(Roles = "Sifarnici,Administrator")]
     public class KlaseKadrovaAPIController : ApiController
     {
         private materijalno db = new materijalno();

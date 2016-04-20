@@ -17,7 +17,7 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/InventurniManjakAPI")]
-    [Authorize]
+    [Authorize(Roles = "Dokumenti,Administrator")]
     public class InventurniManjakAPIController : ApiController
     {
         private materijalno db = new materijalno();
