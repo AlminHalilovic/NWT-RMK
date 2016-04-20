@@ -79,8 +79,9 @@ app.controller('AddProizvodiController', function ($scope, $location, SifarniciS
     SifarniciGetAllFactory($scope, '/api/JediniceMjereAPI');
     
     SifarniciService.getItem('/api/GrupeProizvodaAPI').then(function (pl) {
-       
-        $scope.collection1 = pl.data; },
+        var response = angular.fromJson(JSON.parse(pl.data));
+        $scope.collection1 = response
+    },
           function (errorPl) {
               $scope.error = 'Greška tokom učitavanja podataka', errorPl;
           });
@@ -98,8 +99,8 @@ app.controller("EditProizvodiController", function ($scope, $location, ShareData
         SifarniciGetByIdFactory($scope, "/api/ProizvodiAPI");
         SifarniciGetAllFactory($scope, '/api/JediniceMjereAPI');
         SifarniciService.getItem('/api/GrupeProizvodaAPI').then(function (pl) {
-
-            $scope.collection1 = pl.data;
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.collection1 = response;
         },
          function (errorPl) {
              $scope.error = 'Greška tokom učitavanja podataka', errorPl;
@@ -111,7 +112,7 @@ app.controller("EditProizvodiController", function ($scope, $location, ShareData
     //The Save method used to make HTTP PUT call to the WEB API to update the record
 
     $scope.save = function () {
-        var Item = { id:$scope.Item.id,sifra: $scope.Item.sifra, naziv: $scope.Item.naziv, barcode: $scope.Item.barcode, grupa_proizvoda: $scope.grupa_proizvoda, jedinica_mjere: $scope.jedinica_mjere };
+        var Item = { id:$scope.Item.id,sifra: $scope.Item.sifra, naziv: $scope.Item.naziv, barcode: $scope.Item.barcode, grupa_proizvoda: $scope.Item.grupa_proizvoda, jedinica_mjere: $scope.Item.jedinica_mjere };
         console.log(Item);
         SifarniciUpdateFactory($scope, "/api/ProizvodiAPI", "/Sifarnici/Proizvodi", Item);
 
@@ -167,7 +168,7 @@ app.controller("EditGrupeProizvodaController", function ($scope, $location, Shar
             ID: $scope.Item.id,
             SIFRA: $scope.Item.sifra,
             NAZIV: $scope.Item.naziv,
-            NADGRUPA:$scope.nadgrupa
+            NADGRUPA:$scope.Item.nadgrupa
         };
         SifarniciUpdateFactory($scope, "/api/GrupeProizvodaAPI", "/Sifarnici/GrupeProizvoda", Item);
 
@@ -387,7 +388,7 @@ app.controller("EditVrsteDokumenataController", function ($scope, $location, Sha
             ID: $scope.Item.id,
             SIFRA: $scope.Item.sifra,
             NAZIV: $scope.Item.naziv,
-            KLASA:$scope.klasa
+            KLASA:$scope.Item.klasa
         };
         $log.debug(Item);
         SifarniciUpdateFactory($scope, "/api/VrsteDokumenataAPI", "/Sifarnici/VrsteDokumenata", Item);
@@ -569,9 +570,9 @@ app.controller('AddOdnosiSubjekataController', function ($scope, $location, Sifa
     $scope.back = function () { $location.path("/Sifarnici/OdnosiSubjekata"); }
     SifarniciGetAllFactory($scope, '/api/VrsteOdnosaSubjekataAPI');
 
-    SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) {$scope.collection1 = pl.data;},
+    SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { var response = angular.fromJson(JSON.parse(pl.data)); $scope.collection1 = response;},
           function (errorPl) { $scope.error = 'Greška tokom učitavanja podataka', errorPl; });
-    SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { $scope.collection2 = pl.data; },
+    SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { var response = angular.fromJson(JSON.parse(pl.data)); $scope.collection2 = response; },
           function (errorPl) { $scope.error = 'Greška tokom učitavanja podataka', errorPl; });
 
     //Scope.save metoda poziva sifarnicicreatefactory, te mu prosljedjuje apiPath te urlPath, za poziv ka webapi te za naknadno vracanje pri izvrsenju akcija
@@ -588,9 +589,9 @@ app.controller("EditOdnosiSubjekataController", function ($scope, $location, Sha
         SifarniciGetByIdFactory($scope, "/api/OdnosiSubjekataAPI");
         SifarniciGetAllFactory($scope, '/api/VrsteOdnosaSubjekataAPI');
 
-        SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { $scope.collection1 = pl.data; },
+        SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { var response = angular.fromJson(JSON.parse(pl.data)); $scope.collection1 = response; },
               function (errorPl) { $scope.error = 'Greška tokom učitavanja podataka', errorPl; });
-        SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { $scope.collection2 = pl.data; },
+        SifarniciService.getItem('/api/SubjektiAPI').then(function (pl) { var response = angular.fromJson(JSON.parse(pl.data)); $scope.collection2 = response; },
               function (errorPl) { $scope.error = 'Greška tokom učitavanja podataka', errorPl; });
 
     }
@@ -599,7 +600,7 @@ app.controller("EditOdnosiSubjekataController", function ($scope, $location, Sha
     //The Save method used to make HTTP PUT call to the WEB API to update the record
 
     $scope.save = function () {
-        var Item = { id: $scope.Item.id, vrsta_odnosa: $scope.vrsta_odnosa, subjekt: $scope.subjekat, ka_subjektu: $scope.ka_subjektu };
+        var Item = { id: $scope.Item.id, vrsta_odnosa: $scope.Item.vrsta_odnosa, subjekt: $scope.Item.subjekat, ka_subjektu: $scope.Item.ka_subjektu };
         console.log(Item);
         SifarniciUpdateFactory($scope, "/api/OdnosiSubjekataAPI", "/Sifarnici/OdnosiSubjekata", Item);
 
@@ -676,8 +677,8 @@ app.controller("EditSubjektiController", function ($scope, $location, ShareData,
 
     $scope.save = function () {
         var Item = {
-            id: $scope.Item.id, sifra: $scope.Item.sifra, naziv: $scope.Item.naziv, pdv_broj: $scope.Item.pdV_BROJ, poreski_broj: $scope.Item.poreskI_BROJ,
-            adresa:$scope.Item.adresa,kontakt_osoba: $scope.Item.kontakT_OSOBA,
+            id: $scope.Item.id, sifra: $scope.Item.sifra, naziv: $scope.Item.naziv, pdv_broj: $scope.Item.pdv_broj, poreski_broj: $scope.Item.poreski_broj,
+            adresa:$scope.Item.adresa,kontakt_osoba: $scope.Item.kontakt_osoba,
             email: $scope.Item.email, telefon: $scope.Item.telefon, fax: $scope.Item.fax, vrsta_subjekta: $scope.vrsta_subjekta
         };
         console.log(Item);

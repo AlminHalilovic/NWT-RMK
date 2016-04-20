@@ -32,16 +32,15 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/KlaseKadrovaAPI/5
-        [ResponseType(typeof(sp_klase_kadrova))]
-        public IHttpActionResult Getsp_klase_kadrova(int id)
+        public string Getsp_klase_kadrova(int id)
         {
-            sp_klase_kadrova sp_klase_kadrova = db.sp_klase_kadrova.Find(id);
-            if (sp_klase_kadrova == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_klase_kadrova);
+            var jsonResult = db.sp_klase_kadrova.Select(x => new {
+                id = x.ID,
+                sifra = x.SIFRA,
+                naziv = x.NAZIV
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/KlaseKadrovaAPI/5

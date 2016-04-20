@@ -35,16 +35,18 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/KadroviAPI/5
-        [ResponseType(typeof(sp_kadrovi))]
-        public IHttpActionResult Getsp_kadrovi(int id)
+        public string Getsp_kadrovi(int id)
         {
-            sp_kadrovi sp_kadrovi = db.sp_kadrovi.Find(id);
-            if (sp_kadrovi == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_kadrovi);
+            var jsonResult = db.sp_kadrovi.Select(x => new {
+                id = x.ID,
+                ime = x.IME,
+                prezime = x.PREZIME,
+                jmbg = x.JMBG,
+                email = x.EMAIL,
+                klasa = x.sp_klase_kadrova.ID
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/KadroviAPI/5

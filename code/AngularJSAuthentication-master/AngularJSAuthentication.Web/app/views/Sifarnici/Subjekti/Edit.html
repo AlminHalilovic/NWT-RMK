@@ -12,11 +12,11 @@
     </tr>
     <tr>
         <td>PDV broj</td>
-        <td><input type="text" ng-model="Item.pdV_BROJ" ng-pattern="/^\d+$/" ng-class="{ error: !Item.pdV_BROJ }" />  </td>
+        <td><input type="text" ng-model="Item.pdv_broj" ng-pattern="/^\d+$/" ng-class="{ error: !Item.pdv_broj }" />  </td>
     </tr>
     <tr>
         <td>Poreski broj</td>
-        <td><input type="text" ng-model="Item.poreskI_BROJ" ng-class="{ error: !Item.poreskI_BROJ }" />  </td>
+        <td><input type="text" ng-model="Item.poreski_broj" ng-class="{ error: !Item.poreski_broj }" />  </td>
     </tr>
     <tr>
         <td>Adresa</td>
@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <td>Kontakt osoba</td>
-        <td><input type="text" ng-model="Item.kontakT_OSOBA" ng-class="{ error: !Item.kontakT_OSOBA }" />  </td>
+        <td><input type="text" ng-model="Item.konakt_osoba" ng-class="{ error: !Item.kontakt_osoba }" />  </td>
     </tr>
     <tr>
 
@@ -41,10 +41,10 @@
     </tr>
     <tr>
         <td>Vrsta subjekta</td>
-        <td><select ng-model="vrsta_subjekta" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !vrsta_subjekta }" ng-init="vrsta_subjekta=vrsta_subjekta|| collection[0].naziv"></select></td>
+        <td><select ng-model="Item.vrsta_subjekta" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !vrsta_subjekta }" ng-init="vrsta_subjekta=vrsta_subjekta|| collection[0].naziv"></select></td>
 
     </tr>
 
 </table>
-<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.pdV_BROJ ||!Item.poreskI_BROJ ||!Item.adresa ||!Item.kontakT_OSOBA  ||!Item.email ||!Item.telefon ||!Item.fax ||!vrsta_subjekta" />
+<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.pdv_broj ||!Item.poreski_broj ||!Item.adresa ||!Item.kontakt_osoba  ||!Item.email ||!Item.telefon ||!Item.fax ||!Item.vrsta_subjekta" />
 <a class="btn btn-info" ng-click="back()">Odustani</a>

@@ -13,9 +13,9 @@
     </tr>
     <tr>
         <td>Klasa dokumenata</td>
-        <td><select ng-model="klasa" ng-options="item.id as item.naziv for item in collection" ng-init="klasa = klasa|| collection[0].naziv"></select></td>
+        <td><select ng-model="Item.klasa" ng-options="item.id as item.naziv for item in collection" ng-init="klasa = klasa|| collection[0].naziv"></select></td>
     </tr>
 </table>
-<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!klasa" />
+<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.klasa" />
 <a class="btn btn-info" ng-click="back()">Odustani</a>
 <div>{{error}}</div>

@@ -32,16 +32,15 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/VrsteSubjekataAPI/5
-        [ResponseType(typeof(sp_vrste_subjekata))]
-        public IHttpActionResult Getsp_vrste_subjekata(int id)
+        public string Getsp_vrste_subjekata(int id)
         {
-            sp_vrste_subjekata sp_vrste_subjekata = db.sp_vrste_subjekata.Find(id);
-            if (sp_vrste_subjekata == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_vrste_subjekata);
+            var jsonResult = db.sp_vrste_subjekata.Select(x => new {
+                id = x.ID,
+                sifra = x.SIFRA,
+                naziv = x.NAZIV
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/VrsteSubjekataAPI/5

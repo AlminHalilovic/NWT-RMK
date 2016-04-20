@@ -42,6 +42,8 @@ namespace AngularJSAuthentication.API.Controllers
                 naziv = x.NAZIV,
                 sifra = x.SIFRA,
                 barcode = x.BARCODE,
+                grupa_proizvoda = x.GRUPA_PROIZVODA,
+                jedinica_mjere = x.JEDINICA_MJERE,
                 sifra_jmjere = x.sp_jedinice_mjera.SIFRA,
                 sifra_grupe = x.sp_grupe_proizvoda.SIFRA,
                 id_jmjere = x.sp_jedinice_mjera.ID

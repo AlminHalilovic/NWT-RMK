@@ -40,16 +40,23 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/SubjektiAPI/5
-        [ResponseType(typeof(sp_subjekti))]
-        public IHttpActionResult Getsp_subjekti(int id)
+        public string Getsp_subjekti(int id)
         {
-            sp_subjekti sp_subjekti = db.sp_subjekti.Find(id);
-            if (sp_subjekti == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_subjekti);
+            var jsonResult = db.sp_subjekti.Select(x => new {
+                id = x.ID,
+                pdv_broj = x.PDV_BROJ,
+                poreski_broj = x.PORESKI_BROJ,
+                sifra = x.SIFRA,
+                naziv = x.NAZIV,
+                adresa = x.ADRESA,
+                kontakt_osoba = x.KONTAKT_OSOBA,
+                email = x.EMAIL,
+                telefon = x.TELEFON,
+                fax = x.FAX,
+                vrsta_subjekta = x.sp_vrste_subjekata.ID
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/SubjektiAPI/5

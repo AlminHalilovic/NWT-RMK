@@ -30,17 +30,18 @@ namespace AngularJSAuthentication.API.Controllers
             return json;
         }
 
-        // GET: api/GrupeProizvodaAPI/5
-        [ResponseType(typeof(sp_grupe_proizvoda))]
-        public IHttpActionResult Getsp_grupe_proizvoda(int id)
+        public string Getsp_grupe_proizvoda(int id)
         {
-            sp_grupe_proizvoda sp_grupe_proizvoda = db.sp_grupe_proizvoda.Find(id);
-            if (sp_grupe_proizvoda == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_grupe_proizvoda);
+            var jsonResult = db.sp_grupe_proizvoda.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                nadgrupa = x.NADGRUPA,
+                nadgrupaNaziv = x.sp_grupe_proizvoda2.NAZIV,
+                nadgrupaSifra = x.sp_grupe_proizvoda2.SIFRA
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/GrupeProizvodaAPI/5

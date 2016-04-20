@@ -43,11 +43,9 @@ app.factory('SifarniciGetByIdFactory', function (SifarniciService, $location, Sh
     return function ($scope, apiPath) {
 
         var promiseGetEmployee = SifarniciService.getItemId(apiPath, ShareData.value);
-        console.log('Sharedata value je ' + ShareData.value);
         promiseGetEmployee.then(function (pl) {
-            var response = angular.fromJson(JSON.parse(pl.data));
+            var response = angular.fromJson(JSON.parse(pl.data))[0];
             $scope.Item = response;
-            console.log(response);
         },
               function (errorPl) {
                   $scope.error = 'Neuspješno učitavanje podataka', errorPl;

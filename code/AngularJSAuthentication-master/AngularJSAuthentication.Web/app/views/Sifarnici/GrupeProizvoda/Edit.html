@@ -11,10 +11,10 @@
     </tr>
     <tr>
         <td>Nadgrupa</td>
-        <td><select ng-model="nadgrupa" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !nadgrupa }"></select></td>
+        <td><select ng-model="Item.nadgrupa" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !Item.nadgrupa }"></select></td>
     </tr>
 
 </table>
-<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!nadgrupa" />
+<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.nadgrupa" />
 <a class="btn btn-info" ng-click="back()">Odustani</a>
 <div>{{error}}</div>

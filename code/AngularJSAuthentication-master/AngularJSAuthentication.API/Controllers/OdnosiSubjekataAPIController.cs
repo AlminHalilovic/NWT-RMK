@@ -32,16 +32,16 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/OdnosiSubjekataAPI/5
-        [ResponseType(typeof(sp_odnosi_subjekata))]
-        public IHttpActionResult Getsp_odnosi_subjekata(int id)
+        public string Getsp_odnosi_subjekata(int id)
         {
-            sp_odnosi_subjekata sp_odnosi_subjekata = db.sp_odnosi_subjekata.Find(id);
-            if (sp_odnosi_subjekata == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_odnosi_subjekata);
+            var jsonResult = db.sp_odnosi_subjekata.Select(x => new {
+                id = x.ID,
+                vrsta_odnosa = x.sp_vrste_odnosa_subjekata.ID,
+                subjekat = x.SUBJEKT,
+                ka_subjektu = x.KA_SUBJEKTU
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/OdnosiSubjekataAPI/5

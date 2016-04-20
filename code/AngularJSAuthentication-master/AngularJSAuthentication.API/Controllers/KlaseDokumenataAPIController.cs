@@ -32,16 +32,15 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/KlaseDokumenataAPI/5
-        [ResponseType(typeof(sp_klase_dokumenata))]
-        public IHttpActionResult Getsp_klase_dokumenata(int id)
+        public string Getsp_klase_dokumenata(int id)
         {
-            sp_klase_dokumenata sp_klase_dokumenata = db.sp_klase_dokumenata.Find(id);
-            if (sp_klase_dokumenata == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_klase_dokumenata);
+            var jsonResult = db.sp_klase_dokumenata.Select(x => new {
+                id = x.ID,
+                sifra = x.SIFRA,
+                naziv = x.NAZIV
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/KlaseDokumenataAPI/5

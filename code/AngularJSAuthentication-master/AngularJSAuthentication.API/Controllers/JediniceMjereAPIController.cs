@@ -32,16 +32,15 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/JediniceMjereAPI/5
-        [ResponseType(typeof(sp_jedinice_mjera))]
-        public IHttpActionResult Getsp_jedinice_mjera(int id)
+        public string Getsp_jedinice_mjera(int id)
         {
-            sp_jedinice_mjera sp_jedinice_mjera = db.sp_jedinice_mjera.Find(id);
-            if (sp_jedinice_mjera == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_jedinice_mjera);
+            var jsonResult = db.sp_jedinice_mjera.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/JediniceMjereAPI/5

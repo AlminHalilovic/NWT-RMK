@@ -33,16 +33,16 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/VrsteDokumenataAPI/5
-        [ResponseType(typeof(sp_vrste_dokumenata))]
-        public IHttpActionResult Getsp_vrste_dokumenata(int id)
+        public string Getsp_vrste_dokumenata(int id)
         {
-            sp_vrste_dokumenata sp_vrste_dokumenata = db.sp_vrste_dokumenata.Find(id);
-            if (sp_vrste_dokumenata == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(sp_vrste_dokumenata);
+            var jsonResult = db.sp_vrste_dokumenata.Select(x => new {
+                id = x.ID,
+                sifra = x.SIFRA,
+                naziv = x.NAZIV,
+                klasa = x.sp_klase_dokumenata.ID
+            }).Where(x => x.id == id).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // PUT: api/VrsteDokumenataAPI/5
