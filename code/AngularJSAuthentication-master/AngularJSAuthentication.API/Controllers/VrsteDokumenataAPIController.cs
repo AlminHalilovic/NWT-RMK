@@ -20,9 +20,16 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno db = new materijalno();
 
         // GET: api/VrsteDokumenataAPI
-        public IQueryable<sp_vrste_dokumenata> Getsp_vrste_dokumenata()
+        public string Getsp_vrste_dokumenata()
         {
-            return db.sp_vrste_dokumenata;
+            var jsonResult = db.sp_vrste_dokumenata.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA,
+                sifra_klase = x.sp_klase_dokumenata.SIFRA
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/VrsteDokumenataAPI/5

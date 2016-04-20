@@ -20,9 +20,18 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno db = new materijalno();
 
         // GET: api/KadroviAPI
-        public IQueryable<sp_kadrovi> Getsp_kadrovi()
+        public string Getsp_kadrovi()
         {
-            return db.sp_kadrovi;
+            var jsonResult = db.sp_kadrovi.Select(x => new {
+                id = x.ID,
+                ime = x.IME,
+                prezime = x.PREZIME,
+                jmbg = x.JMBG,
+                email = x.EMAIL,
+                sifra_klase = x.sp_klase_kadrova.SIFRA
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/KadroviAPI/5

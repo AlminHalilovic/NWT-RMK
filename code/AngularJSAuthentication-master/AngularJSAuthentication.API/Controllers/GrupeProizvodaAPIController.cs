@@ -19,9 +19,15 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno db = new materijalno();
 
         // GET: api/GrupeProizvodaAPI
-        public IQueryable<sp_grupe_proizvoda> Getsp_grupe_proizvoda()
+        public string Getsp_grupe_proizvoda()
         {
-            return db.sp_grupe_proizvoda;
+            var jsonResult = db.sp_grupe_proizvoda.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/GrupeProizvodaAPI/5

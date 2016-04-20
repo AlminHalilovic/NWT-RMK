@@ -20,9 +20,15 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno db = new materijalno();
 
         // GET: api/JediniceMjereAPI
-        public IQueryable<sp_jedinice_mjera> Getsp_jedinice_mjera()
+        public string Getsp_jedinice_mjera()
         {
-            return db.sp_jedinice_mjera;
+            var jsonResult = db.sp_jedinice_mjera.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/JediniceMjereAPI/5

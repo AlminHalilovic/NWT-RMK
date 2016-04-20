@@ -19,10 +19,16 @@ namespace AngularJSAuthentication.API.Controllers
     {
         private materijalno db = new materijalno();
 
-        // GET: api/OdnosiSubjekataAPI
-        public IQueryable<sp_odnosi_subjekata> Getsp_odnosi_subjekata()
+        public string Getsp_odnosi_subjekata()
         {
-            return db.sp_odnosi_subjekata;
+            var jsonResult = db.sp_odnosi_subjekata.Select(x => new {
+                id = x.ID,
+                naziv_vrste = x.sp_vrste_odnosa_subjekata.NAZIV,
+                subjekat = x.sp_subjekti.NAZIV,
+                ka_subjektu = x.sp_subjekti1.NAZIV
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/OdnosiSubjekataAPI/5

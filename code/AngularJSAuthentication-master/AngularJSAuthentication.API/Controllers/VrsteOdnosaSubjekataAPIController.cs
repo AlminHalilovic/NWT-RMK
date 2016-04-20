@@ -20,9 +20,15 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno db = new materijalno();
 
         // GET: api/VrsteOdnosaSubjekataAPI
-        public IQueryable<sp_vrste_odnosa_subjekata> Getsp_vrste_odnosa_subjekata()
+        public string Getsp_vrste_odnosa_subjekata()
         {
-            return db.sp_vrste_odnosa_subjekata;
+            var jsonResult = db.sp_vrste_odnosa_subjekata.Select(x => new {
+                id = x.ID,
+                naziv = x.NAZIV,
+                sifra = x.SIFRA
+            }).ToList();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
+            return json;
         }
 
         // GET: api/VrsteOdnosaSubjekataAPI/5
