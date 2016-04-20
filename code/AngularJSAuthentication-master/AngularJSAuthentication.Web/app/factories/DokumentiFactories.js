@@ -6,6 +6,11 @@
         promiseGetData.then(function (pl) {
             //$log.debug(pl.data);
             var response = angular.fromJson(JSON.parse(pl.data));
+            response.forEach(function (val) {
+                var d = new Date(val.datum);
+                var dateString = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+                val.datum = dateString;
+            });
             $scope.collection = response;
         },
               function (errorPl) {
