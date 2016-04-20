@@ -16,16 +16,16 @@ using System.Web.Script.Serialization;
 
 namespace AngularJSAuthentication.API.Controllers
 {
-    [RoutePrefix("api/IzdatnicaAPI")]
+    [RoutePrefix("api/StornoIzdatnicaAPI")]
     //[Authorize]
-    public class IzdatnicaAPIController : ApiController
+    public class StornoIzdatnicaAPIController : ApiController
     {
         private materijalno db = new materijalno();
 
         // GET: api/PrimkaAPI
         public string Getdp_izlazi()
         {
-            var jsonResult = db.dp_izlazi.Where(y => y.VRSTA_DOKUMENTA == 3).Select(x => new {
+            var jsonResult = db.dp_izlazi.Where(y => y.VRSTA_DOKUMENTA == 7).Select(x => new {
                 id = x.ID,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,
@@ -39,22 +39,16 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // GET: api/PrimkaAPI/5
-        public string Getdp_izlazi(int id)
+        [ResponseType(typeof(dp_izlazi))]
+        public IHttpActionResult Getdp_izlazi(int id)
         {
-            var jsonResult = db.dp_izlazi.Select(x => new {
-                id = x.ID,
-                broj_primke = x.BROJ_PRIMKE,
-                redni_broj = x.REDNI_BROJ,
-                datum = x.DATUM,
-                datum_unosa = x.DATUM_UNOSA,
-                opis = x.OPIS,
-                skladiste = x.OD_SUBJEKTA,
-                skladisteNaziv = db.sp_subjekti.Where(z => z.ID == x.OD_SUBJEKTA).FirstOrDefault().NAZIV,
-                dobavljac = x.ZA_SUBJEKTA,
-                dobavljacNaziv = x.sp_subjekti1.NAZIV
-            }).Where(y => y.id == id).FirstOrDefault();
-            string json = JsonConvert.SerializeObject(jsonResult);
-            return json;
+            dp_izlazi dp_izlazi = db.dp_izlazi.Find(id);
+            if (dp_izlazi == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(dp_izlazi);
         }
 
         public string Getdp_izlazi(int id, string model)
@@ -62,21 +56,12 @@ namespace AngularJSAuthentication.API.Controllers
             var jsonResult = db.dp_stavke_izlaza.Where(y => y.IZLAZ == id).Select(x => new {
                 id = x.ID,
                 redni_broj = x.REDNI_BROJ,
-                proizvod = x.sp_proizvodi.NAZIV,
+                proizvodNaziv = x.sp_proizvodi.NAZIV,
+                proizvod = x.PROIZVOD,
                 kolicina = x.KOLICINA,
                 jedinica_mjere = x.sp_jedinice_mjera.ID,
                 cijena = Math.Round(x.CIJENA, 3)
             }).ToList();
-            string json = JsonConvert.SerializeObject(jsonResult);
-            return json;
-        }
-        public string Getdp_ulazi(int dummy1, int dummy2, int dummy3)
-        {
-            var jsonResult = db.dp_izlazi.Where(x => (x.VRSTA_DOKUMENTA == 3 &&
-                                                 x.POVRAT == null &&
-                                                 !(db.dp_izlazi.Where(y => y.POVRAT != null).Select(y => y.POVRAT)).ToList().Contains(x.ID))).
-                                                 Select(z => new { id = z.ID, broj_povrata = z.BROJ_PRIMKE })
-                                                 .ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
         }
@@ -149,7 +134,8 @@ namespace AngularJSAuthentication.API.Controllers
                 izlaz.OD_SUBJEKTA = Convert.ToInt32(master["skladiste"]);
                 izlaz.OPIS = master["opis"].ToString();
                 izlaz.DATUM = Convert.ToDateTime(master["datum"]);
-                izlaz.VRSTA_DOKUMENTA = 3;
+                izlaz.POVRAT = Convert.ToInt32(master["povrat"]);
+                izlaz.VRSTA_DOKUMENTA = 7;
                 izlaz.POSLOVNI_PERIOD = 2;
                 izlaz.DATUM_UNOSA = DateTime.Now;
                 izlaz.STATUS = "D";
@@ -171,7 +157,7 @@ namespace AngularJSAuthentication.API.Controllers
                     brojac_dokumenata.ORGANIZACIJA = izlaz.OD_SUBJEKTA;
                     brojac_dokumenata.REDNI_BROJ = redniBroj;
                     brojac_dokumenata.GODINA = godina;
-                    brojac_dokumenata.VRSTA_DOKUMENTA = 3;
+                    brojac_dokumenata.VRSTA_DOKUMENTA = 7;
                     db.dp_brojaci_dokumenata.Add(brojac_dokumenata);
                 }
 
@@ -187,7 +173,7 @@ namespace AngularJSAuthentication.API.Controllers
                     response = JsonConvert.SerializeObject(new
                     {
                         ok = false,
-                        message = "Desila se greška pri unosu zaglavlja:" + e.Message.ToString() + " " +  (e.InnerException != null ? e.InnerException.Message.ToString() : "")
+                        message = "Desila se greška pri unosu zaglavlja:" + e.Message.ToString() + " " + (e.InnerException != null ? e.InnerException.Message.ToString() : "")
                     });
                     return response;
                 }

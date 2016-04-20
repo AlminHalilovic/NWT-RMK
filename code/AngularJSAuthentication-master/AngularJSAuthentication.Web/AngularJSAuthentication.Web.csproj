@@ -100,6 +100,8 @@
     <Content Include="app\views\Dokumenti\PocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\Primka\Add.html" />
     <Content Include="app\views\Dokumenti\Primka\Index.html" />
+    <Content Include="app\views\Dokumenti\StornoIzdatnica\Add.html" />
+    <Content Include="app\views\Dokumenti\StornoIzdatnica\Index.html" />
     <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Add.html" />
     <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\StornoPrimka\Add.html" />
@@ -222,9 +224,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\views\Dokumenti\StornoIzdatnica\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

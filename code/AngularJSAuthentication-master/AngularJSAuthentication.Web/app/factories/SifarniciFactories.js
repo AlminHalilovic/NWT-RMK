@@ -8,7 +8,7 @@ app.factory('SifarniciGetAllFactory', function (SifarniciService, ShareData, $ht
         promiseGetData.then(function (pl) {
             $log.debug(pl.data);
             var response = angular.fromJson(JSON.parse(pl.data));
-            $scope.collection = pl.data;
+            $scope.collection = response;
 
         },
               function (errorPl) {
@@ -43,9 +43,11 @@ app.factory('SifarniciGetByIdFactory', function (SifarniciService, $location, Sh
     return function ($scope, apiPath) {
 
         var promiseGetEmployee = SifarniciService.getItemId(apiPath, ShareData.value);
+        console.log('Sharedata value je ' + ShareData.value);
         promiseGetEmployee.then(function (pl) {
-            $scope.Item = pl.data;
-            console.log(pl.data);
+            var response = angular.fromJson(JSON.parse(pl.data));
+            $scope.Item = response;
+            console.log(response);
         },
               function (errorPl) {
                   $scope.error = 'Neuspješno učitavanje podataka', errorPl;

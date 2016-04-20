@@ -1,0 +1,59 @@
+﻿<div>
+
+    <h2>Pregled storno izdatnica</h2>
+
+    <a class="btn btn-primary" ng-click="addItem()"> Nova storno izdatnica</a>
+    <br />
+    <br />
+
+    <table class="table table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>Stavke</th>
+                <th>Redni broj</th>
+                <th>Broj storno izdatnice</th>
+                <th>Datum storno izdatnice</th>
+                <th>Opis</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat-start="i in collection">
+                <td><a class="btn btn-info" ng-click="showStavke('Izlaz', $index)">Stavke</a></td>
+                <td>{{i.redni_broj}}</td>
+                <td>{{i.broj_primke}}</td>
+                <td>{{i.datum}}</td>
+                <td>{{i.opis}}</td>
+            </tr>
+            <tr ng-show="i.isStavkeShown" ng-repeat-end="" >
+                <td colspan="6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Redni broj</th>
+                                <th>Proizvod</th>
+                                <th>Količina</th>
+                                <th>Cijena</th>
+                                <th>Vrijednost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="j in collection[$index].stavke">
+                                <td>{{j.redni_broj}}</td>
+                                <td>{{j.proizvodNaziv}}</td>
+                                <td>{{j.kolicina}}</td>
+                                <td>{{j.cijena}}</td>
+                                <td>{{j.cijena*j.kolicina}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="progress progress-striped active" data-ng-show="isBusy">
+        <div class="progress-bar" role="progressbar" style="width: 100%;"></div>
+    </div>
+</div>
+
+<div>{{error}}</div>
+
