@@ -1,25 +1,25 @@
 ﻿<div>
 
-    <h2>Pregled storno početnih stanja</h2>
+    <h2>{{'dokumentiStornoPocetnoStanjeIndexHEADLINE' | translate}}</h2>
 
-    <a class="btn btn-primary" ng-click="addItem()">Novo storno početno stanje</a>
+    <a class="btn btn-primary" ng-click="addItem()">{{'dokumentiDodaj' | translate}}</a>
     <br />
     <br />
 
     <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
-                <th>Stavke</th>
-                <th>Redni broj</th>
-                <th>Broj storno početnog stanja</th>
-                <th>Dostavnica</th>
-                <th>Datum storno početnog stanja</th>
-                <th>Opis</th>
+                <th>{{'dokumentiTableStavke' | translate}}</th>
+                <th>{{'dokumentiTableRedniBroj' | translate}}</th>
+                <th>{{'dokumentiTableBrojStornoPocetnogStanja' | translate}}</th>
+                <th>{{'dokumentiTableDostavnica' | translate}}</th>
+                <th>{{'dokumentiTableDatumStornoPocetnogStanja' | translate}}</th>
+                <th>{{'dokumentiTableOpis' | translate}}</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">Stavke</a></td>
+                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">{{'dokumentiTableStavke' | translate}}</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
                 <td>{{i.dostavnica}}</td>
@@ -31,11 +31,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Redni broj</th>
-                                <th>Proizvod</th>
-                                <th>Količina</th>
-                                <th>Cijena</th>
-                                <th>Vrijednost</th>
+                                <th>{{'dokumentiTableRedniBroj' | translate}}</th>
+                                <th>{{'dokumentiTableProizvod' | translate}}</th>
+                                <th>{{'dokumentiTableKolicina' | translate}}</th>
+                                <th>{{'dokumentiTableCijena' | translate}}</th>
+                                <th>{{'dokumentiTableVrijednost' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>

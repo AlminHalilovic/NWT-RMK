@@ -1,29 +1,29 @@
 ﻿
-<h2>Novi kadar</h2>
+<h2>{{'sifarniciKadroviAddHEADLINE' | translate}}</h2>
 <table class="table table-bordered table-responsive">
 
     <tr>
-        <td>JMBG</td>
+        <td>{{'sifarniciTableJMBG' | translate}}</td>
         <td><input type="text" ng-model="jmbg" ng-pattern="jmbgPattern" ng-class="{ error: !jmbg }" />  </td>
     </tr>
     <tr>
-        <td>Ime</td>
+        <td>{{'sifarniciTableIme' | translate}}</td>
         <td><input type="text" ng-model="ime" ng-pattern="/^[a-zA-Z\s]*$/" ng-class="{ error: !ime }" />  </td>
     </tr>
     <tr>
-        <td>Prezime</td>
+        <td>{{'sifarniciTablePrezime' | translate}}</td>
         <td><input type="text" ng-model="prezime" ng-pattern="/^[a-zA-Z\s]*$/" ng-class="{ error: !prezime }" />  </td>
     </tr>
 
     <tr>
-        <td>Email</td>
+        <td>{{'sifarniciTableEmail' | translate}}</td>
         <td><input type="text" ng-model="email" ng-pattern="emailPattern" ng-class="{ error: !email }" />  </td>
     </tr>
     <tr>
-        <td>Klasa kadrova</td>
+        <td>{{'sifarniciTableKlasaKadrova' | translate}}</td>
         <td><select ng-model="klasa" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !klasa }" ng-init="klasa = klasa|| collection[0].naziv"></select></td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!jmbg || !ime ||!prezime  ||!email ||!klasa" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>

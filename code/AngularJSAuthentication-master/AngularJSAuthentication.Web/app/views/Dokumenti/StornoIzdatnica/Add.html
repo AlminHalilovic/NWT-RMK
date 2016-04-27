@@ -1,6 +1,6 @@
 ﻿<table class="table">
     <tr>
-        <td colspan="2"><h2>Unos nove storno izdatnice</h2></td>
+        <td colspan="2"><h2>{{'dokumentiStornoIzdatnicaAddHEADLINE' | translate}}</h2></td>
         <td style="text-align:right;">
             <a class="btn btn-info" style="margin-top:5%;margin-right:1%;" ng-click="back()">Odustani <span class="glyphicon glyphicon-repeat"></span></a>
             <button class="btn btn-success" style="margin-top:5%;" ng-click="save()" ng-disabled="!stornoIzlazForm.$valid || stavke.length == 0">Sačuvaj storno izdatnicu<span class="glyphicon glyphicon-ok"></span></button>
@@ -11,20 +11,20 @@
     <table class="table table-bordered table-responsive">
         <tbody>
             <tr>
-                <td>Primka za povrat</td>
+                <td>{{'dokumentiTablePrimkaZaPovrat' | translate}}</td>
                 <td ng-class="{ 'has-error' : stornoIzlazForm.povrat_combobox.$invalid }">
                     <select id="povrat_combo" name="povrat_combobox" ng-required="true" class="form-control" ng-model="stornoIzdatnica.povrat" ng-change="setMasterAndStavke()" ng-options="item.id as item.broj_povrata for item in primkeZaStorno"></select>
                     <p ng-show="stornoIzlazForm.povrat_combobox.$error.required" class="help-block">Morate odabrati primku za povrat!</p>
                 </td>
             </tr>
             <tr>
-                <td>Opis</td>
+                <td>{{'dokumentiTableOpis' | translate}}</td>
                 <td><input type="text" class="form-control" ng-required="false" ng-model="stornoIzdatnica.opis" ng-class="{ error: !stornoIzdatnica.opis }" readonly disabled />  </td>
             </tr>
             <tr>
-                <td>Dokument</td>
+                <td>{{'dokumentiTableDokument' | translate}}</td>
                 <td><input type="text" class="form-control" ng-model="stornoIzdatnica.broj_primke" ng-class="{ error: !stornoIzdatnica.broj_primke }" readonly disabled />  </td>
-                <td>Datum</td>
+                <td>{{'dokumentiTableDatum' | translate}}</td>
                 <td>
                     <div class="row">
                         <table class="table">
@@ -45,12 +45,12 @@
                 </td>
             </tr>
             <tr>
-                <td>Skladište</td>
+                <td>{{'dokumentiTableSkladiste' | translate}}</td>
                 <td ng-class="{ 'has-error' : stornoIzlazForm.skladiste_combobox.$invalid }">
                     <select id="skladiste_combo" name="skladiste_combobox" ng-disabled="stavke.length > 0" class="form-control" ng-model="stornoIzdatnica.skladiste" ng-required="true" ng-options="item.id as item.naziv for item in subjekti" readonly disabled></select>
                     <p ng-show="stornoIzlazForm.skladiste_combobox.$error.required" class="help-block">Morate odabrati skladište!</p>
                 </td>
-                <td>Dobavljač</td>
+                <td>{{'dokumentiTableDobavljac' | translate}}</td>
                 <td ng-class="{ 'has-error' : stornoIzlazForm.dobavljaci_combobox.$invalid }">
                     <select id="dobavljaci_combo" ng-disabled="stavke.length > 0" name="dobavljaci_combobox" class="form-control" ng-required="true" ng-model="stornoIzdatnica.dobavljac" ng-options="item.id as item.naziv for item in subjekti" readonly disabled></select>
                     <p ng-show="stornoIzlazForm.dobavljaci_combobox.$error.required" class="help-block">Morate odabrati dobavljača!</p>
@@ -64,13 +64,12 @@
     <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
-                <th>Redni broj</th>
-                <th>Proizvod</th>
-                <th>Jedinica mjere</th>
-                <th>Količina</th>
-                <th>Cijena</th>
-                <th>Vrijednost</th>
-                <th ng-show="stavke.length != 0">Akcije</th>
+                <th>{{'dokumentiTableRedniBroj' | translate}}</th>
+                <th>{{'dokumentiTableProizvod' | translate}}</th>
+                <th>{{'dokumentiTableKolicina' | translate}}</th>
+                <th>{{'dokumentiTableCijena' | translate}}</th>
+                <th>{{'dokumentiTableVrijednost' | translate}}</th>
+                <th ng-show="stavke.length != 0">{{'dokumentiTableAkcije' | translate}}</th>
             </tr>
         </thead>
         <tbody>
@@ -101,7 +100,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><b>Ukupno:</b></td>
+                <td><b>{{'dokumentiTableUkupno' | translate}}</b></td>
                 <td></td>
                 <td></td>
                 <td></td>

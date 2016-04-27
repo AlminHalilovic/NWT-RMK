@@ -1,17 +1,17 @@
 ﻿
 
-<h2>Nova jedinica mjere</h2>
+<h2>{{'sifarniciJediniceMjeraAddHEADLINE' | translate}}</h2>
 <table class="table table-bordered table-responsive">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td><input type="text" ng-model="sifra" ng-class="{ error: !sifra }" />  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td><input type="text" ng-model="naziv" ng-class="{ error: !naziv }" />  </td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!sifra || !naziv" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciCancel' | translate}}</a>

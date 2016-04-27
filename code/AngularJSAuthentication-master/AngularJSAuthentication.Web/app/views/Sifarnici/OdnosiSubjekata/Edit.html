@@ -1,22 +1,22 @@
 ﻿
 
-<h2>Izmjena odnosa subjekata</h2>
+<h2>{{'sifarniciOdnosiSubjekataEditHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Vrsta odnosa</td>
+        <td>{{'sifarniciTableVrstaOdnosa' | translate}}</td>
         <td>
             <select ng-model="Item.vrsta_odnosa" ng-options="item.id as item.naziv for item in collection" ng-init="vrsta_odnosa=vrsta_odnosa|| collection[0].naziv" ng-class="{ error: !vrsta_odnosa }"></select>
         </td>
     </tr>
     <tr>
-        <td>Subjekat</td>
+        <td>{{'sifarniciTableSubjekat' | translate}}</td>
         <td>
             <select ng-model="Item.subjekat" ng-options="item.id as item.naziv for item in collection1" ng-init="subjekat=subjekat|| collection1[0].naziv" ng-class="{ error: !subjekat }"></select>
         </td>
     </tr>
     <tr>
-        <td>Ka subjektu</td>
+        <td>{{'sifarniciTableKaSubjektu' | translate}}</td>
         <td>
             <select ng-model="Item.ka_subjektu" ng-options="item.id as item.naziv for item in collection2" ng-init="ka_subjektu=ka_subjektu|| collection2[0].naziv" ng-class="{ error: !ka_subjektu }"></select>
         </td>
@@ -24,5 +24,5 @@
 
 </table>
 <input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.vrsta_odnosa || !Item.subjekat ||!Item.ka_subjektu" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciCancel' | translate}}</a>
 <div>{{error}}</div>

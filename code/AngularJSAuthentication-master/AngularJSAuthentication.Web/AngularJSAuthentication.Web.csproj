@@ -39,14 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BotDetect, Version=4.0.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Captcha.4.0.1\lib\net45\BotDetect.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="BotDetect.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Captcha.4.0.1\lib\net45\BotDetect.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -79,12 +71,15 @@
     <Content Include="app\controllers\SifarniciControllers.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
+    <Content Include="app\controllers\translateController.js" />
     <Content Include="app\directives\CustomDirectives.js" />
+    <Content Include="app\directives\LanguageSelectDirective.js" />
     <Content Include="app\factories\DokumentiFactories.js" />
     <Content Include="app\factories\SifarniciFactories.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\DokumentiServices.js" />
+    <Content Include="app\services\LocaleService.js" />
     <Content Include="app\services\SifarniciService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\services\ZaliheServices.js" />
@@ -186,6 +181,8 @@
     <Content Include="packages.config" />
     <Content Include="content\css\images\dropdown.pdn" />
     <None Include="Properties\PublishProfiles\ngauthenticationweb.pubxml" />
+    <Content Include="resources\locale-en_US.json" />
+    <Content Include="resources\locale-ba_BA.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -201,6 +198,10 @@
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-recaptcha.min.js" />
+    <Content Include="scripts\angular-translate-loader-url.js" />
+    <Content Include="scripts\angular-translate-loader-url.min.js" />
+    <Content Include="scripts\angular-translate.js" />
+    <Content Include="scripts\angular-translate.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap.js" />

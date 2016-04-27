@@ -4,12 +4,12 @@
             &nbsp;
         </div>
         <div class="col-md-4">
-            <h2 class="form-login-heading">Login</h2>
+            <h2 class="form-login-heading">{{'loginHEADLINE' | translate}}</h2>
             <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
             <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
-            <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="login()">Login</button>
+            <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="login()">{{'loginPrijava' | translate}}</button>
             <br />
-            <a href="/#/forgotPassword">Forgot your password?</a>
+            <a href="/#/forgotPassword">{{'loginZaboraviliSteSifru' | translate}}</a>
               <div data-ng-hide="message == ''" class="alert alert-danger">
                 {{message}}
             </div>

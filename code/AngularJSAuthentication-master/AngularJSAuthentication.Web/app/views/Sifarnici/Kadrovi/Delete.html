@@ -1,25 +1,25 @@
 ﻿
-<h2>Brisanje kadrova</h2>
+<h2>{{'sifarniciKadroviDeleteHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>JMBG</td>
+        <td>{{'sifarniciTableJMBG' | translate}}</td>
         <td>{{Item.jmbg}}  </td>
     </tr>
     <tr>
-        <td>Ime</td>
+        <td>{{'sifarniciTableIme' | translate}}</td>
         <td>{{Item.ime}} </td>
     </tr>
     <tr>
-        <td>Prezime</td>
+        <td>{{'sifarniciTablePrezime' | translate}}</td>
         <td>{{Item.prezime}} </td>
     </tr>
     <tr>
-        <td>Email</td>
+        <td>{{'sifarniciTableEmail' | translate}}</td>
         <td>{{Item.email}} </td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciTableCancel' | translate}}</a>
 <div>{{error}}</div>

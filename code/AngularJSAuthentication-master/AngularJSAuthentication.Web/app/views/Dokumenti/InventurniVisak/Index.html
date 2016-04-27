@@ -1,21 +1,21 @@
 ﻿<div>
-    <h2>Pregled inventurnih viškova</h2>
+    <h2>{{'dokumentiInventurniVisakIndexHEADLINE' | translate}}</h2>
     <br />
     <br />
     <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
-                <th>Stavke</th>
-                <th>Redni broj</th>
-                <th>Broj inventurnog viška</th>
-                <th>Datum inventurnog viška</th>
-                <th>Opis</th>
-                <th>Skladište</th>
+                <th>{{'dokumentiTableStavke' | translate}}</th>
+                <th>{{'dokumentiTableRedniBroj' | translate}}</th>
+                <th>{{'dokumentiTableBrojInventurnogViska' | translate}}</th>
+                <th>{{'dokumentiTableDatumInventurnogViska' | translate}}</th>
+                <th>{{'dokumentiTableOpis' | translate}}</th>
+                <th>{{'dokumentiTableSkladiste' | translate}}</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">Stavke</a></td>
+                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">{{'dokumentiTableStavke' | translate}}</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
                 <td>{{i.datum}}</td>
@@ -27,11 +27,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Redni broj</th>
-                                <th>Proizvod</th>
-                                <th>Količina</th>
-                                <th>Cijena</th>
-                                <th>Vrijednost</th>
+                                <th>{{'dokumentiTableRedniBroj' | translate}}</th>
+                                <th>{{'dokumentiTableProizvod' | translate}}</th>
+                                <th>{{'dokumentiTableKolicina' | translate}}</th>
+                                <th>{{'dokumentiTableCijena' | translate}}</th>
+                                <th>{{'dokumentiTableVrijednost' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>

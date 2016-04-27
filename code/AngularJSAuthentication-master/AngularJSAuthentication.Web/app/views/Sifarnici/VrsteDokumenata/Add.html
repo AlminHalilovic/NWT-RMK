@@ -1,22 +1,22 @@
 ﻿
 
 
-<h2>Nova vrsta dokumenata</h2>
+<h2>{{'sifarniciVrsteDokumenataAddHEADLINE' | translate}}</h2>
 <table class="table table-bordered table-responsive">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td><input type="text" ng-model="sifra" ng-class="{ error: !sifra }" />  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td><input type="text" ng-model="naziv" ng-class="{ error: !naziv }" />  </td>
     </tr>
     <tr>
-        <td>Klasa dokumenata</td>
+        <td>{{'sifarniciTableKlasaDokumenata' | translate}}</td>
         <td><select ng-model="klasa" ng-options="item.id as item.naziv for item in collection" ng-init="klasa = klasa|| collection[0].naziv"></select></td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!sifra || !naziv" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>

@@ -1,28 +1,28 @@
-﻿<h2>Izmjena proizvoda</h2>
+﻿<h2>{{'sifarniciProizvodEditHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td><input type="text" ng-model="Item.sifra" ng-class="{ error: !Item.sifra }" />  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td><input type="text" ng-model="Item.naziv" ng-class="{ error: !Item.naziv }" />  </td>
     </tr>
     <tr>
-        <td>Barcode</td>
+        <td>{{'sifarniciTableBarcode' | translate}}</td>
         <td><input type="text" ng-model="Item.barcode" ng-class="{ error: !Item.barcode }" />  </td>
     </tr>
     <tr>
-        <td>Grupa proizvoda</td>
+        <td>{{'sifarniciTableGrupaProizvoda' | translate}}</td>
         <td><select ng-model="Item.grupa_proizvoda" ng-options="item.id as item.naziv for item in collection1" ng-init="grupa_proizvoda = grupa_proizvoda|| collection1[0].naziv" ng-class="{ error: !grupa_proizvoda }"></select></td>
     </tr>
     <tr>
-        <td>Jedinica mjera</td>
+        <td>{{'sifarniciTableJedinicaMjera' | translate}}</td>
         <td><select ng-model="Item.jedinica_mjere" ng-options="item.id as item.naziv for item in collection" ng-init="jedinica_mjere = jedinica_mjere|| collection[0].naziv" ng-class="{ error: !jedinica_mjere }"></select></td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.barcode ||!Item.grupa_proizvoda ||!Item.jedinica_mjere" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>
 <div>{{error}}</div>

@@ -1,41 +1,41 @@
 ﻿
-<h2>Brisanje subjekta</h2>
+<h2>{{'sifarniciSubjektiDeleteHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td>{{Item.sifra}}</td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td>{{Item.naziv}}</td>
     </tr>
     <tr>
-        <td>PDV broj</td>
+        <td>{{'sifarniciTablePDVBroj' | translate}}</td>
         <td>{{Item.pdV_BROJ}}</td>
     </tr>
     <tr>
-        <td>Poreski broj</td>
+        <td>{{'sifarniciTablePoreskiBroj' | translate}}</td>
         <td>{{Item.poreskI_BROJ}}</td>
     </tr>
     <tr>
-        <td>Adresa</td>
+        <td>{{'sifarniciTableAdresa' | translate}}</td>
         <td>{{Item.adresa}}</td>
     </tr>
     <tr>
-        <td>Kontakt osoba</td>
+        <td>{{'sifarniciTableKontakOsoba' | translate}}</td>
         <td>{{Item.kontakT_OSOBA}}</td>
     </tr>
     <tr>
-        <td>Email</td>
+        <td>{{'sifarniciTableEmail' | translate}}</td>
         <td>{{Item.email}}</td>
     </tr>
     <tr>
-        <td>Telefon</td>
+        <td>{{'sifarniciTableTelefon' | translate}}</td>
         <td>{{Item.telefon}}</td>
     </tr>
     <tr>
-        <td>Fax</td>
+        <td>{{'sifarniciTableFax' | translate}}</td>
         <td>{{Item.fax}}</td>
     </tr>
 
@@ -46,5 +46,5 @@
 
 
 <input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>
 <div>{{error}}</div>

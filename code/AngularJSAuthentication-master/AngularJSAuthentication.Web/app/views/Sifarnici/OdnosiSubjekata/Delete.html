@@ -1,21 +1,21 @@
 ﻿
-<h2>Brisanje odnosa subjekata</h2>
+<h2>{{'sifarniciOdnosiSubjekataDeleteHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Vrsta_odnosa</td>
+        <td>{{'sifarniciTableVrstaOdnosa' | translate}}</td>
         <td>{{Item.sp_vrste_odnosa_subjekata.naziv}}  </td>
     </tr>
     <tr>
-        <td>Subjekat</td>
+        <td>{{'sifarniciTableSubjekat' | translate}}</td>
         <td>{{Item.sp_subjekti.naziv}} </td>
     </tr>
     <tr>
-        <td>Ka subjektu</td>
+        <td>{{'sifarniciTableKaSubjektu' | translate}}</td>
         <td>{{Item.sp_subjekti1.naziv}} </td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>
 <div>{{error}}</div>

@@ -1,17 +1,17 @@
 ﻿
-<h2>Brisanje grupe proizvoda</h2>
+<h2>{{'sifarniciGrupeProizvodaDeleteHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td>{{Item.sifra}}  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td>{{Item.naziv}} </td>
     </tr>
 
 </table>
 <input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>
 <div>{{error}}</div>

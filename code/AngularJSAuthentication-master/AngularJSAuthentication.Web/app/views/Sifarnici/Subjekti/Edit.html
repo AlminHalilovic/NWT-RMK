@@ -1,50 +1,50 @@
 ﻿
-<h2>Izmjena subjekata</h2>
+<h2>{{'sifarniciSubjektiEditHEADLINE' | translate}}</h2>
 <table class="table table-bordered table-responsive">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td><input type="text" ng-model="Item.sifra" ng-class="{ error: !Item.sifra }" />  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td><input type="text" ng-model="Item.naziv" ng-class="{ error: !Item.naziv }" />  </td>
     </tr>
     <tr>
-        <td>PDV broj</td>
+        <td>{{'sifarniciTablePDVBroj' | translate}}</td>
         <td><input type="text" ng-model="Item.pdv_broj" ng-pattern="/^\d+$/" ng-class="{ error: !Item.pdv_broj }" />  </td>
     </tr>
     <tr>
-        <td>Poreski broj</td>
+        <td>{{'sifarniciTablePoreskiBroj' | translate}}</td>
         <td><input type="text" ng-model="Item.poreski_broj" ng-class="{ error: !Item.poreski_broj }" />  </td>
     </tr>
     <tr>
-        <td>Adresa</td>
+        <td>{{'sifarniciTableAdresa' | translate}}</td>
         <td><input type="text" ng-model="Item.adresa" ng-class="{ error: !Item.adresa }" />  </td>
     </tr>
     <tr>
-        <td>Kontakt osoba</td>
+        <td>{{'sifarniciTableKontaktOsoba' | translate}}</td>
         <td><input type="text" ng-model="Item.konakt_osoba" ng-class="{ error: !Item.kontakt_osoba }" />  </td>
     </tr>
     <tr>
 
-        <td>Email</td>
+        <td>{{'sifarniciTableEmail' | translate}}</td>
         <td><input type="text" ng-model="Item.email" ng-pattern="emailPattern" ng-class="{ error: !Item.email }" />  </td>
     </tr>
     <tr>
-        <td>Telefon</td>
+        <td>{{'sifarniciTableTelefon' | translate}}</td>
         <td><input ng-model="Item.telefon" ng-pattern="/^\d+$/" ng-class="{ error: !Item.telefon }" /></td>
     </tr>
     <tr>
-        <td>Fax</td>
+        <td>{{'sifarniciTableFax' | translate}}</td>
         <td><input ng-model="Item.fax" ng-pattern="/^\d+$/" ng-class="{error:!Item.fax}" /></td>
     </tr>
     <tr>
-        <td>Vrsta subjekta</td>
+        <td>{{'sifarniciTableVrstaSubjekta' | translate}}</td>
         <td><select ng-model="Item.vrsta_subjekta" ng-options="item.id as item.naziv for item in collection" ng-class="{ error: !vrsta_subjekta }" ng-init="vrsta_subjekta=vrsta_subjekta|| collection[0].naziv"></select></td>
 
     </tr>
 
 </table>
 <input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv ||!Item.pdv_broj ||!Item.poreski_broj ||!Item.adresa ||!Item.kontakt_osoba  ||!Item.email ||!Item.telefon ||!Item.fax ||!Item.vrsta_subjekta" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>

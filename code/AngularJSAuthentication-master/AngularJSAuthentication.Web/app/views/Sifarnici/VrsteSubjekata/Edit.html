@@ -1,19 +1,19 @@
 ﻿
-<h2>Izmjena vrste subjekata</h2>
+<h2>{{'sifarniciVrsteSubjekataEditHEADLINE' | translate}}</h2>
 <table class="table table-responsive table-bordered">
 
     <tr>
-        <td>Šifra</td>
+        <td>{{'sifarniciTableSifra' | translate}}</td>
         <td><input type="text" ng-model="Item.sifra" ng-class="{ error: !Item.sifra }" />  </td>
     </tr>
     <tr>
-        <td>Naziv</td>
+        <td>{{'sifarniciTableNaziv' | translate}}</td>
         <td><input type="text" ng-model="Item.naziv" ng-class="{ error: !Item.naziv }" />  </td>
     </tr>
 
 
 </table>
 <input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.sifra || !Item.naziv" />
-<a class="btn btn-info" ng-click="back()">Odustani</a>
+<a class="btn btn-info" ng-click="back()">{{'sifarniciOdustani' | translate}}</a>
 <div>{{error}}</div>
 
