@@ -15,7 +15,7 @@ namespace AngularJSAuthentication.API.Controllers
     public class DijagramiAPIController : ApiController
     {
         private materijalno db = new materijalno();
-      
+        private VrsteDokumenataAPIController vrsteController = new VrsteDokumenataAPIController();
 
         [HttpGet]
         public DijagramiViewModel GetPrimka(string startDate,string endDate)
@@ -23,39 +23,44 @@ namespace AngularJSAuthentication.API.Controllers
             DijagramiViewModel dvm = new DijagramiViewModel();
             DateTime startD = new DateTime();
             DateTime endD = new DateTime();
+            int vrstaPrimka = vrsteController.getIdBySifra("PR");
+            int vrstaStornoPrimka = vrsteController.getIdBySifra("SPR");
             try
             {
-                startD = DateTime.Parse(startDate);
-                endD = DateTime.Parse(endDate);
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e){}
-            var slog1 = db.dp_ulazi.Where(x =>x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA==1).ToList();
+            var datumi = db.dp_ulazi.Select(x => x.DATUM_UNOSA).ToList();
+            var slog1 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaPrimka).ToList();
             if (slog1 != null && slog1.Count != 0)
                 dvm.brojDokumenata = slog1.Count;
 
-           var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA==6).ToList();
+           var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoPrimka).ToList();
             if (slog2 != null && slog2.Count != 0)
                 dvm.brojDokumenata = slog2.Count;
             return dvm;
     }
 
         [HttpGet]
-        public DijagramiViewModel GetIzdatnica(string startDate, string endDate)
+        public DijagramiViewModel GetIzdatnica(string startDate, string endDate, int dummy)
         {
             DijagramiViewModel dvm = new DijagramiViewModel();
             DateTime startD = new DateTime();
             DateTime endD = new DateTime();
+            int vrstaIzdatnica = vrsteController.getIdBySifra("IZD");
+            int vrstaStornoIzdatnica = vrsteController.getIdBySifra("SIZD");
             try
             {
-                startD = DateTime.Parse(startDate);
-                endD = DateTime.Parse(endDate);
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e) { }
-            var slog1 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == 3).ToList();
+            var slog1 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaIzdatnica).ToList();
             if (slog1 != null && slog1.Count != 0)
                 dvm.brojDokumenata = slog1.Count;
 
-            var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == 7).ToList();
+            var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoIzdatnica).ToList();
             if (slog2 != null && slog2.Count != 0)
                 dvm.brojDokumenata = slog2.Count;
             return dvm;

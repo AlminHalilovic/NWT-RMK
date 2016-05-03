@@ -116,7 +116,7 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
     {
         startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth() + 1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
         endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth() + 1) + "/" + $scope.documentsData.documentsTo.getFullYear();
-        var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetIzdatnica?startDate=' + startDate + '&endDate=' + endDate);
+        var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetIzdatnica?startDate=' + startDate + '&endDate=' + endDate + '&dummy=1');
         promiseGetData.then(function (pl) {
 
             $timeout(function () {

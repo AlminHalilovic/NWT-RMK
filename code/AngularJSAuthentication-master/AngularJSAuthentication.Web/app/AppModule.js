@@ -111,7 +111,6 @@ app.run(function (acuteSelectService) {
 
         $routeProvider.when("/forgotPassword", { controller: "forgotPasswordController", templateUrl: "/app/views/forgotPassword.html" });
 
-<<<<<<< HEAD
         $routeProvider.when("/Roles", { controller: "RoleController", templateUrl: "/app/views/Roles/Index.html" });
         $routeProvider.when("/Roles/AddRole", { controller: "AddRoleController", templateUrl: "/app/views/Roles/Add.html" });
         $routeProvider.when("/Roles/EditRole/:id", { controller: "EditRoleController", templateUrl: "/app/views/Roles/Edit.html" });
@@ -123,13 +122,9 @@ app.run(function (acuteSelectService) {
         $routeProvider.when("/Users/EditUser/:id", { controller: "EditUserController", templateUrl: "/app/views/Users/Edit.html" });
         $routeProvider.when("/Users/DeleteUser/:id", { controller: "DeleteUserController", templateUrl: "/app/views/Users/Delete.html" });
         //$routeProvider.when("/resetPassword", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
-=======
         $routeProvider.when("/Admin", { controller: "adminController", templateUrl: "/app/views/Admin/index.html" });
         $routeProvider.when("/Admin/Charts", { controller: "adminChartsController", templateUrl: "/app/views/Admin/charts.html" });
->>>>>>> 655d7138897ed9eb3fac0b4a4be4233bfa1564b5
-
-
-        
+     
         $routeProvider.otherwise({ redirectTo: "/home" });
 
 

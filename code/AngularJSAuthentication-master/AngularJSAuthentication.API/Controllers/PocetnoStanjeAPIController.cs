@@ -77,7 +77,8 @@ namespace AngularJSAuthentication.API.Controllers
 
         public string Getdp_ulazi(int dummy1, int dummy2, int dummy3)
         {
-            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == vrsteController.getIdBySifra("PS") &&
+            int vrsta = vrsteController.getIdBySifra("PS");
+            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == vrsta &&
                                                  x.POVRAT == null &&
                                                  !(db.dp_ulazi.Where(y => y.POVRAT != null).Select(y => y.POVRAT)).ToList().Contains(x.ID))).
                                                  Select(z => new { id = z.ID, broj_povrata = z.BROJ_PRIMKE })
