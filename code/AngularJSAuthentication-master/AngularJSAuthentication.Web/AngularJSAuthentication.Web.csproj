@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\AppModule.js" />
+    <Content Include="app\controllers\adminChartsController.js" />
+    <Content Include="app\controllers\adminController.js" />
     <Content Include="app\controllers\confirmEmailController.js" />
     <Content Include="app\controllers\DokumentiControllers.js" />
     <Content Include="app\controllers\forgotPasswordController.js" />
@@ -83,6 +85,8 @@
     <Content Include="app\services\SifarniciService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\services\ZaliheServices.js" />
+    <Content Include="app\views\Admin\charts.html" />
+    <Content Include="app\views\Admin\index.html" />
     <Content Include="app\views\confirmEmail.html" />
     <Content Include="app\views\Dokumenti\Index.html" />
     <Content Include="app\views\Dokumenti\Inventura\Add.html" />
@@ -196,6 +200,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\acute.select.js" />
     <Content Include="scripts\angular-animate.js" />
+    <Content Include="scripts\angular-fusioncharts.min.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-recaptcha.min.js" />
     <Content Include="scripts\angular-translate-loader-url.js" />
