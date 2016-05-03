@@ -1,10 +1,10 @@
-﻿<h2>Edit role</h2>
+﻿<h2>{{'editRoleTitle' | translate}}</h2>
 <table class="table table-responsive table-bordered">
     <tr>
-        <td>Role name</td>
+        <td>{{'editRoleRoleName' | translate}}</td>
         <td><input type="text" ng-model="Item.RoleName" ng-class="{ error: !Item.RoleName }" />  </td>
     </tr>
 </table>
-<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.RoleName" />
-<a class="btn btn-info" ng-click="back()">Cancel</a>
+<input type="button" class="btn btn-success" value="{{'editRoleEdit' | translate}}" ng-click="save()" ng-disabled="!Item.RoleName" />
+<a class="btn btn-info" ng-click="back()">{{'editRoleCancel' | translate}}</a>
 <div>{{error}}</div>

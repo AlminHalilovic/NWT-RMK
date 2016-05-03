@@ -50,7 +50,20 @@ namespace AngularJSAuthentication.API.Controllers
             string json = JsonConvert.SerializeObject(roles);
             return json;
         }
-       
+
+        [Route("GetRolesForUserByName/{userName}")]
+        public string GetRolesForUserByName(string userName)
+        {
+            var user = db.Users.Where(x => x.UserName == userName).First();
+            var userRoles = this.AppUserManager.GetRoles(user.Id);
+            var roles = db.Roles.Where(x => userRoles.Contains(x.Name)).Select(y => new {
+                RoleName = y.Name,
+                ID = y.Id
+            });
+            string json = JsonConvert.SerializeObject(roles);
+            return json;
+        }
+
         [Route("Delete/{id}")]
         public void Deleterole(string id)
         {

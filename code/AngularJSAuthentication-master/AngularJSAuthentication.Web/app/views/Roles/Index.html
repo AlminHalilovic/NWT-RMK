@@ -1,22 +1,22 @@
 ﻿<div>
 
-    <h2>Roles</h2>
+    <h2>{{'indexRoles' | translate}}</h2>
 
-    <a class="btn btn-primary" ng-click="addItem()"> Add role </a>
+    <a class="btn btn-primary" ng-click="addItem()"> {{'indexAddRole' | translate}} </a>
     <br />
     <br />
 
     <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
-                <th>Role name</th>
+                <th>{{'indexRoleName' | translate}}</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="i in collection track by $index">
                 <td>{{i.RoleName}}</td>
-                <td><a class="btn btn-info" ng-click="editItem(i.ID)">Edit</a></td>
-                <td><a class="btn btn-danger" ng-click="deleteItem(i.ID)">Delete</a></td>
+                <td><a class="btn btn-info" ng-click="editItem(i.ID)">{{'indexRoleEdit' | translate}}</a></td>
+                <td><a class="btn btn-danger" ng-click="deleteItem(i.ID)">{{'indexRoleDelete' | translate}}</a></td>
             </tr>
         </tbody>
     </table>

@@ -1,22 +1,22 @@
-﻿<h2>Edit user</h2>
+﻿<h2>{{'editUserTitle' | translate}}</h2>
 <table class="table table-responsive table-bordered">
     <tr>
-        <td>Username</td>
+        <td>{{'editUserUsername' | translate}}</td>
         <td><input type="text" ng-model="Item.UserName" ng-class="{ error: !Item.UserName }" />  </td>
     </tr>
     <tr>
-        <td>Email</td>
+        <td>{{'editUserEmail' | translate}}</td>
         <td><input type="text" ng-model="Item.Email" ng-class="{ error: !Item.Email }" />  </td>
     </tr>
     <tr>
-        <td>Current password</td>
+        <td>{{'editUserCurrentPassword' | translate}}</td>
         <td><input type="password" ng-model="Item.CurrentPassword" ng-class="{ error: !Item.CurrentPassword }" />  </td>
     </tr>
     <tr>
-        <td>Password</td>
+        <td>{{'editUserPassword' | translate}}</td>
         <td><input type="password" ng-model="Item.Password" ng-class="{ error: !Item.Password }" />  </td>
     </tr>
 </table>
-<input type="button" class="btn btn-success" value="Izmijeni" ng-click="save()" ng-disabled="!Item.CurrentPassword" />
-<a class="btn btn-info" ng-click="back()">Cancel</a>
+<input type="button" class="btn btn-success" value="{{'editUserSave' | translate}}" ng-click="save()" ng-disabled="!Item.CurrentPassword" />
+<a class="btn btn-info" ng-click="back()">{{'editUserCancel' | translate}}</a>
 <div>{{error}}</div>

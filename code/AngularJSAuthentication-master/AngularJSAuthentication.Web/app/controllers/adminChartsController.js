@@ -1,5 +1,21 @@
 ﻿'use strict';
-app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'authService', '$routeParams','SifarniciService','$rootScope', function ($scope, $location, $timeout, authService, $routeParams,SifarniciService,$rootScope) {
+app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'authService', '$routeParams','SifarniciService','$rootScope', '$http', function ($scope, $location, $timeout, authService, $routeParams,SifarniciService,$rootScope, $http) {
+
+
+    $http.get('http://localhost:26264/api/RoleAPI/GetRolesForUserByName/' + authService.authentication.userName).then(function (pl) {
+        var json = JSON.parse(pl.data);
+        var found = false;
+        for (var i = 0; i < json.length; i++) {
+            if (json[i].RoleName == "Administrator") {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            alert('Nemate pristup ovom modulu aplikacije!');
+            $location.path('/home');
+        }
+    });
 
     $scope.isChartReady = false;
     $scope.maxDate = new Date();

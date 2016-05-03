@@ -1,6 +1,6 @@
 ﻿<div>
 
-    <h2>{{'dokumentiIzdatnicaIndexHEADLIN' | translate}}</h2>
+    <h2>{{'dokumentiIzdatnicaIndexHEADLINE' | translate}}</h2>
 
     <a class="btn btn-primary" ng-click="addItem()"> {{'dokumentiDodaj' | translate}}</a>
     <br />
@@ -18,7 +18,7 @@
         </thead>
         <tbody>
             <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Izlaz', $index)">Stavke</a></td>
+                <td><a class="btn btn-info" ng-click="showStavke('Izlaz', $index)">{{'dokumentiTableStavke' | translate}}</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
                 <td>{{i.datum}}</td>

@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr ng-repeat-start="i in collection">
-                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">Stavke</a></td>
+                <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">{{'dokumentiTableStavke' | translate}}</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
                 <td>{{i.dostavnica}}</td>
