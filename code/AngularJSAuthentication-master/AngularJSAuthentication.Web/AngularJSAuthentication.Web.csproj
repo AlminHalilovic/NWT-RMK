@@ -107,6 +107,11 @@
     <Content Include="app\views\login.html" />
     <Content Include="app\views\refresh.html" />
     <Content Include="app\views\resetPassword.html" />
+    <Content Include="app\views\Roles\AddRoleToUser.html" />
+    <Content Include="app\views\Roles\Delete.html" />
+    <Content Include="app\views\Roles\Add.html" />
+    <Content Include="app\views\Roles\Edit.html" />
+    <Content Include="app\views\Roles\Index.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Add.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Delete.html" />
     <Content Include="app\views\Sifarnici\GrupeProizvoda\Edit.html" />
@@ -154,6 +159,10 @@
     <Content Include="app\views\Sifarnici\VrsteSubjekata\Index.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\tokens.html" />
+    <Content Include="app\views\Users\Add.html" />
+    <Content Include="app\views\Users\Delete.html" />
+    <Content Include="app\views\Users\Edit.html" />
+    <Content Include="app\views\Users\Index.html" />
     <Content Include="authComplete.html" />
     <Content Include="content\css\acute.select.css" />
     <Content Include="content\css\AdminLTE.css" />

@@ -14,7 +14,7 @@ using System.Web.Http.Description;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/VrsteDokumenataAPI")]
-    [Authorize(Roles = "Sifarnici,Administrator")]
+    [Authorize(Roles = "Sifarnici, Administrator")]
     public class VrsteDokumenataAPIController : ApiController
     {
         private materijalno db = new materijalno();
@@ -43,6 +43,11 @@ namespace AngularJSAuthentication.API.Controllers
             }).Where(x => x.id == id).ToList();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonResult);
             return json;
+        }
+
+        public int getIdBySifra(string sifra)
+        {
+            return db.sp_vrste_dokumenata.Where(x => x.SIFRA == sifra).First().ID;
         }
 
         // PUT: api/VrsteDokumenataAPI/5

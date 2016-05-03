@@ -27,9 +27,22 @@ app.factory('SifarniciCreateFactory', function (SifarniciService, $location, Sha
 
 
         promisePost.then(function (pl) {
-
-            alert("Uspješno je unesen novi podatak u šifarnik!");
-            $location.path(returnPath);
+            try {
+                var json = JSON.parse(pl.data);
+                if (json && typeof json === "object" && json !== null) {
+                    if (json.ok == true || json.ok == null || json.ok == "undefined") {
+                        alert("Uspješno je unesen novi podatak u šifarnik!");
+                        $location.path(returnPath);
+                    } else if (json.ok == false) {
+                        $scope.error = json.error;
+                    }
+                }
+            }
+            catch (e) {
+                alert("Uspješno je unesen novi podatak u šifarnik!");
+                $location.path(returnPath);
+            }
+            
         },
               function (errorPl) {
                   $scope.error = 'Greška tokom učitavanja podataka', errorPl;

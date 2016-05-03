@@ -1,0 +1,10 @@
+﻿<h2>Add new role</h2>
+<table class="table table-bordered table-responsive">
+
+    <tr>
+        <td>Role name</td>
+        <td><input type="text" ng-model="roleName" ng-class="{ error: !roleName }" />  </td>
+    </tr>
+</table>
+<input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!roleName" />
+<a class="btn btn-info" ng-click="back()">Cancel</a>

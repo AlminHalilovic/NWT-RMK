@@ -17,15 +17,17 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/StornoPrimkaAPI")]
-    [Authorize(Roles = "Dokumenti,Administrator")]
+    [Authorize(Roles = "Dokumenti, Administrator")]
     public class StornoPrimkaAPIController : ApiController
     {
         private materijalno db = new materijalno();
+        private VrsteDokumenataAPIController vrsteController = new VrsteDokumenataAPIController();
 
         // GET: api/PrimkaAPI
         public string Getdp_ulazi()
         {
-            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 6).Select(x => new {
+            int vrsta = vrsteController.getIdBySifra("SPR");
+            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == vrsta).Select(x => new {
                 id = x.ID,
                 povrat = x.POVRAT,
                 broj_primke = x.BROJ_PRIMKE,
@@ -138,7 +140,7 @@ namespace AngularJSAuthentication.API.Controllers
                 ulaz.OPIS = master["opis"].ToString();
                 ulaz.DATUM = Convert.ToDateTime(master["datum"]);
                 ulaz.POVRAT = Convert.ToInt32(master["povrat"]);
-                ulaz.VRSTA_DOKUMENTA = 6;
+                ulaz.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("SPR");
                 ulaz.POSLOVNI_PERIOD = 2;
                 ulaz.DATUM_UNOSA = DateTime.Now;
                 ulaz.STATUS = "D";
@@ -160,7 +162,7 @@ namespace AngularJSAuthentication.API.Controllers
                     brojac_dokumenata.ORGANIZACIJA = ulaz.ZA_SUBJEKTA;
                     brojac_dokumenata.REDNI_BROJ = redniBroj;
                     brojac_dokumenata.GODINA = godina;
-                    brojac_dokumenata.VRSTA_DOKUMENTA = 6;
+                    brojac_dokumenata.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("SPR");
                     db.dp_brojaci_dokumenata.Add(brojac_dokumenata);
                 }
 

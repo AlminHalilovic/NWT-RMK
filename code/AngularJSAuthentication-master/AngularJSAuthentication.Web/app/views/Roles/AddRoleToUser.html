@@ -1,0 +1,17 @@
+﻿<h2>Add new role for user</h2>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Role name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in roleList track by $index">
+            <td>{{item.roleName}}</td>
+            <td><input type="checkbox" name="vehicle" ng-model="roleList[$index].status" ng-checked="roleList[$index].status"></td>
+        </tr>
+    </tbody>
+</table>
+<input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" />
+<a class="btn btn-info" ng-click="back()">Cancel</a>

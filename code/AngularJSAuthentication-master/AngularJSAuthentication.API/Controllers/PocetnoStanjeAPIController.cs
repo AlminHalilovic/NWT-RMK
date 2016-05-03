@@ -17,15 +17,18 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/PocetnoStanjeAPI")]
-    [Authorize(Roles = "Dokumenti,Administrator")]
+    [Authorize(Roles = "Dokumenti, Administrator")]
     public class PocetnoStanjeAPIController : ApiController
     {
         private materijalno db = new materijalno();
+        private VrsteDokumenataAPIController vrsteController = new VrsteDokumenataAPIController();
+
 
         // GET: api/PrimkaAPI
         public string Getdp_ulazi()
         {
-            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 4).Select(x => new {
+            int vrsta = vrsteController.getIdBySifra("PS");
+            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == vrsta).Select(x => new {
                 id = x.ID,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,
@@ -74,7 +77,7 @@ namespace AngularJSAuthentication.API.Controllers
 
         public string Getdp_ulazi(int dummy1, int dummy2, int dummy3)
         {
-            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == 4 &&
+            var jsonResult = db.dp_ulazi.Where(x => (x.VRSTA_DOKUMENTA == vrsteController.getIdBySifra("PS") &&
                                                  x.POVRAT == null &&
                                                  !(db.dp_ulazi.Where(y => y.POVRAT != null).Select(y => y.POVRAT)).ToList().Contains(x.ID))).
                                                  Select(z => new { id = z.ID, broj_povrata = z.BROJ_PRIMKE })
@@ -151,7 +154,7 @@ namespace AngularJSAuthentication.API.Controllers
                 ulaz.OD_SUBJEKTA = Convert.ToInt32(master["dobavljac"]);
                 ulaz.OPIS = master["opis"].ToString();
                 ulaz.DATUM = Convert.ToDateTime(master["datum"]);
-                ulaz.VRSTA_DOKUMENTA = 4;
+                ulaz.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("PS");
                 ulaz.POSLOVNI_PERIOD = 2;
                 ulaz.DATUM_UNOSA = DateTime.Now;
                 ulaz.STATUS = "D";
@@ -173,7 +176,7 @@ namespace AngularJSAuthentication.API.Controllers
                     brojac_dokumenata.ORGANIZACIJA = ulaz.ZA_SUBJEKTA;
                     brojac_dokumenata.REDNI_BROJ = redniBroj;
                     brojac_dokumenata.GODINA = godina;
-                    brojac_dokumenata.VRSTA_DOKUMENTA = 4;
+                    brojac_dokumenata.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("PS");
                     db.dp_brojaci_dokumenata.Add(brojac_dokumenata);
                 }
 

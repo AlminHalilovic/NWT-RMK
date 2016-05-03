@@ -111,6 +111,16 @@ app.run(function (acuteSelectService) {
 
         $routeProvider.when("/forgotPassword", { controller: "forgotPasswordController", templateUrl: "/app/views/forgotPassword.html" });
 
+        $routeProvider.when("/Roles", { controller: "RoleController", templateUrl: "/app/views/Roles/Index.html" });
+        $routeProvider.when("/Roles/AddRole", { controller: "AddRoleController", templateUrl: "/app/views/Roles/Add.html" });
+        $routeProvider.when("/Roles/EditRole/:id", { controller: "EditRoleController", templateUrl: "/app/views/Roles/Edit.html" });
+        $routeProvider.when("/Roles/DeleteRole/:id", { controller: "DeleteRoleController", templateUrl: "/app/views/Roles/Delete.html" });
+        $routeProvider.when("/Roles/ManageRolesForUser/:id", { controller: "AddRoleToUserController", templateUrl: "/app/views/Roles/AddRoleToUser.html" });
+
+        $routeProvider.when("/Users", { controller: "UserController", templateUrl: "/app/views/Users/Index.html" });
+        $routeProvider.when("/Users/AddUser", { controller: "AddUserController", templateUrl: "/app/views/Users/Add.html" });
+        $routeProvider.when("/Users/EditUser/:id", { controller: "EditUserController", templateUrl: "/app/views/Users/Edit.html" });
+        $routeProvider.when("/Users/DeleteUser/:id", { controller: "DeleteUserController", templateUrl: "/app/views/Users/Delete.html" });
         //$routeProvider.when("/resetPassword", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
 
         $routeProvider.otherwise({ redirectTo: "/home" });

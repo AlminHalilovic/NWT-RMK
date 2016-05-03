@@ -17,15 +17,17 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/InventuraAPI")]
-    [Authorize(Roles = "Dokumenti,Administrator")]
+    [Authorize(Roles = "Dokumenti, Administrator")]
     public class InventuraAPIController : ApiController
     {
         private materijalno db = new materijalno();
+        private VrsteDokumenataAPIController vrsteController = new VrsteDokumenataAPIController();
 
         // GET: api/PrimkaAPI
         public string Getdp_inventure()
         {
-            var jsonResult = db.dp_inventure.Where(y => y.VRSTA_DOKUMENTA == 8).Select(x => new {
+            int vrsta = vrsteController.getIdBySifra("INV");
+            var jsonResult = db.dp_inventure.Where(y => y.VRSTA_DOKUMENTA == vrsta).Select(x => new {
                 id = x.ID,
                 redni_broj = x.REDNI_BROJ,
                 datum = x.DATUM,
@@ -135,8 +137,8 @@ namespace AngularJSAuthentication.API.Controllers
             ulaz.ZA_SUBJEKTA = inventura.ORGANIZACIJA;
             ulaz.OD_SUBJEKTA = inventura.ORGANIZACIJA;
             ulaz.OPIS = inventura.OPIS;
-            ulaz.VRSTA_DOKUMENTA = 10;
-            int rb = getBrojac(10, inventura.ORGANIZACIJA, godina);
+            ulaz.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("INVV");
+            int rb = getBrojac(vrsteController.getIdBySifra("INVV"), inventura.ORGANIZACIJA, godina);
             ulaz.STATUS = "D";
             ulaz.POSLOVNI_PERIOD = 2;
             ulaz.REDNI_BROJ = rb;
@@ -174,8 +176,8 @@ namespace AngularJSAuthentication.API.Controllers
             izlaz.OD_SUBJEKTA = inventura.ORGANIZACIJA;
             izlaz.MJESTO_TROSKA = inventura.ORGANIZACIJA;
             izlaz.OPIS = inventura.OPIS;
-            izlaz.VRSTA_DOKUMENTA = 9;
-            int rb = getBrojac(9, inventura.ORGANIZACIJA, godina);
+            izlaz.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("INVM");
+            int rb = getBrojac(vrsteController.getIdBySifra("INVM"), inventura.ORGANIZACIJA, godina);
             izlaz.STATUS = "D";
             izlaz.POSLOVNI_PERIOD = 2;
             izlaz.REDNI_BROJ = rb;
@@ -230,13 +232,13 @@ namespace AngularJSAuthentication.API.Controllers
                 inventura.ORGANIZACIJA = Convert.ToInt32(master["skladiste"]);
                 inventura.OPIS = master["opis"].ToString();
                 inventura.DATUM = Convert.ToDateTime(master["datum"]);
-                inventura.VRSTA_DOKUMENTA = 8;
+                inventura.VRSTA_DOKUMENTA = vrsteController.getIdBySifra("INV");
                 inventura.POSLOVNI_PERIOD = 2;
                 inventura.DATUM_UNOSA = DateTime.Now;
                 inventura.STATUS = "D";
 
                 int godina = DateTime.Now.Year;
-                int redniBroj = getBrojac(8, inventura.ORGANIZACIJA, godina);
+                int redniBroj = getBrojac(vrsteController.getIdBySifra("INV"), inventura.ORGANIZACIJA, godina);
 
                 inventura.REDNI_BROJ = redniBroj;
 

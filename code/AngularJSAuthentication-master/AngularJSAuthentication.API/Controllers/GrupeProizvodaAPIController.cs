@@ -13,7 +13,7 @@ using AngularJSAuthentication.Models.API;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/GrupeProizvodaAPI")]
-    [Authorize(Roles = "Sifarnici,Administrator")]
+    [Authorize(Roles = "Sifarnici, Administrator")]
     public class GrupeProizvodaAPIController : ApiController
     {
         private materijalno db = new materijalno();

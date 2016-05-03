@@ -1,0 +1,21 @@
+﻿<h2>Add new user</h2>
+<table class="table table-bordered table-responsive">
+
+    <tr>
+        <td>Username</td>
+        <td><input type="text" ng-model="userName" ng-class="{ error: !userName }" />  </td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td><input type="text" ng-model="email" ng-class="{ error: !email }" />  </td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td><input type="password" ng-model="password" ng-class="{ error: !password }" />  </td>
+    </tr>
+</table>
+<div class="alert-danger">
+    {{error}}
+</div>
+<input type="button" class="btn btn-success" value="Dodaj" ng-click="save()" ng-disabled="!userName || !password || !email" />
+<a class="btn btn-info" ng-click="back()">Cancel</a>

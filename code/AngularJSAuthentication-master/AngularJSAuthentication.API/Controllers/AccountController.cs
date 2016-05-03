@@ -33,7 +33,7 @@ namespace AngularJSAuthentication.API.Controllers
             _repo = new AuthRepository();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
@@ -43,7 +43,7 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUser(string Id)
         {
@@ -59,7 +59,7 @@ namespace AngularJSAuthentication.API.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [Route("user/{username}")]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
@@ -205,7 +205,7 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
@@ -231,7 +231,7 @@ namespace AngularJSAuthentication.API.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [Route("user/{id:guid}/roles")]
         [HttpPut]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)

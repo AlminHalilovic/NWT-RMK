@@ -192,10 +192,12 @@
     <Compile Include="Controllers\PrimkaAPIController.cs" />
     <Compile Include="Controllers\ProizvodiAPIController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StornoIzdatnicaAPIController.cs" />
     <Compile Include="Controllers\StornoPocetnoStanjeAPIController.cs" />
     <Compile Include="Controllers\StornoPrimkaControllerAPI.cs" />
     <Compile Include="Controllers\SubjektiAPIController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VrsteDokumenataAPIController.cs" />
     <Compile Include="Controllers\VrsteOdnosaSubjekataAPIController.cs" />
     <Compile Include="Controllers\VrsteSubjekataAPIController.cs" />
@@ -218,6 +220,10 @@
     <Compile Include="Migrations\201604161306537_jkl.cs" />
     <Compile Include="Migrations\201604161306537_jkl.Designer.cs">
       <DependentUpon>201604161306537_jkl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605021836586_migrate.cs" />
+    <Compile Include="Migrations\201605021836586_migrate.Designer.cs">
+      <DependentUpon>201605021836586_migrate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -284,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604161306537_jkl.resx">
       <DependentUpon>201604161306537_jkl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605021836586_migrate.resx">
+      <DependentUpon>201605021836586_migrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

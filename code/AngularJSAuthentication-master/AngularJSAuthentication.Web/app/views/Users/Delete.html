@@ -1,0 +1,10 @@
+﻿<h2>Delete user</h2>
+<table class="table table-responsive table-bordered">
+    <tr>
+        <td>Username</td>
+        <td>{{Item.UserName}} </td>
+    </tr>
+</table>
+<input type="button" class="btn btn-danger" value="Obriši" ng-click="delete()" />
+<a class="btn btn-info" ng-click="back()">Cancel</a>
+<div>{{error}}</div>

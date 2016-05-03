@@ -17,15 +17,17 @@ using System.Web.Script.Serialization;
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/InventurniVisakAPI")]
-    [Authorize(Roles = "Dokumenti,Administrator")]
+    [Authorize(Roles = "Dokumenti, Administrator")]
     public class InventurniVisakAPIController : ApiController
     {
         private materijalno db = new materijalno();
+        private VrsteDokumenataAPIController vrsteController = new VrsteDokumenataAPIController();
 
         // GET: api/PrimkaAPI
         public string Getdp_ulazi()
         {
-            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == 10).Select(x => new {
+            int vrsta = vrsteController.getIdBySifra("INVV");
+            var jsonResult = db.dp_ulazi.Where(y => y.VRSTA_DOKUMENTA == vrsta).Select(x => new {
                 id = x.ID,
                 broj_primke = x.BROJ_PRIMKE,
                 redni_broj = x.REDNI_BROJ,

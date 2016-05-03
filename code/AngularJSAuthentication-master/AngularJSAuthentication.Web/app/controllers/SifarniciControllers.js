@@ -699,3 +699,171 @@ app.controller("DeleteSubjektiController", function ($scope, $location, ShareDat
 
 });
 
+// Role
+app.controller('RoleController', function ($scope, $location, SifarniciGetAllFactory, ShareData) {
+    loadData();
+
+    //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
+    function loadData() { SifarniciGetAllFactory($scope, '/api/RoleAPI/Index'); }
+    //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
+    $scope.addItem = function () { $location.path("/Roles/AddRole"); }
+    $scope.editItem = function (id) { ShareData.value = id; $location.path("/Roles/EditRole/" + id); }
+    $scope.deleteItem = function (id) { ShareData.value = id; $location.path("/Roles/DeleteRole/" + id); }
+
+});
+app.controller('AddRoleController', function ($scope, $location, SifarniciService, SifarniciCreateFactory, ShareData) {
+
+    $scope.back = function () { $location.path("/Roles"); }
+    $scope.id = 0;
+
+    //Scope.save metoda poziva sifarnicicreatefactory, te mu prosljedjuje apiPath te urlPath, za poziv ka webapi te za naknadno vracanje pri izvrsenju akcija
+    $scope.save = function () {
+        var Item = { roleName: $scope.roleName };
+        SifarniciCreateFactory($scope, "/api/RoleAPI/Save", "/Roles", Item);
+    }
+});
+app.controller('AddRoleToUserController', function ($scope, $location, $http, SifarniciService, ShareData) {
+
+    
+    $scope.back = function () { $location.path("/Users"); }
+    $scope.id = 0;
+    $scope.userId = ShareData.value;
+
+    $scope.getRolesForUser = function (userId) {
+        var roleList = [];
+        $http.get('http://localhost:26264/api/RoleAPI/Index').then(function (pla) {
+            var roles = JSON.parse(pla.data);
+            $http.get('http://localhost:26264/api/RoleAPI/GetRolesForUser/' + userId).then(function (pl) {
+                var json = JSON.parse(pl.data);
+                for (var i = 0; i < roles.length; i++) {
+                    var roleName = roles[i].RoleName;
+                    var found = false;
+                    for (var j = 0; j < json.length; j++) {
+                        if (json[j].RoleName === roleName) {
+                            roleList.push({
+                                roleName: json[j].RoleName,
+                                status: true
+                            });
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) roleList.push({ roleName: roleName, status: false });
+                }
+                console.log(roleList);
+                $scope.roleList = roleList;
+            });
+        });
+    };
+    $scope.getRolesForUser(ShareData.value);
+    //Scope.save metoda poziva sifarnicicreatefactory, te mu prosljedjuje apiPath te urlPath, za poziv ka webapi te za naknadno vracanje pri izvrsenju akcija
+    $scope.save = function () {
+        var Item = {
+            userId: $scope.userId,
+            roles: JSON.stringify($scope.roleList)
+        };
+        $http({ method: "post", url: 'http://localhost:26264/api/RoleAPI/SaveRoles', data: Item }).then(function (pl) {
+            var json = JSON.parse(pl.data);
+            if (json.ok === true) {
+                alert("Uspješno ste izmijenili uloge korisnika!");
+                $location.path('/Users');
+            }
+        });
+    }
+});
+app.controller("EditRoleController", function ($scope, $location, ShareData, SifarniciGetByIdFactory, SifarniciUpdateFactory) {
+
+    getRole();
+    function getRole() { SifarniciGetByIdFactory($scope, "/api/RoleAPI/Show"); }
+    $scope.back = function () { $location.path("/Roles"); }
+
+    //The Save method used to make HTTP PUT call to the WEB API to update the record
+
+    $scope.save = function () {
+        var id = $scope.Item.ID;
+        var roleName = $scope.Item.RoleName;
+        var Item = {
+            id: id,
+            roleName: roleName
+        };
+        SifarniciUpdateFactory($scope, "/api/RoleAPI/Edit", "/Roles", Item);
+
+    };
+
+});
+app.controller("DeleteRoleController", function ($scope, $location, ShareData, SifarniciGetByIdFactory, SifarniciDeleteFactory) {
+
+    SifarniciGetByIdFactory($scope, "/api/RoleAPI/Show");
+
+
+    //Delete funkcija poziva factory koji putem servisa vrsi delete poziv u webapi
+    $scope.delete = function () { SifarniciDeleteFactory($scope, "/api/RoleAPI/Delete", "/Roles"); };
+
+    $scope.back = function () { $location.path("/Roles"); }
+
+});
+
+// Users
+app.controller('UserController', function ($scope, $location, SifarniciGetAllFactory, ShareData) {
+    loadData();
+
+    //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
+    function loadData() { SifarniciGetAllFactory($scope, '/api/UserAPI/Index'); }
+    //Funkcije koje omogucavaju rutiranje tokom aktivacije ng-click
+    $scope.addItem = function () { $location.path("/Users/AddUser"); }
+    $scope.editItem = function (id) { ShareData.value = id; $location.path("/Users/EditUser/" + id); }
+    $scope.deleteItem = function (id) { ShareData.value = id; $location.path("/Users/DeleteUser/" + id); }
+    $scope.addRoles = function (id, roles) { ShareData.value = id; $location.path("/Roles/ManageRolesForUser/" + id);}
+});
+app.controller('AddUserController', function ($scope, $location, SifarniciService, SifarniciCreateFactory, ShareData) {
+
+    $scope.back = function () { $location.path("/Users"); }
+    $scope.id = 0;
+
+    //Scope.save metoda poziva sifarnicicreatefactory, te mu prosljedjuje apiPath te urlPath, za poziv ka webapi te za naknadno vracanje pri izvrsenju akcija
+    $scope.save = function () {
+        var Item = {
+            userName: $scope.userName,
+            email: $scope.email,
+            password: $scope.password
+        };
+        SifarniciCreateFactory($scope, "/api/UserAPI/Save", "/Users", Item);
+    }
+});
+app.controller("EditUserController", function ($scope, $location, ShareData, SifarniciGetByIdFactory, SifarniciUpdateFactory) {
+
+    getRole();
+    function getRole() { SifarniciGetByIdFactory($scope, "/api/UserAPI/Show"); }
+    $scope.back = function () { $location.path("/Users"); }
+
+    //The Save method used to make HTTP PUT call to the WEB API to update the record
+
+    $scope.save = function () {
+        var id = $scope.Item.ID;
+        var userName = $scope.Item.UserName;
+        var email = $scope.Item.Email;
+        var password = ($scope.Item.Password == null) ? "" : $scope.Item.Password;
+        var currPassword = ($scope.Item.CurrentPassword);
+        var Item = {
+            id: id,
+            userName: userName,
+            email: email,
+            password: password,
+            currentPassword : currPassword
+        };
+        SifarniciUpdateFactory($scope, "/api/UserAPI/Edit", "/Users", Item);
+
+    };
+
+});
+app.controller("DeleteUserController", function ($scope, $location, ShareData, SifarniciGetByIdFactory, SifarniciDeleteFactory) {
+
+    SifarniciGetByIdFactory($scope, "/api/UserAPI/Show");
+
+
+    //Delete funkcija poziva factory koji putem servisa vrsi delete poziv u webapi
+    $scope.delete = function () { SifarniciDeleteFactory($scope, "/api/UserAPI/Delete", "/Users"); };
+
+    $scope.back = function () { $location.path("/Users"); }
+
+});
