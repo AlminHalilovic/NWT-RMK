@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'acute.select', 'ngSanitize', 'ui.bootstrap', 'oitozero.ngSweetAlert', 'pascalprecht.translate']);
+var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'acute.select', 'ngSanitize', 'ng-fusioncharts', 'ui.bootstrap', 'oitozero.ngSweetAlert', 'pascalprecht.translate']);
 app.run(function (acuteSelectService) {
     // Set the template path for all instances
     acuteSelectService.updateSetting("templatePath", "/content/templates");
@@ -111,6 +111,7 @@ app.run(function (acuteSelectService) {
 
         $routeProvider.when("/forgotPassword", { controller: "forgotPasswordController", templateUrl: "/app/views/forgotPassword.html" });
 
+<<<<<<< HEAD
         $routeProvider.when("/Roles", { controller: "RoleController", templateUrl: "/app/views/Roles/Index.html" });
         $routeProvider.when("/Roles/AddRole", { controller: "AddRoleController", templateUrl: "/app/views/Roles/Add.html" });
         $routeProvider.when("/Roles/EditRole/:id", { controller: "EditRoleController", templateUrl: "/app/views/Roles/Edit.html" });
@@ -122,7 +123,13 @@ app.run(function (acuteSelectService) {
         $routeProvider.when("/Users/EditUser/:id", { controller: "EditUserController", templateUrl: "/app/views/Users/Edit.html" });
         $routeProvider.when("/Users/DeleteUser/:id", { controller: "DeleteUserController", templateUrl: "/app/views/Users/Delete.html" });
         //$routeProvider.when("/resetPassword", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
+=======
+        $routeProvider.when("/Admin", { controller: "adminController", templateUrl: "/app/views/Admin/index.html" });
+        $routeProvider.when("/Admin/Charts", { controller: "adminChartsController", templateUrl: "/app/views/Admin/charts.html" });
+>>>>>>> 655d7138897ed9eb3fac0b4a4be4233bfa1564b5
 
+
+        
         $routeProvider.otherwise({ redirectTo: "/home" });
 
 
@@ -277,6 +284,7 @@ app.run(function (acuteSelectService) {
             dokumentiTableBrojStorneIzdatnice: 'Cancellation issue slip number',
             dokumentiTableDatumStorneIzdatnice: 'Cancellation issue slip date',
             dokumentiTablePrimkaZaPovrat: 'Return receipt',
+            dokumentiStornoPrimkaHEADLINE: 'New cancellation receipt',
             dokumentiStornoPocetnoStanjeIndexHEADLINE: 'Initial state cancellation overview',
             dokumentiStornoPocetnoStanjeAddHEADLINE: 'New initial state cancellation entry',
             dokumentiTableBrojStornoPocetnogStanja: 'Initial state cancellation number',
@@ -315,7 +323,13 @@ app.run(function (acuteSelectService) {
             indexOdjava: 'Log out',
             indexPrijava: 'Log in',
             indexRegistracija: 'Sign up',
-            indexPocetna: 'Home'
+            indexPocetna: 'Home',
+            indexAdmin: 'Admin panel',
+            adminIndexPrimke: 'Receipts',
+            adminIndexIzdatnice: 'Issue slips',
+            adminIndexStornoPrimke: 'Cancellation receipts',
+            adminIndexStornoIzdatnice: 'Cancellation issue slips',
+            adminIndexDijagrami:'Charts'
 
 
         }).translations('ba', {
@@ -452,6 +466,7 @@ app.run(function (acuteSelectService) {
             dokumentiTableBrojStorneIzdatnice: 'Broj storne izdatnice',
             dokumentiTableDatumStorneIzdatnice: 'Datum storne izdatnice',
             dokumentiTablePrimkaZaPovrat: 'Primka za povrat',
+            dokumentiStornoPrimkaHEADLINE: 'Nova storna primka',
             dokumentiStornoPocetnoStanjeIndexHEADLINE: 'Pregled storno početnih stanja',
             dokumentiStornoPocetnoStanjeAddHEADLINE: 'Unos storno početnog stanja',
             dokumentiTableBrojStornoPocetnogStanja: 'Broj storno pocetnog stanja',
@@ -490,7 +505,13 @@ app.run(function (acuteSelectService) {
             indexOdjava: 'Odjava',
             indexPrijava: 'Prijava',
             indexRegistracija: 'Registracija',
-            indexPocetna: 'Početna'
+            indexPocetna: 'Početna',
+            indexAdmin: 'Admin panel',
+            adminIndexPrimke: 'Primke',
+            adminIndexIzdatnice: 'Izdatnice',
+            adminIndexStornoPrimke: 'Storno Primke',
+            adminIndexStornoIzdatnice: 'Storno izdatnice',
+            adminIndexDijagrami:'Dijagrami'
         });
         $translateProvider.preferredLanguage('ba');
     });

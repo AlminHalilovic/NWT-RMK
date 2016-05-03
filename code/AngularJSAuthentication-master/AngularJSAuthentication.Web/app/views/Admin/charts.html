@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <br />
+    <br />
+    <form name="myForm">
+        <label for="repeatSelect"> Dokument: </label>
+        <select name="documentSelect" id="documentSelect" ng-model="documentsData.documentSelect">
+            <option ng-repeat="option in documentsData.availableDocuments" value="{{option.id}}">{{option.name}}</option>
+        </select>
+        <p>Od:</p>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button  class="form-control" ng-click="openPopupFrom()"><span class="glyphicon glyphicon-calendar"></span></button>
+            </span>
+            <input  type="text" name="dateFrom" style="margin-left: 8px;" class="form-control" ng-required="true" max="{{formatDate(maxDate)}}" uib-datepicker-popup="{{dateFormat}}" is-open="isOpenFrom" ng-model="documentsData.documentsFrom" datepicker-options="dateOptions" close-text="Zatvori" />
+            <p style="margin-left: 8px;" ng-show="myForm.dateFrom.$error.required" class="help-block">Morate unijeti datum!</p>
+            <p style="margin-left: 8px;" ng-show="myForm.dateFrom.$error.date-invalid" class="help-block">Datum mora biti validan!</p>
+
+        </div>
+        <p>Do:</p>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="form-control" ng-click="openPopupTo()"><span class="glyphicon glyphicon-calendar"></span></button>
+            </span>
+            <input type="text" name="dateTo" style="margin-left: 8px;" class="form-control" ng-required="true" max="{{formatDate(maxDate)}}" uib-datepicker-popup="{{dateFormat}}" is-open="isOpenTo" ng-model="documentsData.documentsTo" datepicker-options="dateOptions" close-text="Zatvori" />
+            <p style="margin-left: 8px;" ng-show="myForm.dateTo.$error.required" class="help-block">Morate unijeti datum!</p>
+            <p style="margin-left: 8px;" ng-show="myForm.dateTo.$error.date-invalid" class="help-block">Datum mora biti validan!</p>
+        </div>
+        <br />
+        <button class="form-control" ng-click="showChart()" ng-disabled="!myForm.$valid">Prikaži dijagram</button>
+</form>
+
+    <div ng-show="isChartReady">
+        <fusioncharts width="600"
+                      height="400"
+                      type="pie3d"
+                      datasource="{{myDataSource}}">
+
+        </fusioncharts>
+    </div>
+
+
+</body>
+</html>
