@@ -170,6 +170,7 @@
     <Content Include="authComplete.html" />
     <Content Include="content\css\acute.select.css" />
     <Content Include="content\css\AdminLTE.css" />
+    <Content Include="content\css\angular-datatables.css" />
     <Content Include="content\css\angular-datepicker.min.css" />
     <Content Include="content\css\font-awesome.min.css" />
     <Content Include="content\css\images\dropdown.gif" />
@@ -191,6 +192,7 @@
     <Content Include="content\fonts\fontawesome-webfont.woff" />
     <Content Include="content\fonts\FontAwesome.otf" />
     <Content Include="content\templates\acute.select.htm" />
+    <Content Include="content\templates\dirPagination.tpl.html" />
     <Content Include="packages.config" />
     <Content Include="content\css\images\dropdown.pdn" />
     <None Include="Properties\PublishProfiles\ngauthenticationweb.pubxml" />
@@ -209,6 +211,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\acute.select.js" />
     <Content Include="scripts\angular-animate.js" />
+    <Content Include="scripts\angular-datatables.min.js" />
     <Content Include="scripts\angular-fusioncharts.min.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-recaptcha.min.js" />
@@ -222,6 +225,8 @@
     <Content Include="scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="scripts\authComplete.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\datatables.min.js" />
+    <Content Include="scripts\dirPagination.js" />
     <Content Include="scripts\jquery-2.2.2.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
     <Content Include="scripts\select.js" />

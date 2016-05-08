@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="i in collection">
+            <tr dir-paginate="i in collection | itemsPerPage:10">
 
                 <td>{{i.sifra}}</td>
                 <td>{{i.naziv}}</td>
@@ -28,6 +28,9 @@
                 <td><a class="btn btn-danger" ng-click="deleteItem(i.id)">Delete</a></td>
             </tr>
         </tbody>
+        <tfoot>
+            <dir-pagination-controls></dir-pagination-controls>
+        </tfoot>
     </table>
     <div class="progress progress-striped active" data-ng-show="isBusy">
         <div class="progress-bar" role="progressbar" style="width: 100%;"></div>

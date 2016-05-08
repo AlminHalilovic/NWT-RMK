@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'acute.select', 'ngSanitize', 'ng-fusioncharts', 'ui.bootstrap', 'oitozero.ngSweetAlert', 'pascalprecht.translate']);
+var app = angular.module("AppModule", ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'acute.select', 'ngSanitize', 'ng-fusioncharts', 'ui.bootstrap', 'oitozero.ngSweetAlert', 'pascalprecht.translate', 'angularUtils.directives.dirPagination']);
 app.run(function (acuteSelectService) {
     // Set the template path for all instances
     acuteSelectService.updateSetting("templatePath", "/content/templates");

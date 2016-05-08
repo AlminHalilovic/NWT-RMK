@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat-start="i in collection">
+            <tr dir-paginate-start="i in collection | itemsPerPage:10">
                 <td><a class="btn btn-info" ng-click="showStavke('Ulaz', $index)">{{'dokumentiTableStavke' | translate}}</a></td>
                 <td>{{i.redni_broj}}</td>
                 <td>{{i.broj_primke}}</td>
@@ -22,7 +22,7 @@
                 <td>{{i.opis}}</td>
                 <td>{{i.skladiste}}</td>
             </tr>
-            <tr ng-show="i.isStavkeShown" ng-repeat-end="">
+            <tr ng-show="i.isStavkeShown" dir-paginate-end>
                 <td colspan="6">
                     <table class="table">
                         <thead>

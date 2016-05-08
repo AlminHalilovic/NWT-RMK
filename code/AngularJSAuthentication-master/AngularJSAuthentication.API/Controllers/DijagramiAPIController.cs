@@ -27,8 +27,8 @@ namespace AngularJSAuthentication.API.Controllers
             int vrstaStornoPrimka = vrsteController.getIdBySifra("SPR");
             try
             {
-                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
-                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                startD = DateTime.ParseExact(startDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "M/d/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e){}
             var datumi = db.dp_ulazi.Select(x => x.DATUM_UNOSA).ToList();
@@ -38,7 +38,7 @@ namespace AngularJSAuthentication.API.Controllers
 
            var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoPrimka).ToList();
             if (slog2 != null && slog2.Count != 0)
-                dvm.brojDokumenata = slog2.Count;
+                dvm.brojStornihDokumenata = slog2.Count;
             return dvm;
     }
 
@@ -52,17 +52,17 @@ namespace AngularJSAuthentication.API.Controllers
             int vrstaStornoIzdatnica = vrsteController.getIdBySifra("SIZD");
             try
             {
-                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
-                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                startD = DateTime.ParseExact(startDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "M/d/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e) { }
-            var slog1 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaIzdatnica).ToList();
+            var slog1 = db.dp_izlazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaIzdatnica).ToList();
             if (slog1 != null && slog1.Count != 0)
                 dvm.brojDokumenata = slog1.Count;
 
-            var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoIzdatnica).ToList();
+            var slog2 = db.dp_izlazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoIzdatnica).ToList();
             if (slog2 != null && slog2.Count != 0)
-                dvm.brojDokumenata = slog2.Count;
+                dvm.brojStornihDokumenata = slog2.Count;
             return dvm;
         }
     }
