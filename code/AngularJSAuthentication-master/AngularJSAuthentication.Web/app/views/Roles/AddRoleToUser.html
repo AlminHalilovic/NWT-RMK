@@ -1,17 +1,20 @@
-﻿<h2>{{'addRoleToUserTitle' | translate}}<</h2>
+﻿<h2>{{'addRoleToUserTitle' | translate}}</h2>
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
-            <th>{{'addRoleToUserRoleName' | translate}}<</th>
-            <th>{{'addRoleToUserStatus' | translate}}<</th>
+            <th>{{'addRoleToUserRoleName' | translate}}</th>
+            <th>{{'addRoleToUserStatus' | translate}}</th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in roleList track by $index">
+        <tr dir-paginate="item in roleList | itemsPerPage:10">
             <td>{{item.roleName}}</td>
             <td><input type="checkbox" name="vehicle" ng-model="roleList[$index].status" ng-checked="roleList[$index].status"></td>
         </tr>
     </tbody>
+    <tfoot>
+        <dir-pagination-controls></dir-pagination-controls>
+    </tfoot>
 </table>
-<input type="button" class="btn btn-success" value="{{'addRoleToUserSave' | translate}}<" ng-click="save()" />
-<a class="btn btn-info" ng-click="back()">{{'addRoleToUserCancel' | translate}}<</a>
+<input type="button" class="btn btn-success" value="{{'addRoleToUserSave' | translate}}" ng-click="save()" />
+<a class="btn btn-info" ng-click="back()">{{'addRoleToUserCancel' | translate}}</a>

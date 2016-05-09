@@ -1,21 +1,23 @@
 ﻿<form role="form">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             &nbsp;
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h2 class="form-login-heading">{{'loginHEADLINE' | translate}}</h2>
             <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
+            <br />
             <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
+            <br />
             <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="login()">{{'loginPrijava' | translate}}</button>
             <br />
-            <a href="/#/forgotPassword">{{'loginZaboraviliSteSifru' | translate}}</a>
+            <a class="text-center" href="/#/forgotPassword">{{'loginZaboraviliSteSifru' | translate}}</a>
               <div data-ng-hide="message == ''" class="alert alert-danger">
                 {{message}}
             </div>
         </div>
       
-        <div class="col-md-2">
+        <div class="col-md-3">
             &nbsp;
         </div>
     </div>

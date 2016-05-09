@@ -374,7 +374,8 @@ app.run(function (acuteSelectService) {
             addUserCancel: 'Cancel',
             adminDijagramiUsers: 'Users',
             adminDijagramiRoles: 'Roles',
-            dokumentiTableStavke: 'Rows'
+            dokumentiTableStavke: 'Rows',
+            adminIndexHEADLINE: 'Administrative panel'
         }).translations('ba', {
             homeHEADLINE: 'Dobrodošli u sistem robno materijalnog knjigovodstva!',
             INTRO_TEXT: 'Neki tekst!',
@@ -605,7 +606,8 @@ app.run(function (acuteSelectService) {
             adminDijagramiRoles: 'Role',
             dokumentiTableBrojStornoPrimke: 'Broj storno primke',
             dokumentiTableDatumStornoPrimke: 'Datum storno primke',
-            stavke: 'Stavke'
+            stavke: 'Stavke',
+            adminIndexHEADLINE: 'Admin panel'
         });
         $translateProvider.preferredLanguage('ba');
     });

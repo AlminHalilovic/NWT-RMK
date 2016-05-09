@@ -23,12 +23,19 @@
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-controller="indexController">
         <div class="container">
             <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                <button class="btn btn-success navbar-toggle" data-ng-click="expandNavbar()">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>
-                <a class="navbar-brand" href="#/">{{'indexPocetna' | translate}}</a>
+                <div style="min-width:400px;display:inline-block;">
+                    <a class="navbar-brand" href="#/">{{'indexPocetna' | translate}}</a>
+                    <div ng-controller="translateController">
+                        <a class="btn btn-link" style="margin-top:5px;color:white;" ng-click="changeLanguage('ba')" translate="BUTTON_TEXT_BA"></a>
+                        <a class="btn btn-link" style="margin-top:5px;color:white;" ng-click="changeLanguage('en')" translate="BUTTON_TEXT_EN"></a>
+                    </div>
+                </div>
+               
             </div>
-            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded" >
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="#">{{'indexDobrodosli' | translate}} {{authentication.userName}}</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="#/Sifarnici">{{'indexSifarnici' | translate}}</a></li>
@@ -43,11 +50,7 @@
                 </ul>
              
             </div>
-         
-            <div ng-controller="translateController">
-                <button class="btn-default" ng-click="changeLanguage('ba')" translate="BUTTON_TEXT_BA"></button>
-                <button class="btn-default" ng-click="changeLanguage('en')" translate="BUTTON_TEXT_EN"></button>
-            </div>
+
         </div>
     </div>
   
