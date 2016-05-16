@@ -7,6 +7,9 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
@@ -99,7 +102,7 @@ namespace AngularJSAuthentication.API
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(httpConfig);
-
+            CreateAndConfigureAsync();
         }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
@@ -149,6 +152,37 @@ namespace AngularJSAuthentication.API
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
+        public async void CreateAndConfigureAsync()
+        {
+            try
+            {
+                StorageCredentials creds = new StorageCredentials("rwportalvhds3h1495pxbkfr", "B1QdjmL4Tl7kGfakR6Cg8h8l7KzBmbm2XXgGX6Q/L/JmeYNtNaOt2ME32kysJj6t4Q0xCyUtrAaXvHZeJIa+ig==");
+                CloudStorageAccount storageAccount = new CloudStorageAccount(creds, false);
+
+                // Create a blob client and retrieve reference to images container
+                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobContainer container = blobClient.GetContainerReference("files");
+              
+                // Create the "images" container if it doesn't already exist.
+                if (await container.CreateIfNotExistsAsync())
+                {
+                    // Enable public access on the newly created "images" container
+                    await container.SetPermissionsAsync(
+                        new BlobContainerPermissions
+                        {
+                            PublicAccess =
+                                BlobContainerPublicAccessType.Blob
+                        });
+
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
     }
 

@@ -4,7 +4,7 @@ namespace AngularJSAuthentication.Models.API
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-
+    using AngularJSAuthentication.API.Models;
     public partial class materijalno : DbContext
     {
         public materijalno()
@@ -37,6 +37,7 @@ namespace AngularJSAuthentication.Models.API
         public virtual DbSet<sp_vrste_prostora> sp_vrste_prostora { get; set; }
         public virtual DbSet<sp_vrste_subjekata> sp_vrste_subjekata { get; set; }
         public virtual DbSet<dp_kartice> dp_kartice { get; set; }
+        public virtual DbSet<sp_user_files> sp_user_files { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -312,6 +313,9 @@ namespace AngularJSAuthentication.Models.API
                 .WithRequired(e => e.sp_vrste_subjekata)
                 .HasForeignKey(e => e.VRSTA_SUBJEKTA)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<sp_user_files>();
+                 
         }
     }
 }
