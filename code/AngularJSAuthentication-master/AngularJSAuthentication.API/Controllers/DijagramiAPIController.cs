@@ -27,8 +27,8 @@ namespace AngularJSAuthentication.API.Controllers
             int vrstaStornoPrimka = vrsteController.getIdBySifra("SPR");
             try
             {
-                startD = DateTime.ParseExact(startDate, "M/d/yyyy", CultureInfo.InvariantCulture);
-                endD = DateTime.ParseExact(endDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e){}
             var datumi = db.dp_ulazi.Select(x => x.DATUM_UNOSA).ToList();
@@ -52,8 +52,8 @@ namespace AngularJSAuthentication.API.Controllers
             int vrstaStornoIzdatnica = vrsteController.getIdBySifra("SIZD");
             try
             {
-                startD = DateTime.ParseExact(startDate, "M/d/yyyy", CultureInfo.InvariantCulture);
-                endD = DateTime.ParseExact(endDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             }
             catch (Exception e) { }
             var slog1 = db.dp_izlazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaIzdatnica).ToList();
@@ -65,5 +65,56 @@ namespace AngularJSAuthentication.API.Controllers
                 dvm.brojStornihDokumenata = slog2.Count;
             return dvm;
         }
+
+        [HttpGet]
+        [Route("GetPocetnoStanje")]
+        public DijagramiViewModel GetPocetnoStanje(string startDate, string endDate, int dummy)
+        {
+            DijagramiViewModel dvm = new DijagramiViewModel();
+            DateTime startD = new DateTime();
+            DateTime endD = new DateTime();
+            int vrstaPocetnoStanje = vrsteController.getIdBySifra("PS");
+            int vrstaStornoPocetnoStanje = vrsteController.getIdBySifra("SPS");
+            try
+            {
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (Exception e) { }
+            var slog1 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaPocetnoStanje).ToList();
+            if (slog1 != null && slog1.Count != 0)
+                dvm.brojDokumenata = slog1.Count;
+
+            var slog2 = db.dp_ulazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaStornoPocetnoStanje).ToList();
+            if (slog2 != null && slog2.Count != 0)
+                dvm.brojStornihDokumenata = slog2.Count;
+            return dvm;
+        }
+
+        [HttpGet]
+        [Route("GetInventurniManjak")]
+        public DijagramiViewModel GetInventurniManjak(string startDate, string endDate, int dummy)
+        {
+            DijagramiViewModel dvm = new DijagramiViewModel();
+            DateTime startD = new DateTime();
+            DateTime endD = new DateTime();
+            int vrstaInventura = vrsteController.getIdBySifra("INV");
+            int vrstaInventurniManjak = vrsteController.getIdBySifra("INVM");
+            try
+            {
+                startD = DateTime.ParseExact(startDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                endD = DateTime.ParseExact(endDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (Exception e) { }
+            var slog1 = db.dp_inventure.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaInventura).ToList();
+            if (slog1 != null && slog1.Count != 0)
+                dvm.brojDokumenata = slog1.Count;
+
+            var slog2 = db.dp_izlazi.Where(x => x.DATUM_UNOSA >= startD && x.DATUM_UNOSA <= endD && x.VRSTA_DOKUMENTA == vrstaInventurniManjak).ToList();
+            if (slog2 != null && slog2.Count != 0)
+                dvm.brojStornihDokumenata = slog2.Count;
+            return dvm;
+        }
+
     }
 }

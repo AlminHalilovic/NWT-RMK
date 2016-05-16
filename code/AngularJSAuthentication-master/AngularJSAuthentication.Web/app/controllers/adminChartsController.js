@@ -43,7 +43,10 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
         availableDocuments: [
           { id: 'Primka', name: 'Primka'},
           { id: 'Izdatnica', name: 'Izdatnica' },
-          
+          { id: 'Pocetno stanje', name: 'Pocetno stanje' },
+          { id: 'Inventura/Visak', name: 'Inventura/Visak' },
+          { id: 'Inventura/Manjak', name: 'Inventura/Manjak' },
+          { id: 'Visak/Manjak', name: 'Visak/Manjak' }
         ],
         documentSelect: null,
         documentsFrom:new Date(),
@@ -88,9 +91,16 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
         }
         if ($scope.documentsData.documentSelect == 'Primka')
             getPrimka();
-
         else if ($scope.documentsData.documentSelect == 'Izdatnica')
             getIzdatnica();
+        else if ($scope.documentsData.documentSelect == 'Pocetno stanje')
+            getPocetnoStanje();
+        else if ($scope.documentsData.documentSelect == 'Inventura/Visak')
+            getInventurniVisak();
+        else if ($scope.documentsData.documentSelect == 'Inventura/Manjak')
+            getInventurniManjak();
+        else if ($scope.documentsData.documentSelect == 'Visak/Manjak')
+            getVisakManjak();
        }
   
 
@@ -161,6 +171,71 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
            $scope.isBusy = false;
        });
     }
-    
+
+    var getPocetnoStanje = function () {
+        startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth() + 1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
+        endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth() + 1) + "/" + $scope.documentsData.documentsTo.getFullYear();
+        var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetPocetnoStanje?startDate=' + startDate + '&endDate=' + endDate + '&dummy=1');
+        promiseGetData.then(function (pl) {
+
+            $timeout(function () {
+                $scope.isChartReady = true;
+            });
+
+            $scope.myDataSource.data[0].label = "Pocetno stanje";
+            $scope.myDataSource.data[1].label = "Storno pocetno stanje";
+            $scope.myDataSource.data[0].value = pl.data.brojDokumenata;
+            $scope.myDataSource.data[1].value = pl.data.brojStornihDokumenata;
+            $scope.myDataSource.chart.caption = "Dijagram pocetnih stanja i stornih pocetnih stanja";
+            $scope.myDataSource.chart.subcaption = "Od " + startDate + " do " + endDate;
+
+            if (pl.data.brojDokumenata == 0 && pl.data.brojStornihDokumenata == 0)
+                $scope.myDataSource.chart.caption = "Ne postoje zapisi za odabrani period";
+
+        },
+             function (errorPl) {
+                 alert("Ne postoje pocetna stanja i storna pocetna stanja u tom periodu");
+                 $timeout(function () {
+                     $scope.isChartReady = false;
+                 });;
+
+             })
+       .then(function () {
+           $scope.isBusy = false;
+       });
+    }
+
+    var getInventurniVisak = function () {
+        startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth() + 1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
+        endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth() + 1) + "/" + $scope.documentsData.documentsTo.getFullYear();
+        var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetInventurniVisak?startDate=' + startDate + '&endDate=' + endDate + '&dummy=1');
+        promiseGetData.then(function (pl) {
+
+            $timeout(function () {
+                $scope.isChartReady = true;
+            });
+
+            $scope.myDataSource.data[0].label = "Inventura";
+            $scope.myDataSource.data[1].label = "Inventurni visak";
+            $scope.myDataSource.data[0].value = pl.data.brojDokumenata;
+            $scope.myDataSource.data[1].value = pl.data.brojStornihDokumenata;
+            $scope.myDataSource.chart.caption = "Dijagram inventura i inventurnih viskova";
+            $scope.myDataSource.chart.subcaption = "Od " + startDate + " do " + endDate;
+
+            if (pl.data.brojDokumenata == 0 && pl.data.brojStornihDokumenata == 0)
+                $scope.myDataSource.chart.caption = "Ne postoje zapisi za odabrani period";
+
+        },
+             function (errorPl) {
+                 alert("Ne postoje inventure i inventurni viskovi u tom periodu");
+                 $timeout(function () {
+                     $scope.isChartReady = false;
+                 });;
+
+             })
+       .then(function () {
+           $scope.isBusy = false;
+       });
+    }
 
 }]);
