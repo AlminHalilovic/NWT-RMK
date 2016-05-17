@@ -63,6 +63,7 @@
     <Content Include="app\controllers\adminController.js" />
     <Content Include="app\controllers\confirmEmailController.js" />
     <Content Include="app\controllers\DokumentiControllers.js" />
+    <Content Include="app\controllers\filesController.js" />
     <Content Include="app\controllers\forgotPasswordController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
@@ -105,6 +106,7 @@
     <Content Include="app\views\Dokumenti\StornoPocetnoStanje\Index.html" />
     <Content Include="app\views\Dokumenti\StornoPrimka\Add.html" />
     <Content Include="app\views\Dokumenti\StornoPrimka\Index.html" />
+    <Content Include="app\views\Files\index.html" />
     <Content Include="app\views\forgotPassword.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\Izvjestaji\Index.html" />

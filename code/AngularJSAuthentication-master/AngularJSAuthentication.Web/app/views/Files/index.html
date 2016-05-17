@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="/content/css/AdminLTE.css" />
+</head>
+<body>
+    <br />
+    <h4>{{'filesHEADLINE' | translate}}</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="box-title">{{'filesHEADLINE' | translate}}</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <a href='/#/Admin/Charts'><h4>{{'filesHEADLINE' | translate}}</h4></a>
+                    <input class="form-control" fileread="fileToUpload" type="file" id="file_upload" />
+                    <br />    
+                    <button class="btn btn-info" ng-click="uploadFile()">Upload file</button>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                </div><!-- /.box-footer-->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="box-title">{{'uploadedFilesHEADLINE' | translate}}</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{'uploadedFilesTableName' | translate}}</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="item in urls | itemsPerPage:5">
+                            <td>{{getFileName(item.url)}}</td>
+                            <td><a href='{{item.url}}'><h4>{{item.url}}</h4></a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <dir-pagination-controls></dir-pagination-controls>
+                    </tfoot>
+                </table> 
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                </div><!-- /.box-footer-->
+            </div>
+        </div>
+    </div>
+   
+
+</body>
+</html>

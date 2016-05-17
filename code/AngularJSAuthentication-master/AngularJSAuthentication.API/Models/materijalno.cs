@@ -313,8 +313,6 @@ namespace AngularJSAuthentication.Models.API
                 .WithRequired(e => e.sp_vrste_subjekata)
                 .HasForeignKey(e => e.VRSTA_SUBJEKTA)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<sp_user_files>();
                  
         }
     }

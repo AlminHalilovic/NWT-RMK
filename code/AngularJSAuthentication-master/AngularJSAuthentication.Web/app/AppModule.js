@@ -5,6 +5,20 @@ app.run(function (acuteSelectService) {
     acuteSelectService.updateSetting("templatePath", "/content/templates");
 });
 
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                scope.$apply(function () {
+                    scope.fileread = changeEvent.target.files[0];
+                });
+            });
+        }
+    }
+}]);
 
     app.factory("ShareData", function () {
         return { value: 0 }
@@ -124,7 +138,9 @@ app.run(function (acuteSelectService) {
         //$routeProvider.when("/resetPassword", { controller: "resetPasswordController", templateUrl: "/app/views/resetPassword.html" });
         $routeProvider.when("/Admin", { controller: "adminController", templateUrl: "/app/views/Admin/index.html" });
         $routeProvider.when("/Admin/Charts", { controller: "adminChartsController", templateUrl: "/app/views/Admin/charts.html" });
-     
+         
+        $routeProvider.when("/Files", { controller: "fileController", templateUrl: "/app/views/Files/index.html"});
+
         $routeProvider.otherwise({ redirectTo: "/home" });
 
 
@@ -314,7 +330,7 @@ app.run(function (acuteSelectService) {
             signupPotvrdi: 'Submit',
             indexDobrodosli: 'Welcome',
             indexSifarnici: 'Codebooks',
-            indexIzvjestaji: 'Reports',
+            indexIzvjestaji: 'Files',
             indexDokumenti: 'Documents',
             indexOdjava: 'Log out',
             indexPrijava: 'Log in',
@@ -375,7 +391,10 @@ app.run(function (acuteSelectService) {
             adminDijagramiUsers: 'Users',
             adminDijagramiRoles: 'Roles',
             dokumentiTableStavke: 'Rows',
-            adminIndexHEADLINE: 'Administrative panel'
+            adminIndexHEADLINE: 'Administrative panel',
+            filesHEADLINE: 'Upload files',
+            uploadedFilesHEADLINE: 'Uploaded files',
+            uploadedFilesTableName: 'Name'
         }).translations('ba', {
             homeHEADLINE: 'Dobrodošli u sistem robno materijalnog knjigovodstva!',
             INTRO_TEXT: 'Neki tekst!',
@@ -544,7 +563,7 @@ app.run(function (acuteSelectService) {
             signupPotvrdi: 'Potvrdi',
             indexDobrodosli:'Dobrodošli',
             indexSifarnici: 'Šifarnici',
-            indexIzvjestaji: 'Izvještaji',
+            indexIzvjestaji: 'Datoteke',
             indexDokumenti: 'Dokumenti',
             indexOdjava: 'Odjava',
             indexPrijava: 'Prijava',
@@ -607,7 +626,10 @@ app.run(function (acuteSelectService) {
             dokumentiTableBrojStornoPrimke: 'Broj storno primke',
             dokumentiTableDatumStornoPrimke: 'Datum storno primke',
             stavke: 'Stavke',
-            adminIndexHEADLINE: 'Admin panel'
+            adminIndexHEADLINE: 'Admin panel',
+            filesHEADLINE: 'Upload datoteka',
+            uploadedFilesHEADLINE: 'Uploadovane datoteke',
+            uploadedFilesTableName: 'Naziv'
         });
         $translateProvider.preferredLanguage('ba');
     });

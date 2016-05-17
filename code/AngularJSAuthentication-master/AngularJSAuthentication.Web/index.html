@@ -39,7 +39,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="#">{{'indexDobrodosli' | translate}} {{authentication.userName}}</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="#/Sifarnici">{{'indexSifarnici' | translate}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/Izvjestaji">{{'indexIzvjestaji' | translate}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/Files">{{'indexIzvjestaji' | translate}}</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="#/Dokumenti">{{'indexDokumenti' | translate}}</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="#/Admin">{{'indexAdmin' | translate}}</a></li>
 
@@ -120,6 +120,7 @@
 
     <script src="app/controllers/adminController.js"></script>
     <script src="app/controllers/adminChartsController.js"></script>
+    <script src="app/controllers/filesController.js"></script>
     <script src="app/controllers/SifarniciControllers.js?v=2"></script>
 
     <script src="app/controllers/DokumentiControllers.js"></script>
