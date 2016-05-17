@@ -90,7 +90,8 @@ namespace AngularJSAuthentication.API.Controllers
                 UserName = createUserModel.Username,
                 Email = createUserModel.Email,
                 FirstName = createUserModel.FirstName,
-                LastName = createUserModel.LastName
+                LastName = createUserModel.LastName,
+                IsEnabled=true
             };
 
             string response = await ValidateCaptcha(createUserModel.Recaptcha);
@@ -100,6 +101,7 @@ namespace AngularJSAuthentication.API.Controllers
             }
 
             IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
+            
 
             if (!addUserResult.Succeeded)
             {

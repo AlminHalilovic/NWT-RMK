@@ -11,12 +11,14 @@
             <tr>
                 <th>{{'indexUsername' | translate}}</th>
                 <th>{{'indexEmail' | translate}}</th>
+                <th>{{'indexBanned' | translate}}</th>
             </tr>
         </thead>
         <tbody>
             <tr dir-paginate="i in collection | itemsPerPage:10">
                 <td>{{i.UserName}}</td>
                 <td>{{i.Email}}</td>
+                <td><input type="checkbox" ng-model="i.isBanned" ng-click="banUser(i)" /></td>
                 <td><a class="btn btn-info" ng-click="editItem(i.ID)">{{'indexEditUser' | translate}}</a></td>
                 <td><a class="btn btn-danger" ng-click="deleteItem(i.ID)">{{'indexDeleteUser' | translate}}</a></td>
                 <td><a class="btn btn-info" ng-click="addRoles(i.ID, i.Roles)">{{'indexUsersAddRole' | translate}}</a></td>

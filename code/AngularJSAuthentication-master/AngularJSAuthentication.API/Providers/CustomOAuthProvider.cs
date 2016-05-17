@@ -42,6 +42,11 @@ namespace AngularJSAuthentication.API.Providers
                 context.SetError("invalid_grant", "User did not confirm email.");
                 return;
             }
+            if(!user.IsEnabled)
+            {
+                context.SetError("invalid_grant", "User is banned.");
+                return;
+            }
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
             //oAuthIdentity.AddClaims(ExtendedClaimsProvider.GetClaims(user));

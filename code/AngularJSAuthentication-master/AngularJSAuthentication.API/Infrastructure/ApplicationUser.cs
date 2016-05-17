@@ -20,9 +20,9 @@ namespace AngularJSAuthentication.API.Infrastructure
         [MaxLength(100)]
         public string LastName { get; set; }
 
-       
+        public bool IsEnabled { get; set; }
 
-        
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

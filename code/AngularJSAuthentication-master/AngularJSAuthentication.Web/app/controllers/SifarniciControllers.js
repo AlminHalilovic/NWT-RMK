@@ -804,7 +804,7 @@ app.controller("DeleteRoleController", function ($scope, $location, ShareData, S
 });
 
 // Users
-app.controller('UserController', function ($scope, $location, SifarniciGetAllFactory, ShareData) {
+app.controller('UserController', function ($scope, $location, SifarniciGetAllFactory, ShareData,SifarniciService) {
     loadData();
 
     //Funkcija koja poziva factory, koji zatim putem servisa iz webapi dobavlja podatke.   
@@ -813,7 +813,19 @@ app.controller('UserController', function ($scope, $location, SifarniciGetAllFac
     $scope.addItem = function () { $location.path("/Users/AddUser"); }
     $scope.editItem = function (id) { ShareData.value = id; $location.path("/Users/EditUser/" + id); }
     $scope.deleteItem = function (id) { ShareData.value = id; $location.path("/Users/DeleteUser/" + id); }
-    $scope.addRoles = function (id, roles) { ShareData.value = id; $location.path("/Roles/ManageRolesForUser/" + id);}
+    $scope.addRoles = function (id, roles) { ShareData.value = id; $location.path("/Roles/ManageRolesForUser/" + id); }
+    $scope.banUser = function (Item) {
+        
+        var promiseBanUser = SifarniciService.putItem("/api/UserAPI/BanUser", Item.ID, Item);
+        promiseBanUser.then(function (pl) {
+            var response = angular.fromJson(JSON.parse(pl.data))[0];
+            alert("Uspjeh pri akciji!");
+        },
+              function (errorPl) {
+                  alert("Neuspjeh pri akciji");
+              });
+
+    }
 });
 app.controller('AddUserController', function ($scope, $location, SifarniciService, SifarniciCreateFactory, ShareData) {
 
@@ -844,12 +856,13 @@ app.controller("EditUserController", function ($scope, $location, ShareData, Sif
         var email = $scope.Item.Email;
         var password = ($scope.Item.Password == null) ? "" : $scope.Item.Password;
         var currPassword = ($scope.Item.CurrentPassword);
+    
         var Item = {
             id: id,
             userName: userName,
             email: email,
             password: password,
-            currentPassword : currPassword
+            currentPassword: currPassword
         };
         SifarniciUpdateFactory($scope, "/api/UserAPI/Edit", "/Users", Item);
 

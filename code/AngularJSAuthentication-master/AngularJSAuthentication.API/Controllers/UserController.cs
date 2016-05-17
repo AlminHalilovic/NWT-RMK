@@ -5,6 +5,7 @@ using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,14 @@ namespace AngularJSAuthentication.API.Controllers
         {
 
 
-            var jsonResult = db.Users.Select(x => new { ID = x.Id, UserName = x.UserName, Email = x.Email }).ToList();
+            var jsonResult = db.Users.Select(x => new { ID = x.Id, UserName = x.UserName, Email = x.Email,isBanned=!x.IsEnabled }).ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
         }
         [Route("Show/{userId}")]
         public string GetUser(string userId)
         {
-            var jsonResult = db.Users.Where(x => x.Id == userId).Select(x => new { ID = x.Id, UserName = x.UserName, id = x.Id, Roles = x.Roles.ToList(), Email = x.Email }).ToList();
+            var jsonResult = db.Users.Where(x => x.Id == userId).Select(x => new { ID = x.Id, UserName = x.UserName, id = x.Id, Roles = x.Roles.ToList(), Email = x.Email}).ToList();
             string json = JsonConvert.SerializeObject(jsonResult);
             return json;
         }
@@ -140,7 +141,7 @@ namespace AngularJSAuthentication.API.Controllers
             else
             {
                 Dictionary<string, object> obj = (Dictionary<string, object>)serializer.DeserializeObject(input);
-                ApplicationUser user = db.Users.Find(id);
+                ApplicationUser user = this.AppUserManager.FindById(id);
                 user.UserName = obj["userName"].ToString();
                 user.Email = obj["email"].ToString();
                 user.EmailConfirmed = true;
@@ -179,6 +180,63 @@ namespace AngularJSAuthentication.API.Controllers
                     {
                         ok = false,
                         message = "Desila se greška pri ažuriranju korisnika!"
+                    });
+                    return response;
+                }
+            }
+            return "";
+        }
+
+
+        [HttpPut]
+        [Route("BanUser/{id}")]
+        public string BanUser(string id)
+        {
+            string response = "";
+            string input = "";
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+            using (var reader = new StreamReader(HttpContext.Current.Request.InputStream))
+            {
+                input = reader.ReadToEnd();
+            }
+            if (input == "")
+            {
+                response = JsonConvert.SerializeObject(new
+                {
+                    ok = false,
+                    message = "Desila se greška pri akciji!",
+                });
+            }
+            else
+            {
+                Dictionary<string, object> obj = (Dictionary<string, object>)serializer.DeserializeObject(input);
+                ApplicationUser user = this.AppUserManager.FindById(id);
+                user.IsEnabled = !(bool)obj["isBanned"];
+                
+                try
+                {
+
+
+                      this.AppUserManager.Update<ApplicationUser, string>(user);
+                   // db.Set<ApplicationUser>().AddOrUpdate(user);
+                        
+                        response = JsonConvert.SerializeObject(new
+                        {
+                            ok = true,
+                            message = "Uspjeh pri akciji!"
+                        });
+                    
+                   
+
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    response = JsonConvert.SerializeObject(new
+                    {
+                        ok = false,
+                        message = "Desila se greška pri akciji!"
                     });
                     return response;
                 }
