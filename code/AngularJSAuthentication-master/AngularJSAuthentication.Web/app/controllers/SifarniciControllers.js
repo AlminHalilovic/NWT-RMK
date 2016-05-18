@@ -787,7 +787,7 @@ app.controller("EditRoleController", function ($scope, $location, ShareData, Sif
             roleName: roleName
         };
         SifarniciUpdateFactory($scope, "/api/RoleAPI/Edit", "/Roles", Item);
-
+     
     };
 
 });

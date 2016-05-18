@@ -71,7 +71,15 @@ app.factory('SifarniciUpdateFactory', function (SifarniciService, $location, Sha
 
         var promisePutEmployee = SifarniciService.putItem(apiPath, $scope.Item.id, Item);
         promisePutEmployee.then(function (pl) {
-            alert("Uspješno je izmjenjen podatak u šifarniku!");
+            if (pl.data != null && typeof pl.data != "undefined") {
+                var response = JSON.parse(pl.data);
+                console.log(response);
+                if (response.ok === false)
+                    alert(response.error);
+                else alert("Uspjesno ste izmijenili korisnika");
+            } else {
+                alert("Uspješno je izmjenjen podatak u šifarniku!");
+            }
             $location.path(returnPath);
         },
               function (errorPl) {

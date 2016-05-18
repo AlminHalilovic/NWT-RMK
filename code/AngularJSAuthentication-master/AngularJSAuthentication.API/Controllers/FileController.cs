@@ -13,7 +13,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace AngularJSAuthentication.API.Controllers
 {
@@ -26,10 +28,21 @@ namespace AngularJSAuthentication.API.Controllers
         private materijalno materijalno = new materijalno();
         [HttpPost]
         [Route("UploadFile")]
-        public async void UploadFile(UploadFileViewModel file)
+        public async void UploadFile()
         {
-            Byte[] bytes = Convert.FromBase64String(file.base64String.Substring(file.base64String.IndexOf(",") + 1));
-            await UploadPhotoAsync(bytes, file.extension, file.name);
+            string input = "";
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = 100000000;
+            using (var reader = new StreamReader(HttpContext.Current.Request.InputStream))
+            {
+                input = reader.ReadToEnd();
+            }
+            Dictionary<string, object> obj = (Dictionary<string, object>)serializer.DeserializeObject(input);
+            string fileName = obj["name"].ToString();
+            string base64String = obj["base64String"].ToString();
+            string extension = obj["extension"].ToString();
+            Byte[] bytes = Convert.FromBase64String(base64String.Substring(base64String.IndexOf(",") + 1));
+            await UploadPhotoAsync(bytes, extension, fileName);
         }
 
         [HttpGet]
