@@ -2,8 +2,6 @@
 app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'authService', '$routeParams','SifarniciService','$rootScope', '$http','ngAuthSettings', function ($scope, $location, $timeout, authService, $routeParams,SifarniciService,$rootScope, $http,ngAuthSettings) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
-
-
     $http.get(serviceBase+'api/RoleAPI/GetRolesForUserByName/' + authService.authentication.userName).then(function (pl) {
         var json = JSON.parse(pl.data);
         var found = false;
@@ -103,15 +101,15 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
             getInventurniManjak();
         else if ($scope.documentsData.documentSelect == 'Visak/Manjak')
             getVisakManjak();
-       }
+    }
   
 
     var getPrimka = function()
     {
-         startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth()+1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
-         endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth()+1) + "/" + $scope.documentsData.documentsTo.getFullYear();
-         var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetPrimka?startDate=' +startDate + '&endDate=' + endDate);
-         promiseGetData.then(function (pl) {
+        startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth()+1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
+        endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth()+1) + "/" + $scope.documentsData.documentsTo.getFullYear();
+        var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetPrimka?startDate=' +startDate + '&endDate=' + endDate);
+        promiseGetData.then(function (pl) {
            
             $timeout(function () {
                 $scope.isChartReady = true;
@@ -128,16 +126,16 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
                 $scope.myDataSource.chart.caption = "Ne postoje zapisi za odabrani period";
 
         },
-              function (errorPl) {
-                  alert("Ne postoje primke i storne primke u tom periodu");
-                  $timeout(function () {
-                      $scope.isChartReady = false;
-                  });;
+             function (errorPl) {
+                 alert("Ne postoje primke i storne primke u tom periodu");
+                 $timeout(function () {
+                     $scope.isChartReady = false;
+                 });;
 
-              })
-        .then(function () {
-            $scope.isBusy = false;
-        });
+             })
+       .then(function () {
+           $scope.isBusy = false;
+       });
     }
 
     var getIzdatnica = function()
@@ -238,8 +236,8 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
        .then(function () {
            $scope.isBusy = false;
        });
-
-        var getInventurniManjak = function () {
+    }
+    var getInventurniManjak = function () {
         startDate = $scope.documentsData.documentsFrom.getDate() + "/" + ($scope.documentsData.documentsFrom.getMonth() + 1) + "/" + $scope.documentsData.documentsFrom.getFullYear();
         endDate = $scope.documentsData.documentsTo.getDate() + "/" + ($scope.documentsData.documentsTo.getMonth() + 1) + "/" + $scope.documentsData.documentsTo.getFullYear();
         var promiseGetData = SifarniciService.getItem('api/DijagramiAPI/GetInventurniManjak?startDate=' + startDate + '&endDate=' + endDate + '&dummy=1');
@@ -370,6 +368,6 @@ app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'aut
            $scope.isBusy = false;
        });
     }
-    }
+}
 
-}]);
+]);
