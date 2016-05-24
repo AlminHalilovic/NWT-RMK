@@ -722,18 +722,18 @@ app.controller('AddRoleController', function ($scope, $location, SifarniciServic
         SifarniciCreateFactory($scope, "/api/RoleAPI/Save", "/Roles", Item);
     }
 });
-app.controller('AddRoleToUserController', function ($scope, $location, $http, SifarniciService, ShareData) {
+app.controller('AddRoleToUserController', function ($scope, $location, $http, SifarniciService, ShareData,ngAuthSettings) {
 
-    
+    var serviceBase = ngAuthSettings.apiServiceBaseUri;
     $scope.back = function () { $location.path("/Users"); }
     $scope.id = 0;
     $scope.userId = ShareData.value;
 
     $scope.getRolesForUser = function (userId) {
         var roleList = [];
-        $http.get('http://localhost:26264/api/RoleAPI/Index').then(function (pla) {
+        $http.get(serviceBase+'api/RoleAPI/Index').then(function (pla) {
             var roles = JSON.parse(pla.data);
-            $http.get('http://localhost:26264/api/RoleAPI/GetRolesForUser/' + userId).then(function (pl) {
+            $http.get(serviceBase+'api/RoleAPI/GetRolesForUser/' + userId).then(function (pl) {
                 var json = JSON.parse(pl.data);
                 for (var i = 0; i < roles.length; i++) {
                     var roleName = roles[i].RoleName;
@@ -762,7 +762,7 @@ app.controller('AddRoleToUserController', function ($scope, $location, $http, Si
             userId: $scope.userId,
             roles: JSON.stringify($scope.roleList)
         };
-        $http({ method: "post", url: 'http://localhost:26264/api/RoleAPI/SaveRoles', data: Item }).then(function (pl) {
+        $http({ method: "post", url: serviceBase+'api/RoleAPI/SaveRoles', data: Item }).then(function (pl) {
             var json = JSON.parse(pl.data);
             if (json.ok === true) {
                 alert("Uspješno ste izmijenili uloge korisnika!");
