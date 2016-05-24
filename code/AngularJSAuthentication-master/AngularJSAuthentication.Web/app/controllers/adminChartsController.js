@@ -1,8 +1,10 @@
 ﻿'use strict';
-app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'authService', '$routeParams','SifarniciService','$rootScope', '$http', function ($scope, $location, $timeout, authService, $routeParams,SifarniciService,$rootScope, $http) {
+app.controller('adminChartsController', ['$scope', '$location', '$timeout', 'authService', '$routeParams','SifarniciService','$rootScope', '$http','ngAuthSettings', function ($scope, $location, $timeout, authService, $routeParams,SifarniciService,$rootScope, $http,ngAuthSettings) {
+
+    var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
 
-    $http.get('http://localhost:26264/api/RoleAPI/GetRolesForUserByName/' + authService.authentication.userName).then(function (pl) {
+    $http.get(serviceBase+'api/RoleAPI/GetRolesForUserByName/' + authService.authentication.userName).then(function (pl) {
         var json = JSON.parse(pl.data);
         var found = false;
         for (var i = 0; i < json.length; i++) {

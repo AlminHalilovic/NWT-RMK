@@ -637,9 +637,9 @@ app.directive("fileread", [function () {
     });
    
 
-   var serviceBase = 'http://localhost:26264/'; //port na kojem je web api
+   //var serviceBase = 'http://localhost:26264/'; //port na kojem je web api
 
-    //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
+    var serviceBase = 'http://nwt-rmk-api.azurewebsites.net/';
 
     app.constant('ngAuthSettings', {
         apiServiceBaseUri: serviceBase,

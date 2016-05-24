@@ -1,5 +1,7 @@
 ﻿'use strict';
-app.controller('fileController', ['$scope', '$location', '$timeout', 'authService', '$routeParams', '$http', function ($scope, $location, $timeout, authService, $routeParams, $http) {
+app.controller('fileController', ['$scope', '$location', '$timeout', 'authService', '$routeParams', '$http', 'ngAuthSettings', function ($scope, $location, $timeout, authService, $routeParams, $http, ngAuthSettings) {
+
+    var serviceBase = ngAuthSettings.apiServiceBaseUri;
 
     $scope.fileToUpload = null;
     $scope.urls = [];
@@ -19,7 +21,7 @@ app.controller('fileController', ['$scope', '$location', '$timeout', 'authServic
                 extension: "." + ($scope.fileToUpload.name).substr((~-($scope.fileToUpload.name).lastIndexOf(".") >>> 0) + 2)
             };
             
-            $http({ method: "post", url: 'http://localhost:26264/api/FileAPI/UploadFile', data: fileModel }).then(function (response) {
+            $http({ method: "post", url: serviceBase+'api/FileAPI/UploadFile', data: fileModel }).then(function (response) {
                 getUrls();
                 $scope.isBusy = false;
             }, function (error) {
@@ -31,7 +33,7 @@ app.controller('fileController', ['$scope', '$location', '$timeout', 'authServic
     }
 
     function getUrls() {
-        $http.get('http://localhost:26264/api/FileAPI/GetFiles').then(function (response) {
+        $http.get(serviceBase+'api/FileAPI/GetFiles').then(function (response) {
             var json = JSON.parse(response.data);
             $scope.urls = json;
         });
